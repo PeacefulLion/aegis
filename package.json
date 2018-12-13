@@ -1,0 +1,22 @@
+{
+  "name": "guardjs",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.code.oa.com/ivweb/guardjs.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.6.2",
+    "parcel": "^1.10.3",
+    "react": "^16.7.0-alpha.0",
+    "react-dom": "^16.7.0-alpha.0"
+  },
+  "devDependencies": {}
+}
