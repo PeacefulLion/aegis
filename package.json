@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel ./src/*.html"
   },
   "repository": {
     "type": "git",
@@ -13,10 +14,16 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "antd": "^3.11.2",
+    "axios": "^0.18.0",
     "koa": "^2.6.2",
     "parcel": "^1.10.3",
-    "react": "^16.7.0-alpha.0",
-    "react-dom": "^16.7.0-alpha.0"
+    "proptypes": "^1.1.0",
+    "react": "16.7.0-alpha.0",
+    "react-dom": "16.7.0-alpha.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "0.0.0",
+    "less": "^3.9.0"
+  }
 }
