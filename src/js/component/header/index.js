@@ -2,28 +2,32 @@ import React from 'react';
 import { Header } from 'antd/lib/layout';
 import Menu from 'antd/lib/menu';
 import Item from 'antd/lib/menu/MenuItem';
+import { Link } from 'react-router-dom';
 
 import './index.less';
 
 export default function WraperHeader(props) {
-    console.log('header');
+    const {
+        id
+    } = props;
+
     return (
-        <Header className="header" > 
+        <Header className="header"> 
             <div className="logo"></div>
-            <Menu mode="horizontal" theme="dark">
-                <Item>
-                    项目管理
+            {/* <Menu defaultSelectedKeys={['0']} style={{"lineHeight": "64px", "float": "right"}} mode="horizontal" theme="dark">
+                <Item key="0">
+                    <Link to={'/index'}>日志查询</Link>
                 </Item>
-                <Item>
-                    用户管理
+                <Item key="">
+                    <Link to={`/userManage`}>用户管理</Link>
                 </Item>
-                <Item>
-                    开发指引
+                <Item key="2">
+                    <Link to={`/help`}>使用帮助</Link>
                 </Item>
-                <Item>
-                    使用帮助
+                <Item key="3">
+                    <Link to={`/about`}>关于</Link>
                 </Item>
-            </Menu>            
+            </Menu>  */}
         </Header>
     )
 }

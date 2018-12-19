@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../common/api';
 
-
-function useBusinessList() {
+export function useBusinessList(value = 0) {
     const [ list, setList ] = useState([]);
 
     useEffect(() => {
@@ -11,10 +10,21 @@ function useBusinessList() {
                 // console.log(data);
                 setList(data.item);
             });
-    }, [0])
+    }, [value]);
 
     return list;
 }
 
+export function useFilterList(list, value) {
+    const [filerList, setFilterList] = useState(list);
+
+    useEffect(() => {
+        setFilterList(!value ? list : list.filter((item) => {
+            return item.name.toLowerCase().indexOf(value.toLowerCase()) > -1
+        }));
+    }, [list, value]);
+
+    return filerList;
+}
 
 export default useBusinessList;
