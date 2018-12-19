@@ -4,9 +4,11 @@ import api from '../common/api';
 export function useBusinessList(value = 0) {
     const [list, setList] = useState([]);
 
-    useEffect(async () => {
-        const data = await api.get('//badjs2.ivweb.io/controller/userAction/getBusiness.do');
-        setList(data.item);
+    useEffect(() => {
+        (async () => {
+            const data = await api.get('//badjs2.ivweb.io/controller/userAction/getBusiness.do');
+            setList(data.item);
+        })();
     }, [value]);
 
     return list;
