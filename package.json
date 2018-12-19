@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "description": "基于 badjs",
   "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel ./src/*.html",
+    "build": "parcel build ./src/index.html"
+  },
   "dependencies": {
     "antd": "^3.11.2",
     "axios": "^0.18.0",
@@ -14,7 +19,10 @@
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.0",
     "babel-eslint": "^10.0.1",
+    "babel-polyfill": "^6.26.0",
     "eslint": "^5.10.0",
     "eslint-config-ivweb": "^0.1.5",
     "eslint-plugin-class-property": "^1.1.0",
@@ -22,10 +30,6 @@
     "koa": "^2.6.2",
     "less": "^3.9.0",
     "parcel": "^1.11.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel ./src/*.html"
   },
   "repository": {
     "type": "git",

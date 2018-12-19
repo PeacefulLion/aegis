@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import api from '../common/api';
 import Device from '../common/device';
@@ -14,7 +14,7 @@ function formatLog(log) {
 export function useLogs() {
     const [logs, setLogs] = useState([]);
 
-    function getLogs(opts) {
+    async function getLogs(opts) {
         const {
             id,
             startDate,
@@ -22,10 +22,10 @@ export function useLogs() {
             include,
             exclude,
             index = 0,
-            level = [1,2,4]    
+            level = [1, 2, 4]
         } = opts;
-        
-        api.get('//badjs2.ivweb.io/controller/logAction/queryLogList.do', {
+
+        const data = await api.get('//badjs2.ivweb.io/controller/logAction/queryLogList.do', {
             params: {
                 id,
                 startDate,
@@ -36,12 +36,10 @@ export function useLogs() {
                 index,
                 level
             }
-        })
-        .then((data) => {
-            setLogs(data.map((item) => {
-                return formatLog(item);
-            }));
-        })
+        });
+        setLogs(data.map((item) => {
+            return formatLog(item);
+        }));
     }
 
     return [logs, setLogs, getLogs];
