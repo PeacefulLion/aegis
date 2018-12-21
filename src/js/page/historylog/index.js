@@ -38,7 +38,10 @@ export default function Log(props) {
     const list = useBusinessList();
     const [logs, setLogs, getLogs] = useLogs([]);
     const [projectId, setProjectId] = useState(null);
+<<<<<<< HEAD
     const [level, setLevel] = useState([1, 2, 4]);
+=======
+>>>>>>> 99a50146adfa9de9a4960efceb802434ddaba956
 
     const includeRef = useRef(null);
     const excludeRef = useRef(null);
@@ -68,17 +71,17 @@ export default function Log(props) {
         setLevel(level);
     }
 
-    function handlerSumbit() {
+    async function handlerSumbit() {
         const include = includeRef.current.getTags();
         const exclude = excludeRef.current.getTags();
         const startDate = startTimeRef.current.getTime().unix() * 1000;
         const endDate = endTimeRef.current.getTime().unix() * 1000;
 
-        if(!projectId) {
+        if (!projectId) {
             return;
         }
 
-        getLogs({
+        await getLogs({
             id: projectId,
             include,
             exclude,
@@ -92,7 +95,7 @@ export default function Log(props) {
     }
 
     console.log(projectId);
-    
+
     return (
         <div>
             <Drawer
@@ -103,7 +106,7 @@ export default function Log(props) {
                 className="ward-logs-sumbitpanel"
                 onClose={handlerClose}
                 visible={drawerVisiblie}
-            >   
+            >
                 <div className="ward-drawer-btn" onClick={handlerOpen}>
                     { !drawerVisiblie ? <Icon color="#fff" type="caret-left" /> : <Icon color="#fff" type="caret-right" /> }
                 </div>
@@ -114,7 +117,7 @@ export default function Log(props) {
                             value={projectId}
                             onSelect={setProjectId}
                             filterOption={(input, option) => option.props.name.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                        >   
+                        >
                             {
                                 list.map((item) => {
                                     return (

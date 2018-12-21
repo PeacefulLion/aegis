@@ -7,7 +7,7 @@ module.exports = {
     extends: ['ivweb'],
     plugins: [
         "class-property",
-        "react-hook"
+        "react-hooks"
     ],
     "parserOptions": {
         "ecmaVersion": 6,

@@ -1,33 +1,44 @@
 {
-  "name": "guardjs",
+  "name": "wardmonitor",
   "version": "0.0.1",
-  "description": "",
+  "description": "基于 badjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel ./src/*.html"
+    "start": "parcel ./src/*.html",
+    "build": "parcel build ./src/index.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://git.code.oa.com/ivweb/guardjs.git"
-  },
-  "author": "",
-  "license": "MIT",
   "dependencies": {
     "antd": "^3.11.2",
     "axios": "^0.18.0",
-    "koa": "^2.6.2",
     "moment": "^2.23.0",
-    "now-util-device": "0.0.3",
-    "parcel": "^1.10.3",
     "proptypes": "^1.1.0",
-    "react": "16.7.0-alpha.0",
-    "react-dom": "16.7.0-alpha.0",
+    "react": "^16.7.0-alpha.0",
+    "react-dom": "^16.7.0-alpha.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.0",
+    "babel-eslint": "^10.0.1",
+    "babel-polyfill": "^6.26.0",
+    "eslint": "^5.10.0",
+    "eslint-config-ivweb": "^0.1.5",
+    "eslint-plugin-class-property": "^1.1.0",
     "eslint-plugin-react-hooks": "0.0.0",
-    "less": "^3.9.0"
-  }
+    "koa": "^2.6.2",
+    "less": "^3.9.0",
+    "parcel": "^1.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iv-web/wardmonitor.git"
+  },
+  "author": "iv-web",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iv-web/wardmonitor/issues"
+  },
+  "homepage": "https://github.com/iv-web/wardmonitor#readme"
 }

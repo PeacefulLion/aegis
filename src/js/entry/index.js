@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React, { useState, useEffect } from 'react';
 import ReactDom from 'react-dom';
 import { Layout, Breadcrumb } from 'antd';

@@ -1,15 +1,14 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import api from '../common/api';
 
 export function useBusinessList(value = 0) {
-    const [ list, setList ] = useState([]);
+    const [list, setList] = useState([]);
 
     useEffect(() => {
-        api.get('//badjs2.ivweb.io/controller/userAction/getBusiness.do')
-            .then((data) => {
-                // console.log(data);
-                setList(data.item);
-            });
+        (async () => {
+            const data = await api.get('//badjs2.ivweb.io/controller/userAction/getBusiness.do');
+            setList(data.item);
+        })();
     }, [value]);
 
     return list;
@@ -20,7 +19,7 @@ export function useFilterList(list, value) {
 
     useEffect(() => {
         setFilterList(!value ? list : list.filter((item) => {
-            return item.name.toLowerCase().indexOf(value.toLowerCase()) > -1
+            return item.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
         }));
     }, [list, value]);
 
