@@ -11,8 +11,8 @@ import { useLogs } from '../../hook/logs';
 import './index.less';
 
 const logType = [
-    'error',
-    'log'
+    'log',
+    'error'
 ]
 
 const formItemLayout = {
@@ -38,13 +38,13 @@ export default function Log(props) {
     const list = useBusinessList();
     const [logs, setLogs, getLogs] = useLogs([]);
     const [projectId, setProjectId] = useState(null);
-    
+    const [level, setLevel] = useState([1, 2, 4]);
+
     const includeRef = useRef(null);
     const excludeRef = useRef(null);
     const startTimeRef = useRef(null);
     const endTimeRef = useRef(null);
     const checkBoxRef = useRef(null);
-    const selectRef = useRef(null);
 
     function handlerClose() {
         setDrawerVisiblie(false);
@@ -54,8 +54,18 @@ export default function Log(props) {
         setDrawerVisiblie(true);
     }
 
-    function onChange(e) {
-        // TODO change level
+    function onChange(value) {
+        const level = [1];
+        
+        value.forEach((value) => {
+            if(value === 'error') {
+                level.push(4);
+            } else if(value === 'log') {
+                level.push(2);
+            }
+        });
+
+        setLevel(level);
     }
 
     function handlerSumbit() {
@@ -75,7 +85,7 @@ export default function Log(props) {
             startDate,
             endDate,
             index: pageIndex,
-            level: [1,2,4]
+            level: level
         });
 
         setDrawerVisiblie(false);
@@ -100,7 +110,6 @@ export default function Log(props) {
                 <Form>
                     <Form.Item label="选择项目" {...formItemLayout}>
                         <Select
-                            ref={selectRef}
                             showSearch
                             value={projectId}
                             onSelect={setProjectId}

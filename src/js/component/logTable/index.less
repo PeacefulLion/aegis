@@ -1,7 +1,48 @@
+
 .log-type-default {
-    background-color: #1890ff;
+    &:before {
+        position: absolute;
+        left:0 ;
+        top: 0;
+        width: 5px;
+        height: 100%;
+        content: '';
+        background-color: #88b6f2;
+    }
 }
 
 .log-type-error {
-    background-color: #f5222d;
+    &:before {
+        position: absolute;
+        left:0 ;
+        top: 0;
+        width: 5px;
+        height: 100%;
+        content: '';
+        background-color: #f5222d;
+    }
+}
+
+.logtable-index {
+    position: relative;
+}
+
+.ward-logstab-control {
+    padding: 0 12px;
+}
+
+.logdetail-panel {
+    .label { 
+        font-weight: bold;
+        &:after {
+            content: ':';
+        }
+    }
+    .logdetail-row {
+        margin: 10px 0;
+    }
+
+    .logpanel-iconwrap {
+        margin-right: 20px;
+    }
 }

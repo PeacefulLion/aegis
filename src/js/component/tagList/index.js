@@ -14,7 +14,7 @@ function TagList(props, ref) {
 
     function showInput(e) {
         setInputVisible(true);
-        this.setState({ inputVisible: true }, () => this.input.focus());
+        inputRef.current.focus();
     }
     
     function handleInputChange(e) {

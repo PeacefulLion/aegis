@@ -1,12 +1,41 @@
 import React, {useState, useEffect } from 'react';
 import moment from 'moment';
 import api from '../common/api';
-import Device from '../common/device';
+import Device, { Up } from '../common/device';
+import Log from '../page/historylog';
 
 function formatLog(log) {
-    log.time = moment(log.date).format('MM-DD HH:mm:ss');
+    log.time = moment(log.date).format('YYYY-MM-DD HH:mm:ss');
 
-    log.device = new Device(log.useAgent);
+    const device = new Device(log.userAgent);
+    const data = log.all.split(';');
+
+    log.uin = log.uin || isNaN(log.uin) ? '-' : log.uin;
+    log.device = device;
+
+    log.platform = [];
+    
+    ['android', 'ios', 'windows'].forEach((name) => {
+        if(device['is' + Up(name)]) {
+            log.platform.push({
+                name,
+                version: device[name + 'Version']
+            });
+        }
+    });
+
+    log.appIcon = [];
+
+    ['qq', 'wechat', 'now', 'huayang', 'qzone', 
+    'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou',
+    'maxthon', '360', 'edge', 'chrome', 'firefox', 'safari'].forEach((name) => {
+        if(device['is' + Up(name)]) {
+            log.appIcon.push({
+                name,
+                version: device[name + 'Version']
+            });
+        }
+    });
 
     return log;
 }

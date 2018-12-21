@@ -3,9 +3,6 @@ import { Menu, Layout, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 
 import './index.less';
-const {
-    Sider
-} = Layout;
 
 const {
     SubMenu,
@@ -16,10 +13,7 @@ const {
 
 export default function LeftMenu(props) {
     return (
-        <Sider className="ward-sider">
-            <div className="ward-logo">
-
-            </div>
+        <div className="ward-sider">
             <Menu mode="inline" defaultOpenKeys={['log', 'speed', 'project', 'set', 'about']}>
                 <SubMenu key="log" title="日志查询">
                     <Menu.Item key="historylog">
@@ -39,15 +33,11 @@ export default function LeftMenu(props) {
                     <Menu.Item key="userrole">项目用户权限</Menu.Item>
                     <Menu.Item key="userlist">注册用户列表</Menu.Item>
                 </SubMenu>
-                <SubMenu key='set' title="设置">
-                    <Menu.Item key="changewwd">修改密码</Menu.Item>
-                    <Menu.Item key="logout">退出</Menu.Item>
-                </SubMenu>
                 <SubMenu key='about' title="关于">
                     <Menu.Item key="help">使用帮助</Menu.Item>
                     <Menu.Item key="updatelog">更新日志</Menu.Item>
                 </SubMenu>
             </Menu>
-        </Sider>
+        </div>
     )
 }

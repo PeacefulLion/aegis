@@ -12,6 +12,8 @@ import HistoryLog from '../page/historylog/index';
 import About from '../page/about/index';
 import Help from '../page/help/index';
 
+import './index.less';
+
 const {
     Content
 } = Layout;
@@ -23,17 +25,17 @@ function Home(props) {
     } = match;
 
     return (
-        <Layout style={{height:"100%"}}>
-            <Route breadcrumbName="首页" component={LeftMenu}></Route>
-            <Layout>
-                <Header></Header>
-                <Layout>
+        <div>
+            <Header></Header>
+            <div className="main-container">
+                <Route breadcrumbName="首页" component={LeftMenu}></Route>
+                <div className="main-content">
                     <Switch>
                         <Route breadcrumbName="历史日志" path="/historylog" component={HistoryLog} />
                     </Switch>
-                </Layout>
-            </Layout>
-        </Layout>
+                </div>
+            </div>
+        </div>
     )
 }
 
