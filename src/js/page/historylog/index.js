@@ -38,10 +38,7 @@ export default function Log(props) {
     const list = useBusinessList();
     const [logs, setLogs, getLogs] = useLogs([]);
     const [projectId, setProjectId] = useState(null);
-<<<<<<< HEAD
     const [level, setLevel] = useState([1, 2, 4]);
-=======
->>>>>>> 99a50146adfa9de9a4960efceb802434ddaba956
 
     const includeRef = useRef(null);
     const excludeRef = useRef(null);
