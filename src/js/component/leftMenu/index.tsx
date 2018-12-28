@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';;
 import { Menu, Layout, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +9,6 @@ const {
     Item,
     ItemGroup
 } = Menu;
-
 
 export default function LeftMenu(props) {
     return (

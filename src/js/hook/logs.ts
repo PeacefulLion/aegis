@@ -1,20 +1,66 @@
-import React, {useState, useEffect} from 'react';
+import * as React from 'react';;
 import moment from 'moment';
 import api from '../common/api';
 import Device, { Up } from '../common/device';
 import Log from '../page/historylog';
+import logType from '../common/const/logType';
+import { platform } from 'os';
 
-function formatLog(log) {
-    log.time = moment(log.date).format('YYYY-MM-DD HH:mm:ss');
+const {
+    useState,
+    useEffect
+} = React;
 
+export interface Log {
+    uin: number | string,
+    userAgent: string,
+    date: number,
+    all: string,
+    msg: string,
+    ip: string,
+    level: logType,
+    from: string,
+    rowNum?: number,
+    colNum?: number,
+}
+
+export interface FormatLog extends Log{
+    platform: Icon[],
+    appIcon: Icon[],
+    time: string
+    device: any
+}
+
+export interface Icon {
+    name: string,
+    version: string
+}
+
+export interface ApiResult {
+    item: Log[]
+}
+
+export interface SummitOptions {
+    id: number
+    include: string[],
+    exclude: string[],
+    startDate: number,
+    endDate: number
+    index: number,
+    level: logType[]
+}
+
+function formatLog(log: Log) {
     const device = new Device(log.userAgent);
-    const data = log.all.split(';');
 
-    log.uin = log.uin || isNaN(log.uin) ? '-' : log.uin;
-    log.device = device;
+    const formatLog: FormatLog = Object.assign({
+        time: moment(log.date).format('YYYY-MM-DD HH:mm:ss'),
+        uin: (log.uin || isNaN(log.uin as number) ? '-' : log.uin),
+        device,
+        appIcon: [],
+        platform: []
+    }, log);
 
-    log.platform = [];
-    
     ['android', 'ios', 'windows'].forEach((name) => {
         if(device['is' + Up(name)]) {
             log.platform.push({
@@ -23,8 +69,6 @@ function formatLog(log) {
             });
         }
     });
-
-    log.appIcon = [];
 
     ['qq', 'wechat', 'now', 'huayang', 'qzone', 
     'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou',
@@ -40,10 +84,11 @@ function formatLog(log) {
     return log;
 }
 
-export function useLogs() {
-    const [logs, setLogs] = useState([]);
 
-    async function getLogs(opts) {
+export function useLogs(value: Log[]) {
+    const [logs, setLogs] = useState(value);
+
+    async function getLogs(opts: SummitOptions) {
         const {
             id,
             startDate,
@@ -54,7 +99,7 @@ export function useLogs() {
             level = [1, 2, 4]
         } = opts;
 
-        const data = await api.get('//badjs2.ivweb.io/controller/logAction/queryLogList.do', {
+        const data: Log[] = await api.get('//badjs2.ivweb.io/controller/logAction/queryLogList.do', {
             params: {
                 id,
                 startDate,
@@ -65,7 +110,8 @@ export function useLogs() {
                 index,
                 level
             }
-        });
+        }) as any;
+
         setLogs(data.map((item) => {
             return formatLog(item);
         }));

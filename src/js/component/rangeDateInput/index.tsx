@@ -1,13 +1,18 @@
-import React, { forwardRef, useRef, useState, useImperativeMethods } from 'react';
-import { DatePicker, Divider, Input, Layout, InputNumber } from 'antd';
+import * as React from 'react';
+
+import InputNumber from 'antd/lib/input-number';
 import moment from 'moment';
 
 import './index.less';
 
+const {
+    forwardRef, useRef, useState, useImperativeMethods
+} = React;
+
 const MAX_YEAR = new Date().getFullYear() + 1;
 const MIN_YEAR = new Date().getFullYear() - 1;
 
-function DateInput(props, ref) {
+export const DateInput = forwardRef(function (props, ref) {
     const {
         date
     } = props;
@@ -15,13 +20,9 @@ function DateInput(props, ref) {
     const wrapRef = useRef();
 
     const [year, setYear] = useState(date.get('year'));
-
     const [month, setMonth] = useState(date.get('month'));
-
     const [day, setDay] = useState(date.get('date'));
-
     const [hour, setHour] = useState(date.get('hour'));
-
     const [minute, setMinute] = useState(date.get('minute'));
 
     useImperativeMethods(ref, () => {
@@ -47,18 +48,15 @@ function DateInput(props, ref) {
             <InputNumber className="ward-dateinput" max={59} min={0} onChange={setMinute} value={minute}></InputNumber>分
         </div>
     )
-}
+});
 
-const DateInput = forwardRef(DateInput);
-
-function RangeDateInput(props, ref) {
+export const RangeDateInput = forwardRef(function (props, ref) {
     const {
         start = moment().add(-1, 'hour'),
         end = moment()
     } = props;
 
     const startDateRef = useRef();
-
     const endDateRef = useRef();
     
     useImperativeMethods(ref, () => {
@@ -79,11 +77,4 @@ function RangeDateInput(props, ref) {
             日志结束时间<DateInput ref={endDateRef} date={end}/>
         </div>
     )
-}
-
-const RangeDateInput = forwardRef(RangeDateInput);
-
-export {
-    RangeDateInput,
-    DateInput
-};
+});

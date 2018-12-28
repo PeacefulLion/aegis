@@ -1,12 +1,26 @@
-import {useState, useEffect} from 'react';
+import * as React from 'react';;
 import api from '../common/api';
+
+const {
+    useState,
+    useEffect
+} = React;
+
+interface Business {
+    chineseName: string,
+    id: number
+    loginName: string
+    name: string
+    role: number
+}
 
 export function useBusinessList(value = 0) {
     const [list, setList] = useState([]);
 
     useEffect(() => {
         (async () => {
-            const data = await api.get('//badjs2.ivweb.io/controller/userAction/getBusiness.do');
+            const data = await api.get('//badjs2.ivweb.io/controller/userAction/getBusiness.do') as any;
+
             setList(data.item);
         })();
     }, [value]);
@@ -14,7 +28,7 @@ export function useBusinessList(value = 0) {
     return list;
 }
 
-export function useFilterList(list, value) {
+export function useFilterList(list: Business[], value: string | null) {
     const [filerList, setFilterList] = useState(list);
 
     useEffect(() => {

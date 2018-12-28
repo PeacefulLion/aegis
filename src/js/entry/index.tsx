@@ -1,5 +1,4 @@
-import 'babel-polyfill';
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
 import ReactDom from 'react-dom';
 import { Layout, Breadcrumb } from 'antd';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-router-dom';

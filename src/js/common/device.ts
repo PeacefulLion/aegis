@@ -1,3 +1,5 @@
+import { platform } from "os";
+
 const regexp = [
     [ 'iOS', /\b(iPad|iPhone|iPod)\b.*? OS ([\d_]+)/, 2],
     [ 'android', /\bAndroid\s*([^;]+)/ ],
@@ -33,6 +35,10 @@ export function Up(str) {
 }
 
 class Device {
+    ua: string = ''
+    netType: string = ''
+    model: string = ''
+
     constructor(ua = getUa()) {
         this.ua = ua;
 
@@ -40,12 +46,9 @@ class Device {
             this.addItem.apply(this, args);
         });
 
-        this.platform = this.isIOS ? 'ios' : (this.isAndroid ? 'android' : 'pc');
-
         regexp.forEach((args) => {
             const [ name ] = args;
             if (this['is' + Up(name)]) {
-                this.type = name;
             }
         });
         

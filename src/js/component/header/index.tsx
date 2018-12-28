@@ -1,6 +1,6 @@
-import React from 'react';
-import {   Row, Col, Avatar, Layout } from 'antd';
-import { Header } from 'antd/lib/layout';
+import * as React from 'react';;
+import Layout from 'antd/lib/layout';
+import Avatar from 'antd/lib/avatar';
 import { Link } from 'react-router-dom';
 
 import './index.less';
@@ -11,13 +11,13 @@ export default function WraperHeader(props) {
     } = props;
 
     return (
-        <Header className="header">
+        <Layout.Header className="header">
             <div className="logo">
                 WARDMONITOR
             </div>
             <div className="navlink">
                 <div className="item">
-                    <Avatar size="small" ></Avatar>
+                    <Avatar></Avatar>
                 </div>
                 <div className="item">
                     <Link to="/setting">设置</Link>
@@ -26,6 +26,6 @@ export default function WraperHeader(props) {
                     <Link to="/logout">退出</Link>
                 </div>
             </div>
-        </Header>
+        </Layout.Header>
     )
 }

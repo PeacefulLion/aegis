@@ -4,7 +4,6 @@ import { Breadcrumb, Layout, Menu } from 'antd';
 
 import LeftMenu from '../../component/leftMenu';
 import RealTimeLog from '../../component/realTimeLog';
-import Log from '../component/log';
 import Statistics from '../../component/statistics';
 
 import './index.less';
@@ -40,17 +39,6 @@ export function MainContent(props) {
             background: '#fff', padding: 24, margin: 0, minHeight: 280,
         }}
         >
-            <Menu mode="horizontal">
-                <Item>
-                    <Link to={`${match.url}/log`}>历史日志</Link>
-                </Item>
-                <Item>
-                    <Link to={`${match.url}/realTimeLog`}>实时日志</Link>
-                </Item>
-                <Item>
-                    <Link to={`${match.url}/statistics`}>日志统计</Link>
-                </Item>
-            </Menu>
             <Route path={`${path}/log`} component={(props) => (
                 <Log {...props} projectId={projectId}></Log>
             )}  />

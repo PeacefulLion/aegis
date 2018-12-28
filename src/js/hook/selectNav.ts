@@ -1,4 +1,9 @@
-import { useState, useEffect } from 'react';
+import * as React from 'react';;
+
+const {
+    useState,
+    useEffect
+} = React;
 
 export function useSelectNav(value) {
     const [selectNav, setselectNav] = useState(null);

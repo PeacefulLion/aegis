@@ -1,4 +1,9 @@
-import { useState, useEffect } from 'react';
+import * as React from 'react';;
+
+const {
+    useState,
+    useEffect
+} = React;
 
 export function useSearchResult(list, value) {
     const [dataSource, setDataSource] = useState([]);
