@@ -13,6 +13,8 @@ import About from '../page/about/index';
 import Help from '../page/help/index';
 
 import './index.less';
+import Login from '../component/login';
+import RecvCode from '../component/login/RecvCode';
 
 const {
     Content
@@ -26,6 +28,7 @@ function Home(props) {
 
     return (
         <div>
+            <Login />
             <Header></Header>
             <div className="main-container">
                 <Route breadcrumbName="首页" component={LeftMenu}></Route>
@@ -39,16 +42,19 @@ function Home(props) {
     )
 }
 
-function Container() {
-    return (
-        <Router>
-            <Route path="/" component={Home}>
-            </Route>
-        </Router>
-    )
+function select() {
+    if (location.pathname === '/qq-connect') {
+        return <RecvCode />
+    } else {
+        return (
+            <Router>
+                <Route path="/" component={Home}></Route>
+            </Router>
+        )
+    }
 }
 
 ReactDom.render(
-    <Container></Container>,
+    select(),
     document.querySelector('#container')
 );
