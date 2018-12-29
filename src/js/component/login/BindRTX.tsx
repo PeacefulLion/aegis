@@ -18,7 +18,7 @@ export type BindRTXProps = {
     onSubmit?: onSubmitCallback
 }
 
-export default function RecvCode(props: BindRTXProps) {
+export default function BindRTX(props: BindRTXProps) {
     const onClk = () => {
         // <input /> element
         const $input = document.getElementById('rtx-input') as HTMLInputElement; 

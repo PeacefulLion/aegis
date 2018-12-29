@@ -1,3 +1,6 @@
+export * from "./BindRTX"; 
+export * from "./RecvCode"; 
+
 import * as React from "react";
 import { useState, useEffect } from "react"; 
 import BindRTX, { VerifyStateValue } from "./BindRTX"; 
