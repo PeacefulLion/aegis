@@ -1,7 +1,7 @@
 import * as React from 'react';;
-import moment from 'moment';
+import { Dayjs, unix } from 'dayjs';
 import api from '../common/api';
-import Device, { Up } from '../common/device';
+import { Up, getDevice } from '../common/device';
 import Log from '../page/historylog';
 import logType from '../common/const/logType';
 import { platform } from 'os';
@@ -33,7 +33,7 @@ export interface FormatLog extends Log{
 
 export interface Icon {
     name: string,
-    version: string
+    version: string | null | boolean
 }
 
 export interface ApiResult {
@@ -51,10 +51,10 @@ export interface SummitOptions {
 }
 
 function formatLog(log: Log) {
-    const device = new Device(log.userAgent);
+    const device = getDevice(log.userAgent);
 
     const formatLog: FormatLog = Object.assign({
-        time: moment(log.date).format('YYYY-MM-DD HH:mm:ss'),
+        time: unix(log.date).format('YYYY-MM-DD HH:mm:ss'),
         uin: (log.uin || isNaN(log.uin as number) ? '-' : log.uin),
         device,
         appIcon: [],
@@ -62,8 +62,8 @@ function formatLog(log: Log) {
     }, log);
 
     ['android', 'ios', 'windows'].forEach((name) => {
-        if(device['is' + Up(name)]) {
-            log.platform.push({
+        if(device[name + 'Version']) {
+            formatLog.platform.push({
                 name,
                 version: device[name + 'Version']
             });
@@ -74,7 +74,7 @@ function formatLog(log: Log) {
     'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou',
     'maxthon', '360', 'edge', 'chrome', 'firefox', 'safari'].forEach((name) => {
         if(device['is' + Up(name)]) {
-            log.appIcon.push({
+            formatLog.appIcon.push({
                 name,
                 version: device[name + 'Version']
             });

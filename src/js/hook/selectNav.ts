@@ -5,8 +5,8 @@ const {
     useEffect
 } = React;
 
-export function useSelectNav(value) {
-    const [selectNav, setselectNav] = useState(null);
+export function useSelectNav(value: number) {
+    const [selectNav, setselectNav] = useState(value);
 
     return [
         selectNav,

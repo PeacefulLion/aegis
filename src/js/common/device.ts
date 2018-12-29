@@ -1,74 +1,64 @@
-import { platform } from "os";
-
-const regexp = [
+const regexp: [string, RegExp, number][] = [
     [ 'iOS', /\b(iPad|iPhone|iPod)\b.*? OS ([\d_]+)/, 2],
-    [ 'android', /\bAndroid\s*([^;]+)/ ],
-    [ 'windows', /\bWindows\sNT\s([\d\.*]*)/i],
-    [ 'mac', /\bMac\sOS\sX\s\/([\d\.]*)/i],
-    [ 'qqBrowser', /\bMQQBrowser\/([\d\.]+)/ ],
-    [ 'nowSDK', /\bNowSDK\/([\d\.]*)/i ], // now结合版
-    [ 'qq', /\bQQ\/([\d\.]+)/ ],
-    [ 'wechat', /\bMicroMessenger\/([\d\.]*)/ ],
-    [ 'now', /\bNow\/([\d\._]+|LocalCompiled)/ ],
-    [ 'huayang', /\bhuayangapp\/([\d\.]*)/ ],
-    [ 'qzone', /\bQzone\/\w*_([\d\.]+)/ ],
-    [ 'pcQQBrowser', /\bQQBrowser\/([\d\.]+)/ ], // PC 的 QQ
-    [ 'qqcomic', /\bQQAC_Client(_\w+)?\/([\d\.]*)/i ], // 动漫
-    [ 'weibo', /\bweibo/i], //微博
-    [ 'yyb', /\/qqdownloader\/(\d+)(?:\/(appdetail|external))?/], //应用宝
-    [ 'sougou', /\bmetasr\/([\d\.]*)/i], //搜狗,
-    [ 'maxthon', /\bmaxthon\/([\d\.]*)/i],
-    [ '360', /\b360se\/([\d\.]*)/i],
-    [ 'edge', /\bedge\/([\d\.]*)/i],
-    [ 'chrome', /\bChrome\/([\d\.]*)/i],
-    [ 'ie', /\bmsie\/([\d\.]*)/i],
-    [ 'firefox', /\bfirefox\/([\d\.]*)/i],
-    [ 'safari', /bsafari\/([\d\.]*)/i],
+    [ 'android', /\bAndroid\s*([^;]+)/, 1],
+    [ 'windows', /\bWindows\sNT\s([\d\.*]*)/i, 1],
+    [ 'mac', /\bMac\sOS\sX\s\/([\d\.]*)/i, 1],
+    [ 'qqBrowser', /\bMQQBrowser\/([\d\.]+)/ , 1],
+    [ 'nowSDK', /\bNowSDK\/([\d\.]*)/i , 1], // now结合版
+    [ 'qq', /\bQQ\/([\d\.]+)/ , 1],
+    [ 'wechat', /\bMicroMessenger\/([\d\.]*)/ , 1],
+    [ 'now', /\bNow\/([\d\._]+|LocalCompiled)/ , 1],
+    [ 'huayang', /\bhuayangapp\/([\d\.]*)/ , 1],
+    [ 'qzone', /\bQzone\/\w*_([\d\.]+)/ , 1],
+    [ 'pcQQBrowser', /\bQQBrowser\/([\d\.]+)/ , 1], // PC 的 QQ
+    [ 'qqcomic', /\bQQAC_Client(_\w+)?\/([\d\.]*)/i , 1], // 动漫
+    [ 'weibo', /\bweibo/i, 1], //微博
+    [ 'yyb', /\/qqdownloader\/(\d+)(?:\/(appdetail|external))?/, 1], //应用宝
+    [ 'sougou', /\bmetasr\/([\d\.]*)/i, 1], //搜狗,
+    [ 'maxthon', /\bmaxthon\/([\d\.]*)/i, 1],
+    [ '360', /\b360se\/([\d\.]*)/i, 1],
+    [ 'edge', /\bedge\/([\d\.]*)/i, 1],
+    [ 'chrome', /\bChrome\/([\d\.]*)/i, 1],
+    [ 'ie', /\bmsie\/([\d\.]*)/i, 1],
+    [ 'firefox', /\bfirefox\/([\d\.]*)/i, 1],
+    [ 'safari', /bsafari\/([\d\.]*)/i, 1],
 ];
 
-function getUa() {
+function getUa(): string {
     return typeof navigator !== 'undefined' && navigator && navigator.userAgent || '';
 }
 
-export function Up(str) {
+export function Up(str: string): string {
     return str.replace(/^./, (ch) => ch.toUpperCase());
 }
 
-class Device {
-    ua: string = ''
-    netType: string = ''
-    model: string = ''
-
-    constructor(ua = getUa()) {
-        this.ua = ua;
-
-        regexp.forEach((args) => {
-            this.addItem.apply(this, args);
-        });
-
-        regexp.forEach((args) => {
-            const [ name ] = args;
-            if (this['is' + Up(name)]) {
-            }
-        });
-        
-        // 网络类型
-        this.netType = ua.match(/NetType\/(\w+)/i) && RegExp.$1.toUpperCase();
-
-        // 机型，主要是安卓机型，例如 HUAWEI C8825D，SAMSUNG-GT-I9308_TD 等
-        this.model = ua.match(/\(.*;\s?(\S*?\s?\S*?)\s?(Build)?\//i) && RegExp.$1;
-    }
-
-    addItem(name, exp, verPos = 1) {
-        const match = this.ua.match(exp);
-        const version = (match && match[verPos] || '').replace(/_/g, '.') || null;
-        this['is' + Up(name)] = !!match;
-        this[name + 'Version'] = version;
-    }
-
-    version(name) {
-        return this[name + 'Version'] || null;
-    }
+interface Device {
+    [index: string]: string | boolean | null
+    ua: string
 }
 
-export default Device;
+export function getDevice(ua: string): Device {
+    const device: Device = {
+        ua: ua
+    }
+
+    // 网络类型
+    if(ua.match(/NetType\/(\w+)/i)) {
+        device.netType = RegExp.$1.toUpperCase();
+    }
+
+    // 机型，主要是安卓机型，例如 HUAWEI C8825D，SAMSUNG-GT-I9308_TD 等
+    if(ua.match(/\(.*;\s?(\S*?\s?\S*?)\s?(Build)?\//i)) { 
+        device.model = RegExp.$1;
+    }
+
+    regexp.forEach(([name, exp, verPos]) => {
+        const match = ua.match(exp);
+        const version = (match && match[verPos] || '').replace(/_/g, '.') || null;
+        device['is' + Up(name)] = !!match;
+        device[name + 'Version'] = version;
+    });
+    
+
+    return device;
+}

@@ -10,7 +10,7 @@ const {
     ItemGroup
 } = Menu;
 
-export default function LeftMenu(props) {
+export default function LeftMenu() {
     return (
         <div className="ward-sider">
             <Menu mode="inline" defaultOpenKeys={['log', 'speed', 'project', 'set', 'about']}>
