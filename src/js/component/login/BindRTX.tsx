@@ -1,15 +1,21 @@
 import * as React from 'react';
 
-export type BindRTXProps = {
-    /**
-     * 用于接收用户输入的 loginName
-     */
-    onSubmit?: (userInput_loginName: string) => any, 
+/**
+ * 验证状态 0: 未验证; 1: 审核中; 2: 已验证
+ */
+export type VerifyStateValue = 0 | 1 | 2; 
 
-    /**
-     * 验证状态 0: 未验证; 1: 审核中; 2: 已验证
-     */
-    verifyState: 0 | 1 | 2, 
+/**
+ * 用于接收用户输入的 loginName
+ */
+export type onSubmitCallback = (userInput_loginName: string) => any;
+
+/**
+ * BindRTX Props 
+ */
+export type BindRTXProps = {
+    verifyState: VerifyStateValue,
+    onSubmit?: onSubmitCallback
 }
 
 export default function RecvCode(props: BindRTXProps) {
