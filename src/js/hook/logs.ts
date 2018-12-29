@@ -1,5 +1,5 @@
 import * as React from 'react';;
-import { Dayjs, unix } from 'dayjs';
+import dayjs from 'dayjs';
 import api from '../common/api';
 import { Up, getDevice } from '../common/device';
 import Log from '../page/historylog';
@@ -50,11 +50,11 @@ export interface SummitOptions {
     level: logType[]
 }
 
-function formatLog(log: Log) {
+function formatLog(log: Log): FormatLog {
     const device = getDevice(log.userAgent);
 
     const formatLog: FormatLog = Object.assign({
-        time: unix(log.date).format('YYYY-MM-DD HH:mm:ss'),
+        time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
         uin: (log.uin || isNaN(log.uin as number) ? '-' : log.uin),
         device,
         appIcon: [],
@@ -81,11 +81,11 @@ function formatLog(log: Log) {
         }
     });
 
-    return log;
+    return formatLog;
 }
 
 
-export function useLogs(value: Log[]) {
+export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: SummitOptions) => Promise<FormatLog[]>] {
     const [logs, setLogs] = useState(value);
 
     async function getLogs(opts: SummitOptions) {
@@ -112,9 +112,13 @@ export function useLogs(value: Log[]) {
             }
         }) as any;
 
-        setLogs(data.map((item) => {
+        const formatLogs = data.map((item) => {
             return formatLog(item);
-        }));
+        });
+        
+        setLogs(formatLogs);
+
+        return formatLogs;
     }
 
     return [logs, setLogs, getLogs];

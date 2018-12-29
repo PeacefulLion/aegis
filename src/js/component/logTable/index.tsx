@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Row, Col, Table, Tooltip, Switch, Form, Icon } from 'antd';
-import { Icon as IconProps, FormatLog as LogProps } from '../../hook/logs'
+import { Icon as IconProps, FormatLog as FormatLog } from '../../hook/logs'
 
 import './index.less';
 
@@ -28,9 +28,9 @@ function VersionIconList(data: IconProps[]) {
     });
 }
 
-interface LogPanelProps extends LogProps {
-    left: number,
-    top: number
+interface LogPanelProps extends FormatLog {
+    left?: number,
+    top?: number
 }
 
 function LogPanelInline(props:LogPanelProps) {
@@ -109,14 +109,14 @@ function LogPanelInline(props:LogPanelProps) {
 }
 
 
-function ColumnIndex(text: string, record: LogProps, index: number) {
+function ColumnIndex(text: string, record: FormatLog, index: number) {
     const className = (record.level & 2) ? 'log-type-default' : 'log-type-error';
     return (
         <div className={className}>{index}</div>
     );
 }
 
-function ColumnPaltform(appIcon: IconProps[], record: LogProps, index: number) {
+function ColumnPaltform(appIcon: IconProps[], record: FormatLog, index: number) {
     return (
         <Tooltip title={record.userAgent}>
             {VersionIconList(appIcon)}
@@ -124,7 +124,7 @@ function ColumnPaltform(appIcon: IconProps[], record: LogProps, index: number) {
     );
 }
 
-function ColumnApp(platform: IconProps[], record: LogProps, index: number) {
+function ColumnApp(platform: IconProps[], record: FormatLog, index: number) {
     return (
         <Tooltip title={record.userAgent}>
             {VersionIconList(platform)}
@@ -133,13 +133,13 @@ function ColumnApp(platform: IconProps[], record: LogProps, index: number) {
 }
 
 interface LogTableProps {
-    logs: any[],
-    id: number
+    logs: FormatLog[],
+    id?: number
 }
 
 export default function LogTable(props: LogTableProps) {
     const {
-        logs = []
+        logs
     } = props;
 
     const [showTime, setShowTime] = useState(false);
