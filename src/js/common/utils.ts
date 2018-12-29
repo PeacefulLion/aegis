@@ -1,8 +1,8 @@
-type QueryObj = {
+export type QueryObj = {
     [key: string]: string | number
 }
 
-type QueryStringObj = {
+export type QueryStringObj = {
     [key: string]: string
 }
 
