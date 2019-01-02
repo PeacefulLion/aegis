@@ -3,8 +3,8 @@ import auth from './auth';
 import menu from './menu';
 
 const rootReducer = combineReducers({
-  auth,
-  menu
+    auth,
+    menu
 });
 
 export default rootReducer;

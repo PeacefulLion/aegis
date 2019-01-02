@@ -1,5 +1,3 @@
-import api from '../api'
-
 export const FETCH_PROFILE_PENDING = 'FETCH_PROFILE_PENDING';
 export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
 
@@ -19,7 +17,6 @@ export function fetchProfile() {
     return {
         type: 'FETCH_PROFILE',
         payload: {
-          promise: api.get('/my')
         }
     }
 }
@@ -28,22 +25,14 @@ export function login(user, password) {
   return {
       type: 'LOGIN',
       payload: {
-        promise: api.put('/login', {
-          data: {
-            user: user,
-            password: password
-          }
-        })
       }
   }
 }
 
 export function logout() {
-
     return {
         type: 'LOGOUT',
         payload: {
-          promise: api.get('/logout')
         }
     }
 }

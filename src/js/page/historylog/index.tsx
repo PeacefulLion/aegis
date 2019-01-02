@@ -8,13 +8,9 @@ import QueryForm from '../../component/queryForm';
 export default function Log() {
     const [logs, setLogs, getLogs] = useLogs([]);
 
-    async function handlerSumbit(opts) {
-        await getLogs(opts);
-    }
-
     return (
         <div>
-            <QueryForm onSummit={handlerSumbit}></QueryForm>
+            <QueryForm onSummit={getLogs}></QueryForm>
             <LogTable logs={logs} />
         </div>
     )

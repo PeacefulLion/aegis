@@ -1,33 +1,39 @@
-
-import _ from 'lodash';
-
 import {
-    GET_ALL_MENU,
-    GET_ALL_MENU_SUCCESS,
-    UPDATE_NAVPATH
+    UPDATE_NAVPATH,
+    MenuItem,
+    MenuAction,
+    NavItem
 } from '../action/menu';
 
-const initialState = {
-    items: [],
-    navpath: []
-};
+import menuData from '../config/menu';
+   
+export type MenuState = {
+    items: MenuItem[],
+    navpath: NavItem[],
+    currentIndex: number
+}
 
-export default function menu(state = initialState, action = {}) {
+const initialState: MenuState = {
+    items: menuData,
+    navpath: [],
+    currentIndex: 0
+}
+
+export default function menu(state = initialState , action: MenuAction) {
     switch (action.type) {
-        case GET_ALL_MENU_SUCCESS:
-            return Object.assign({}, initialState, {items: action.payload.data.menus});
         case UPDATE_NAVPATH:
-            let navpath = [], 
-                tmpOb, 
-                tmpKey, 
+            let navpath = [],
+                tmpOb,
+                tmpKey,
                 child;
             if (Array.isArray(action.payload.data)) {
                 action.payload.data.reverse().map((item) => {
                     if (item.indexOf('sub') != -1) {
                         tmpKey = item.replace('sub', '');
-                        tmpOb = _.find(state.items, function (o) {
+                        tmpOb = state.items.find((o) => {
                             return o.key == tmpKey;
                         });
+
                         child = tmpOb.child;
                         navpath.push({
                             key: tmpOb.key,
@@ -37,7 +43,7 @@ export default function menu(state = initialState, action = {}) {
                     if (item.indexOf('menu') != -1) {
                         tmpKey = item.replace('menu', '');
                         if (child) {
-                            tmpOb = _.find(child, function (o) {
+                            tmpOb = child.find((o) => {
                                 return o.key == tmpKey;
                             });
                             navpath.push({

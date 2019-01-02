@@ -1,26 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { bindActionCreators } from 'redux'
+import * as React from 'react'
 import { Breadcrumb } from 'antd'
-import { connect } from 'react-redux'
 
 import './index.less'
 
-const defaultProps = {
-  data: []
-}
+type NavPathProp = {
+  data: any[]
+}; 
 
-const propTypes = {
-  data: PropTypes.array
-}
-
-class NavPath extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-
-  render () {
-    const { data } = this.props
+const NavPath = (props: NavPathProp) => {
+    const { data } = props;
     const bread = data.map((item)=>{
       return (
         <Breadcrumb.Item key={'bc-'+item.key}>{item.name}</Breadcrumb.Item>
@@ -32,7 +20,6 @@ class NavPath extends React.Component {
         {bread}
       </Breadcrumb>
     )
-  }
 }
 
-export default NavPath
+export default NavPath;

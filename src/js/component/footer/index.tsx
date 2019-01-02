@@ -1,12 +1,12 @@
-import React from 'react'
+import * as React from 'react'
 import { Layout } from 'antd'
 import './index.less'
 const { Footer } = Layout;
 
-export function commonFooter() {
+export default function commonFooter() {
     return (
       <Footer style={{ textAlign: 'center' }}>
-        xxxx 版权所有 © 2015 xxxxxx.com
+        ivweb 版权所有 © 2018 ivweb.io
       </Footer>
     );
 }

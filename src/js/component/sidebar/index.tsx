@@ -1,16 +1,22 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { withRouter, matchPath } from 'react-router'
+import * as React from 'react'
+import { withRouter, matchPath } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Layout, Menu, Icon } from 'antd'
 import { Link } from 'react-router-dom'
-import { getAllMenu, updateNavPath } from '../../action/menu'
+import { getAllMenu, updateNavPath, MenuItem, selectMenu } from '../../action/menu'
+
 
 import './index.less'
+import { MenuMode } from 'antd/lib/menu';
 
 const SubMenu = Menu.SubMenu
 const { Sider } = Layout;
+
+const {
+    useState,
+    useEffect
+} = React;
 
 const isActive = (path, history) => {
     return matchPath(path, {
@@ -22,11 +28,11 @@ const isActive = (path, history) => {
 
 class Sidebar extends React.Component {
     state = {
-        openKey: "sub1",
-        activeKey: "menu101",
         collapsed: false,
-        mode: 'inline',
+        mode: 'inline'
     }
+
+    props: any
 
     toggle = () => {
         this.setState({
@@ -35,102 +41,92 @@ class Sidebar extends React.Component {
         });
     }
 
+    handlerCollapse = () => {
+
+    }
+
     componentDidMount () {
         // this.props.getAllMenu()
     }
 
-  componentWillReceiveProps(nextProps) {
-    Array.isArray(nextProps.items) && nextProps.items.map((item, i) => {
-      Array.isArray(item.child) && item.child.map((node) => {
-        if(node.url && isActive(node.url, this.props.history)){
-          this.menuClickHandle({
-            key: 'menu'+node.key,
-            keyPath: ['menu'+node.key, 'sub'+item.key]
-          })
-        }
-      })
-    });
-  }
-
-  menuClickHandle = (item) => {
-    this.setState({
-        activeKey: item.key
-    })
-    this.props.updateNavPath(item.keyPath, item.key)
-  }
-
-  render () {
-    const { items, updateNavPath, history } = this.props
-    let { activeKey, openKey } = this.state
-
-    const _menuProcess = (nodes, pkey) => {
-      return Array.isArray(nodes) && nodes.map((item, i) => {
-        const menu = _menuProcess(item.child, item.key);
-        if(item.url && isActive(item.url, history)){
-          activeKey = 'menu'+item.key
-          openKey = 'sub'+pkey
-        }
-        if (menu.length > 0) {
-          return (
-            <SubMenu
-              key={'sub'+item.key}
-              title={<span><Icon type={item.icon} /><span className="nav-text">{item.name}</span></span>}
-            >
-              {menu}
-            </SubMenu>
-          )
-        } else {
-          return (
-            <Menu.Item key={'menu'+item.key}>
-              {
-                item.url ? <Link to={item.url}>{item.icon && <Icon type={item.icon} />}{item.name}</Link> : <span>{item.icon && <Icon type={item.icon} />}{item.name}</span>
-              }
-            </Menu.Item>
-          )
-        }
-      });
+    handlerMenuClick = (item) => {
+        this.setState(item);
+        
+        this.props.updateNavPath(item.keyPath, item.key);
     }
 
-    const menu = _menuProcess(items);
+    private _renderMenu(nodes = [], pkey?: string | number) {
+        return nodes.map((item, i) => {
+            const menu = this._renderMenu(item.child, item.key);
 
-    return (
-      <Sider
-          trigger={null}
-          collapsible
-          collapsed={this.state.collapsed}
-          onCollapse={this.onCollapse}
-        >
-        <div className="ant-layout-logo"></div>
-        <Menu
-          mode={this.state.mode} theme="dark"
-          selectedKeys={[activeKey]}
-          defaultOpenKeys={[openKey]}
-          onClick={this.menuClickHandle}
-        >
-          {menu}
-        </Menu>
-        <div className="sider-trigger">
-          <Icon
-              className="trigger"
-              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-              onClick={this.toggle}
-            />
-        </div>
-      </Sider>
-    )
-  }
-}
+            if (menu.length > 0) {
+                return (
+                    <SubMenu
+                        key={'sub'+item.key}
+                        title={<span><Icon type={item.icon} /><span className="nav-text">{item.name}</span></span>}
+                    >
+                    {menu}
+                    </SubMenu>
+                );
+            } else {
+                return (
+                    <Menu.Item key={'menu'+item.key}>
+                    {
+                        item.url ? <Link to={item.url}>{item.icon && <Icon type={item.icon} />}{item.name}</Link> : <span>{item.icon && <Icon type={item.icon} />}{item.name}</span>
+                    }
+                    </Menu.Item>
+                );
+            }
+        });
+    }
+
+    render () {
+        const { items, updateNavPath, history, openKey, activeKey } = this.props
+        const { collapsed, mode } = this.state
+
+        const menu = this._renderMenu(items);
+
+        return (
+            <Sider
+                trigger={null}
+                collapsible
+                collapsed={collapsed}
+                onCollapse={this.handlerCollapse}
+            >
+                <div className="ant-layout-logo"></div>
+                <Menu
+                    mode={mode as MenuMode} theme="dark"
+                    selectedKeys={[activeKey]}
+                    defaultOpenKeys={[openKey]}
+                    onClick={this.handlerMenuClick}
+                >
+                    {menu}
+                </Menu>
+                <div className="sider-trigger">
+                    <Icon
+                        className="trigger"
+                        type={collapsed ? 'menu-unfold' : 'menu-fold'}
+                        onClick={this.toggle}
+                    />
+                </div>
+            </Sider>
+        )
+    }
+    }
 
 
 function mapStateToProps(state) {
     return {
-        items: state.menu.items
+        items: state.menu.items,
+        openKey: state.menu.openKey,
+        activeKey: state.menu.activeKey,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         getAllMenu: bindActionCreators(getAllMenu, dispatch),
+        selectMenu: bindActionCreators(selectMenu, dispatch),
         updateNavPath: bindActionCreators(updateNavPath, dispatch)
     }
 }

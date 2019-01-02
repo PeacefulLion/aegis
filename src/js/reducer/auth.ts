@@ -14,7 +14,12 @@ const initialState = {
     loginErrors: null
 };
   
-export default function auth(state = initialState, action = {}) {
+type AuthAction = {
+    type: string
+    payload: any
+}
+
+export default function auth(state = initialState, action: AuthAction) {
     switch (action.type) {
     case LOGIN_PENDING:
         return Object.assign({}, initialState, {loggingIn: true});

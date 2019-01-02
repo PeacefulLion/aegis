@@ -1,34 +1,34 @@
-import React from 'react'
+import * as React from 'react'
 import { Layout, Row, Col, Icon, Badge, Menu, Dropdown, Avatar, Popover } from 'antd'
 import { Link, withRouter } from 'react-router-dom'
 import './index.less'
 
 const { Header } = Layout;
 
+function handleLogOut() {
+
+}
+
 function commonHeader(props) {
-    const { profile } = props
+    const { profile = {} } = props;
     let username = profile.user ? profile.user.name : '';
     const menu = (
       <Menu>
         <Menu.Item>
-          选项1
+          修改密码
         </Menu.Item>
         <Menu.Item>
-          选项2
+          设置
         </Menu.Item>
         <Menu.Item>
-          <a onClick={this.handleLogOut}>注销</a>
+          <a onClick={handleLogOut}>注销</a>
         </Menu.Item>
       </Menu>
     );
 
     const content = (
       <div>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
-        <p>Content</p>
+        <p>欢迎使用wardmonitor</p>
       </div>
     );
 
@@ -41,7 +41,7 @@ function commonHeader(props) {
                     <Icon type="mail" />
                 </Link>
                 </Badge>
-                <Popover content={content} title="Title" trigger="click">
+                <Popover content={content} title="消息盒子" trigger="click">
                 <Badge className="header-icon" dot>
                     <a href="#">
                     <Icon type="notification" />

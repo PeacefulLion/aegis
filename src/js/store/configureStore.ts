@@ -3,11 +3,11 @@ import thunkMiddleware from 'redux-thunk';
 import reducer from '../reducer';
 
 const createStoreWithMiddleware = applyMiddleware(
-  thunkMiddleware
+    thunkMiddleware
 )(createStore);
 
 export default function configureStore(initialState) {
-  let store;
-  store = createStoreWithMiddleware(reducer, initialState);
-  return store;
+    let store;
+    store = createStoreWithMiddleware(reducer, initialState);
+    return store;
 }
