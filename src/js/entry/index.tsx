@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ReactDom from 'react-dom';
+import * as ReactDom from 'react-dom';
 import { Layout, Breadcrumb } from 'antd';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-router-dom';
 
@@ -13,8 +13,9 @@ import About from '../page/about/index';
 import Help from '../page/help/index';
 
 import './index.less';
-import Login from '../component/login';
-import RecvCode from '../component/login/RecvCode';
+// import Login from '../component/login';
+import RecvCode from '../component/QQLogin/RecvCode';
+import LoginProvider from '../component/QQLogin/LoginProvider';
 
 const {
     Content
@@ -25,10 +26,9 @@ function Home(props) {
     const {
         routes, params,
     } = match;
-
+    
     return (
         <div>
-            <Login />
             <Header></Header>
             <div className="main-container">
                 <Route breadcrumbName="首页" component={LeftMenu}></Route>
@@ -42,7 +42,7 @@ function Home(props) {
     )
 }
 
-function select() {
+function Container() {
     if (location.pathname === '/qq-connect') {
         return <RecvCode />
     } else {
@@ -55,6 +55,6 @@ function select() {
 }
 
 ReactDom.render(
-    select(),
+    <LoginProvider component={ Container } />,
     document.querySelector('#container')
 );

@@ -25,10 +25,11 @@ export function baseTransform(resp: AxiosResponse) {
 }
 
 export const fromBadjs = {
-    get<T>(pathname: string, query: QueryObj): Promise< T > {
+    get<T>(pathname: string, query: QueryObj = {}): Promise< T > {
         const qstr = queryStringify(query); 
+        const qs = qstr ? `?${qstr}` : ''; 
 
-        return api.get(`http://badjs2.ivweb.io${pathname}?${qstr}`)
+        return api.get(`http://badjs2.ivweb.io${pathname}${qs}`)
             .then(baseTransform)
     }, 
 
