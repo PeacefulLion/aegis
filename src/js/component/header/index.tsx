@@ -4,6 +4,7 @@ import Avatar from 'antd/lib/avatar';
 import { Link } from 'react-router-dom';
 
 import './index.less';
+import { loginCtx } from '../QQLogin';
 
 interface HeaderProps {
     id?: number
@@ -23,6 +24,13 @@ export default function WraperHeader(props: HeaderProps) {
                 <div className="item">
                     <Avatar></Avatar>
                 </div>
+                <loginCtx.Consumer>{({ userInfo }) =>
+                    <div className="item">
+                    {
+                        userInfo ? `👏 欢迎, ${ userInfo.loginName }` : '未登陆'
+                    }
+                    </div>
+                }</loginCtx.Consumer>
                 <div className="item">
                     <Link to="/setting">设置</Link>
                 </div>

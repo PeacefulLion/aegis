@@ -1,6 +1,6 @@
 import * as React from "react"; 
 import { getUserInfo, UserInfo } from "./login_cgi"; 
-import QQLogin from "./index";
+import Login from "./Login";
 import { Loading } from "./Loading"
 
 export type LoginAction = {
@@ -35,13 +35,15 @@ export default function LoginProvider(props: LoginProviderProps) {
     React.useEffect(() => {
         // 说明已经初始化完成
         if (!initLoading) return; 
+        
 
+        console.log('To Get UserInfo')
         getUserInfo().then(userInfo => {
             console.log('LoginProvider Result:', userInfo); 
-            setTimeout(() => {
-                setUserInfo(userInfo); 
-                setInitLoading(false); 
-            }, 2000); 
+            
+            setUserInfo(userInfo); 
+            setInitLoading(false); 
+        
         }).catch(didnotLogin => {
             console.log('Not Login', didnotLogin); 
             setInitLoading(false); 
@@ -57,7 +59,7 @@ export default function LoginProvider(props: LoginProviderProps) {
                     <Loading /> 
                 ) : (
                     <loginCtx.Consumer>{
-                        ({ userInfo }) => <QQLogin
+                        ({ userInfo }) => <Login
                             userInfo={ userInfo } 
                             setUserInfo={ setUserInfo } />
                     }
