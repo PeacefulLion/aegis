@@ -72,7 +72,7 @@ export default function Login(props: LoginProps) {
             return (
                 <div className="login-container">
                     <div className="align-center">
-                        <PleaseWait />
+                        <PleaseWait setUserInfo={ props.setUserInfo } />
                     </div>
                 </div>
             )            

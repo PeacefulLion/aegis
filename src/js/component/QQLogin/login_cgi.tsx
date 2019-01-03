@@ -56,3 +56,8 @@ export function bindOpenid(openid: string, loginName: string) {
 export function getUserInfo() {
     return fromBadjs.get<UserInfo>('/api/users/me'); 
 }
+
+export function updateSession() {
+    // 更新 Session 
+    return fromBadjs.get<UserInfo>('/api/users/update_session'); 
+}
