@@ -27,8 +27,7 @@ export function Frame(props) {
             <Header profile={auth} logout={actions.logout} />
             <Content style={{ margin: '0 16px' }}>
                 <NavPath data={navpath} />
-                <div style={{ minHeight: 360 }}>
-                    <Redirect to="/Home"/>
+                <div style={{ minHeight: document.documentElement.offsetHeight }}>
                     <Route path={'/Home'} component={Home} exactly={true} />
                     <Route path={'/historylog'} component={Historylog} exactly={true} />
                 </div>

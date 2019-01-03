@@ -9,7 +9,7 @@ export type NavItem = {
 }
 
 export type MenuItem = {
-    key: number,
+    key: string,
     name: string,
     icon?: string,
     url?: string,
@@ -22,12 +22,11 @@ export const UPDATE_NAVPATH = 'UPDATE_NAVPATH';
 export const SELECT_MENU = 'SELECT_MENU';
 
 
-export function updateNavPath(path: string[], key: any) {
+export function updateNavPath(path: string[]) {
     return {
         type: UPDATE_NAVPATH,
         payload: {
-            data: path,
-            key: key
+            data: path
         }
     }
 }
@@ -37,16 +36,6 @@ export function getAllMenu() {
         type: GET_ALL_MENU,
         payload: {
 
-        }
-    }
-}
-
-export function selectMenu(openKey, activeKey) {
-    return {
-        type: SELECT_MENU,
-        payload: {
-            openKey,
-            activeKey
         }
     }
 }
