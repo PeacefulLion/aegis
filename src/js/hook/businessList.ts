@@ -6,7 +6,7 @@ const {
     useEffect
 } = React;
 
-interface Business {
+export interface Business {
     chineseName: string,
     id: number
     loginName: string
@@ -14,7 +14,7 @@ interface Business {
     role: number
 }
 
-export function useBusinessList(value = 0) {
+export function useBusinessList(value = 0): Business[] {
     const [list, setList] = useState([]);
 
     useEffect(() => {
@@ -28,7 +28,7 @@ export function useBusinessList(value = 0) {
     return list;
 }
 
-export function useFilterList(list: Business[], value: string | null) {
+export function useFilterList(list: Business[], value: string | null):Business[]  {
     const [filerList, setFilterList] = useState(list);
 
     useEffect(() => {

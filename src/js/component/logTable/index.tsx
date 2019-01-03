@@ -1,8 +1,8 @@
 import * as React from 'react';
-
 import { Row, Col, Table, Tooltip, Switch, Form, Icon } from 'antd';
-import './index.less';
 import { Icon as IconProps, FormatLog as LogProps } from '../../hook/logs'
+
+import './index.less';
 
 const {
     useState,

@@ -5,7 +5,11 @@ import { Link } from 'react-router-dom';
 
 import './index.less';
 
-export default function WraperHeader(props) {
+interface HeaderProps {
+    id?: number
+}
+
+export default function WraperHeader(props: HeaderProps) {
     const {
         id
     } = props;

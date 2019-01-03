@@ -1,5 +1,5 @@
 import * as React from 'react';;
 
-export default function Statistics(props) {
+export default function Statistics() {
     return null;
 }

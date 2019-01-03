@@ -1,12 +1,13 @@
 import * as React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { Checkbox, Form, Button, Icon, Select, Drawer } from 'antd';
 import { DateInput } from '../rangeDateInput';
 import TagList from '../tagList';
 import logType from '../../common/const/logType';
 
-import { useBusinessList } from '../../hook/businessList';
-import { SummitOptions } from '../../hook/logs';
+import { useBusinessList, Business } from '../../hook/businessList';
+
+import './index.less';
 
 const {
     useState,
@@ -25,8 +26,8 @@ const formItemLayout = {
 };
 
 export interface Props {
-    start?: object,
-    end?: object,
+    start?: dayjs.Dayjs
+    end?: dayjs.Dayjs
     onSummit: Function
 }
   
@@ -35,18 +36,18 @@ const LOGTYPE_OPTIONS = [
     'error'
 ];
 
-export default function QueryForm({ start = moment().add(-1, 'hour'), end = moment(), onSummit }:Props) {
+export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs(), onSummit }:Props) {
     const [pageIndex, setPageIndex] = useState(0);
     const [drawerVisiblie, setDrawerVisiblie] = useState(true);
     const [projectId, setProjectId] = useState(null);
     const list = useBusinessList(0);
     const [level, setLevel] = useState([logType.Debug, logType.Info, logType.Error]);
 
-    const includeRef = useRef(null);
-    const excludeRef = useRef(null);
-    const startTimeRef = useRef(null);
-    const endTimeRef = useRef(null);
-    const checkBoxRef = useRef(null);
+    const includeRef: any = useRef(null);
+    const excludeRef: any = useRef(null);
+    const startTimeRef: any = useRef(null);
+    const endTimeRef: any = useRef(null);
+    const checkBoxRef: any = useRef(null);
 
     function handlerClose() {
         setDrawerVisiblie(false);
@@ -93,7 +94,6 @@ export default function QueryForm({ start = moment().add(-1, 'hour'), end = mome
         setDrawerVisiblie(false);
     }
 
-
     return (
         <Drawer
             title=""
@@ -113,12 +113,14 @@ export default function QueryForm({ start = moment().add(-1, 'hour'), end = mome
                         showSearch
                         value={projectId}
                         onSelect={setProjectId}
-                        filterOption={(input, option) => option.props.title.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        filterOption={(input, option: any) =>
+                            option.props.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
                     >
                         {
                             list.map((item) => {
                                 return (
-                                    <Select.Option key={item.id} value={item.id} title={item.name}>
+                                    <Select.Option key={item.id.toString()} value={item.id} title={item.name}>
                                         {item.id}.{item.name}
                                     </Select.Option>
                                 )
@@ -127,10 +129,10 @@ export default function QueryForm({ start = moment().add(-1, 'hour'), end = mome
                     </Select>
                 </Form.Item>
                 <Form.Item label="起始时间" {...formItemLayout}>
-                    <DateInput ref={startTimeRef} date={start}></DateInput>
+                    <DateInput ref={startTimeRef} time={start}></DateInput>
                 </Form.Item>
                 <Form.Item label="起始时间" {...formItemLayout}>
-                    <DateInput ref={endTimeRef} date={end}></DateInput>
+                    <DateInput ref={endTimeRef} time={end}></DateInput>
                 </Form.Item>
                 <Form.Item label="日志类型" {...formItemLayout}>
                     <Checkbox.Group ref={checkBoxRef} options={LOGTYPE_OPTIONS} defaultValue={LOGTYPE_OPTIONS} onChange={onChange} />
