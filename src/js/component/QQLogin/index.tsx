@@ -4,10 +4,8 @@ export * from "./RecvCode";
 import * as React from "react";
 import { useState, useEffect } from "react"; 
 import BindRTX from "./BindRTX"; 
-import { loginBy, bindOpenid, VerifyStateValue, UserInfo, isUserInfoResp } from "./login_cgi"; 
-import { loginCtx, SetUserInfo } from "./LoginProvider"
-
-
+import { loginBy, bindOpenid, UserInfo, isUserInfoResp } from "./login_cgi"; 
+import { SetUserInfo } from "./LoginProvider"
 
 // Types: 
 import { onSubmitCallback } from "./BindRTX"; 
@@ -107,19 +105,4 @@ export default function Login(props: LoginProps) {
         }
     }
 
-        // return (
-        //     <div className="login-container">
-        //         {
-        //             (props.userInfo || openid) ? (
-        //                 <div className="align-center">
-        //                     <BindRTX onSubmit={ onSubmit }
-        //                         userInfo={ props.userInfo } />
-        //                 </div>
-        //             ) : (
-                        
-        //             )
-        //         }
-        //     </div>
-        // )
-    }
 }
