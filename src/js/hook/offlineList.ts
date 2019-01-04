@@ -1,6 +1,6 @@
 import * as React from 'react';
 import api from '../common/api';
-import moment from 'moment';
+import * as dayjs from 'dayjs';
 
 const {
     useState,
@@ -22,7 +22,7 @@ export function useOfflineList(value = 0): Offline[] {
                 const arr = d.id.split("_");
                 let name = arr[0];
                 if (arr[2]) {
-                    var dateStr = moment(new Date(arr[2] - 0)).format('MM-DD hh:mm');
+                    var dateStr = dayjs(new Date(arr[2] - 0)).format('MM-DD hh:mm');
                     name += " (" + dateStr + ")";
                 }
                 return {id: d.id, name}
