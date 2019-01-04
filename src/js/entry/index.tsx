@@ -10,6 +10,7 @@ import Header from '../component/header';
 import LeftMenu from '../component/leftMenu';
 import HistoryLog from '../page/historylog/index';
 import RealtimeLog from '../page/realtimelog/index';
+import OfflineLog from '../page/offlinelog/index';
 import About from '../page/about/index';
 import Help from '../page/help/index';
 
@@ -34,6 +35,7 @@ function Home(props) {
                     <Switch>
                         <Route breadcrumbName="历史日志" path="/historylog" component={HistoryLog} />
                         <Route breadcrumbName="实时日志" path="/realtimelog" component={RealtimeLog} />
+                        <Route breadcrumbName="离线日志" path="/offlinelog" component={OfflineLog} />
                     </Switch>
                 </div>
             </div>

@@ -1,11 +1,10 @@
 import * as React from 'react';
-import dayjs from 'dayjs';
-import { Checkbox, Form, Button, Icon, Select, Drawer } from 'antd';
-import { DateInput } from '../rangeDateInput';
+import {Checkbox, Form, Button, Icon, Select, Drawer} from 'antd';
 import TagList from '../tagList';
 import logType from '../../common/const/logType';
-
-import { useBusinessList, Business } from '../../hook/businessList';
+import {firstUpperCase} from '../../common/util';
+import {useBusinessList} from '../../hook/businessList';
+import {useOfflineList} from '../../hook/offlineList';
 
 import './index.less';
 
@@ -16,37 +15,37 @@ const {
 
 const formItemLayout = {
     labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 },
+        xs: {span: 24},
+        sm: {span: 4},
     },
     wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 20 },
+        xs: {span: 24},
+        sm: {span: 20},
     },
 };
 
 export interface Props {
-    start?: dayjs.Dayjs
-    end?: dayjs.Dayjs
     onSummit: Function
 }
-  
+
 const LOGTYPE_OPTIONS = [
+    'error',
     'info',
-    'error'
+    'debug',
+    'offline'
 ];
 
-export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs(), onSummit }:Props) {
+export default function QueryFormOffline({onSummit}: Props) {
     const [pageIndex, setPageIndex] = useState(0);
-    const [drawerVisiblie, setDrawerVisiblie] = useState(true);
+    const [drawervisible, setDrawerVisiblie] = useState(true);
     const [projectId, setProjectId] = useState(null);
+    const [offlineId, setOfflineId] = useState(null);
     const list = useBusinessList(0);
-    const [level, setLevel] = useState([logType.Debug, logType.Info, logType.Error]);
+    const offlineList = useOfflineList();
+    const [level, setLevel] = useState([logType.Debug, logType.Info, logType.Error, logType.Offline]);
 
     const includeRef: any = useRef(null);
     const excludeRef: any = useRef(null);
-    const startTimeRef: any = useRef(null);
-    const endTimeRef: any = useRef(null);
     const checkBoxRef: any = useRef(null);
 
     function handlerClose() {
@@ -54,28 +53,25 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
     }
 
     function handlerOpen() {
-        setDrawerVisiblie(!drawerVisiblie); // 取反
+        setDrawerVisiblie(!drawervisible); // 取反
+    }
+
+    function selectChanged() {
+
     }
 
     function onChange(value: any[]) {
         const level = [1];
-        
-        value.forEach((value) => {
-            if(value === 'error') {
-                level.push(logType.Error);
-            } else if(value === 'info') {
-                level.push(logType.Info);
-            }
-        });
 
+        value.forEach((value) => {
+            level.push(logType[firstUpperCase(value)]);
+        });
         setLevel(level);
     }
 
-    function handlerSumbit() {
+    function searchOfflineLog() {
         const include = includeRef.current.getTags();
         const exclude = excludeRef.current.getTags();
-        const startDate = startTimeRef.current.getTime().unix() * 1000;
-        const endDate = endTimeRef.current.getTime().unix() * 1000;
 
         if (!projectId) {
             return;
@@ -85,8 +81,6 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
             id: projectId,
             include,
             exclude,
-            startDate,
-            endDate,
             index: pageIndex,
             level: level
         });
@@ -102,10 +96,10 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
             closable={false}
             className="ward-logs-sumbitpanel"
             onClose={handlerClose}
-            visible={drawerVisiblie}
+            visible={drawervisible}
         >
             <div className="ward-drawer-btn" onClick={handlerOpen}>
-                { !drawerVisiblie ? <Icon type="caret-left" /> : <Icon type="caret-right" /> }
+                {!drawervisible ? <Icon type="caret-left"/> : <Icon type="caret-right"/>}
             </div>
             <Form>
                 <Form.Item label="选择项目" {...formItemLayout}>
@@ -113,6 +107,7 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
                         showSearch
                         value={projectId}
                         onSelect={setProjectId}
+                        onChange={selectChanged}
                         filterOption={(input, option: any) =>
                             option.props.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }
@@ -128,14 +123,32 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
                         }
                     </Select>
                 </Form.Item>
-                <Form.Item label="起始时间" {...formItemLayout}>
-                    <DateInput ref={startTimeRef} time={start}></DateInput>
+                <Form.Item>
+                    <a className="ward-drawer-offline-config">设置离线日志自动拉取</a>
                 </Form.Item>
-                <Form.Item label="起始时间" {...formItemLayout}>
-                    <DateInput ref={endTimeRef} time={end}></DateInput>
+                <Form.Item label="选择日志" {...formItemLayout}>
+                    <Select
+                        showSearch
+                        value={offlineId}
+                        onSelect={setOfflineId}
+                        filterOption={(input, option: any) =>
+                            option.props.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                    >
+                        {
+                            offlineList.map((item) => {
+                                return (
+                                    <Select.Option key={item.id.toString()} value={item.id}>
+                                        {item.name}
+                                    </Select.Option>
+                                )
+                            })
+                        }
+                    </Select>
                 </Form.Item>
                 <Form.Item label="日志类型" {...formItemLayout}>
-                    <Checkbox.Group ref={checkBoxRef} options={LOGTYPE_OPTIONS} defaultValue={LOGTYPE_OPTIONS} onChange={onChange} />
+                    <Checkbox.Group ref={checkBoxRef} options={LOGTYPE_OPTIONS} defaultValue={LOGTYPE_OPTIONS}
+                                    onChange={onChange}/>
                 </Form.Item>
                 <Form.Item label="关键词" {...formItemLayout}>
                     <TagList ref={includeRef} key="includeTags" color="green" text="添加关键词"></TagList>
@@ -144,11 +157,11 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
                     <TagList ref={excludeRef} key="excludeTags" color="red" text="添加屏蔽词"></TagList>
                 </Form.Item>
                 <Form.Item wrapperCol={{
-                        xs: { span: 24, offset: 0 },
-                        sm: { span: 20, offset: 4 },
-                    }}>
-                    <Button onClick={handlerSumbit} type="primary">
-                        <Icon type="search" />查询日志
+                    xs: {span: 24, offset: 0},
+                    sm: {span: 20, offset: 4},
+                }}>
+                    <Button onClick={searchOfflineLog} type="primary">
+                        <Icon type="search"/>查询日志
                     </Button>
                 </Form.Item>
             </Form>

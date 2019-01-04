@@ -21,7 +21,9 @@ export default function LeftMenu() {
                     <Menu.Item key="realtimelog">
                         <Link to="/realtimelog">实时日志</Link>
                     </Menu.Item>
-                    <Menu.Item key="offlinelog">离线日志</Menu.Item>
+                    <Menu.Item key="offlinelog">
+                        <Link to="/offlinelog">离线日志</Link>
+                    </Menu.Item>
                     <Menu.Item key="statistics">统计</Menu.Item>
                 </SubMenu>
                 <SubMenu key="speed" title="页面测速">
