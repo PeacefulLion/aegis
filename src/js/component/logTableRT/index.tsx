@@ -33,7 +33,7 @@ interface LogPanelProps extends FormatLog {
     top?: number
 }
 
-function LogPanelInline(props:LogPanelProps) {
+function LogPanelInline(props: LogPanelProps) {
     const {
         appIcon,
         platform,
@@ -42,11 +42,8 @@ function LogPanelInline(props:LogPanelProps) {
         from,
         rowNum = 0,
         colNum = 0,
-        left,
-        top
     } = props;
-    console.log('props')
-    console.log(props)
+
     return (
         <div className="logdetail-panel">
             <Row className="logdetail-row">
@@ -112,7 +109,6 @@ function LogPanelInline(props:LogPanelProps) {
 
 function ColumnIndex(text: string, record: FormatLog, index: number) {
     const className = (record.level & 2) ? 'log-type-default' : 'log-type-error';
-    console.log(text,record,index)
     return (
         <div className={className}>{index}</div>
     );
@@ -123,6 +119,12 @@ function ColumnPaltform(appIcon: IconProps[], record: FormatLog, index: number) 
         <Tooltip title={record.userAgent}>
             {VersionIconList(appIcon)}
         </Tooltip>
+    );
+}
+
+function ColumnFrom(appIcon: IconProps[], record: FormatLog, index: number) {
+    return (
+       <div>{record.from}</div>
     );
 }
 
@@ -149,12 +151,12 @@ export default function LogTable(props: LogTableProps) {
     const [showUin, setShowUin] = useState(false);
     const [showApp, setShowApp] = useState(false);
     const [showPlatform, setShowPlatform] = useState(false);
+    const [showFrom, setShowFrom] = useState(false);
     const [showMsg, setShowMsg] = useState(true);
     const [showNetType, setShowNetType] = useState(false);
     const [showLogPanel, setShowLogPanel] = useState(false);
     const [record, setRecord] = useState(null);
-    console.log('logs')
-    console.log(logs)
+
     return (
         <div className="logtable">
             <div className="logtable-control">
@@ -178,16 +180,18 @@ export default function LogTable(props: LogTableProps) {
                         <Switch checked={showPlatform} onChange={setShowPlatform} />
                     </Form.Item>
                     <Form.Item label="From">
-                        <Switch checked={showPlatform} onChange={setShowPlatform} />
+                        <Switch checked={showFrom} onChange={setShowFrom} />
                     </Form.Item>
                 </Form>
             </div>
 
             <Table dataSource={logs}
-                   rowKey={record => {
-                       return record[0].date + record[0].msg.length;
+                   rowKey={(record:LogPanelProps, index: number) => {
+                       return `${record.date}${record.msg}${Math.random()}`;
                    }}
-                   expandedRowRender={LogPanelInline}
+                   expandedRowRender={(record:LogPanelProps,index: number, indent: number, expanded: boolean) => {
+                       return LogPanelInline(record)
+                   }}
                    expandRowByClick={true}
             >
                 <Column
@@ -259,10 +263,21 @@ export default function LogTable(props: LogTableProps) {
                         />
                     ) : null
                 }
+                {
+                    showFrom ? (
+                        <Column
+                            title="From"
+                            dataIndex="from"
+                            key="from"
+                            width={100}
+                            render={ColumnFrom}
+                        />
+                    ) : null
+                }
 
                 <Column
                     title="Message"
-                    dataIndex="0.msg"
+                    dataIndex="msg"
                     key="msg"
                 />
             </Table>

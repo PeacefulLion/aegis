@@ -52,5 +52,5 @@ function Container() {
 
 ReactDom.render(
     <Container></Container>,
-    document.querySelector('#container')
+    document.querySelector('#root')
 );

@@ -1,10 +1,11 @@
 import * as React from 'react';;
-import { Dayjs, unix } from 'dayjs';
+import dayjs from 'dayjs';
 import api from '../common/api';
 import { Up, getDevice } from '../common/device';
 import Log from '../page/historylog';
 import logType from '../common/const/logType';
 import { platform } from 'os';
+
 
 const {
     useState,
@@ -50,10 +51,11 @@ export interface SummitOptions {
     level: logType[]
 }
 
-function formatLog(log: Log) {
+function formatLog(log: Log): FormatLog {
     const device = getDevice(log.userAgent);
+
     const formatLog: FormatLog = Object.assign({
-        time: unix(log.date).format('YYYY-MM-DD HH:mm:ss'),
+        time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
         uin: (log.uin || isNaN(log.uin as number) ? '-' : log.uin),
         device,
         appIcon: [],
@@ -69,9 +71,9 @@ function formatLog(log: Log) {
         }
     });
 
-    ['qq', 'wechat', 'now', 'huayang', 'qzone', 
-    'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou',
-    'maxthon', '360', 'edge', 'chrome', 'firefox', 'safari'].forEach((name) => {
+    ['qq', 'wechat', 'now', 'huayang', 'qzone',
+        'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou',
+        'maxthon', '360', 'edge', 'chrome', 'firefox', 'safari'].forEach((name) => {
         if(device['is' + Up(name)]) {
             formatLog.appIcon.push({
                 name,
@@ -79,8 +81,7 @@ function formatLog(log: Log) {
             });
         }
     });
-    // console.log('formatLog')
-    // console.log(formatLog)
+
     return formatLog;
 }
 
@@ -106,14 +107,11 @@ export function realtimeLogs(value: Log[]) {
         websocket.onmessage = function(evt: any) {
 
             let data = JSON.parse(evt.data).message;
-            if(!Array.isArray(data)) {
-                data = [data]
-            }
+
+            let formatLogArray = formatLog(data);
 
             let temp = logs;
-            temp.push(data.map((item: Log) => {
-                return formatLog(item);
-            }));
+            temp.push(formatLogArray);
 
             setLogs(temp);
         };
@@ -138,12 +136,12 @@ export function realtimeLogs(value: Log[]) {
                 }));
             }, 5000);
         };
-        console.log(`websocket`)
-        console.log(websocket)
+        console.log(`websocket start`)
     }
 
     function stopLogs () {
         websocket.close();
+        console.log(`websocket close`)
     }
 
     return [logs, listenLogs, stopLogs];

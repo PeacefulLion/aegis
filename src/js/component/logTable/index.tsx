@@ -124,6 +124,12 @@ function ColumnPaltform(appIcon: IconProps[], record: FormatLog, index: number) 
     );
 }
 
+function ColumnFrom(appIcon: IconProps[], record: FormatLog, index: number) {
+    return (
+        <div>{record.from}</div>
+    );
+}
+
 function ColumnApp(platform: IconProps[], record: FormatLog, index: number) {
     return (
         <Tooltip title={record.userAgent}>
@@ -147,6 +153,7 @@ export default function LogTable(props: LogTableProps) {
     const [showUin, setShowUin] = useState(false);
     const [showApp, setShowApp] = useState(false);
     const [showPlatform, setShowPlatform] = useState(false);
+    const [showFrom, setShowFrom] = useState(false);
     const [showMsg, setShowMsg] = useState(true);
     const [showNetType, setShowNetType] = useState(false);
     const [showLogPanel, setShowLogPanel] = useState(false);
@@ -175,7 +182,7 @@ export default function LogTable(props: LogTableProps) {
                         <Switch checked={showPlatform} onChange={setShowPlatform} />
                     </Form.Item>
                     <Form.Item label="From">
-                        <Switch checked={showPlatform} onChange={setShowPlatform} />
+                        <Switch checked={showFrom} onChange={setShowFrom} />
                     </Form.Item>
                 </Form>
             </div>
@@ -250,6 +257,17 @@ export default function LogTable(props: LogTableProps) {
                             key="platform"
                             width={100}
                             render={ColumnPaltform}
+                        />
+                    ) : null
+                }
+                {
+                    showFrom ? (
+                        <Column
+                            title="From"
+                            dataIndex="from"
+                            key="from"
+                            width={100}
+                            render={ColumnFrom}
                         />
                     ) : null
                 }
