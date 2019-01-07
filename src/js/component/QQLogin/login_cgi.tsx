@@ -32,6 +32,13 @@ export type UserInfo = {
     verify_state: VerifyStateValue
 }
 
+export type UserInfoWithOpenid = UserInfo & {
+    /**
+     * openid 只在默写特殊场合中有用
+     */
+    openid: string
+}
+
 export function isUserInfoResp(resp: LoginBySuccess): resp is UserInfo {
     if ((resp as OpenidInfo).openid) {
         return false; 
