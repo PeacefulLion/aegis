@@ -35,6 +35,9 @@ export default function LeftMenu() {
                     <Menu.Item key="apply">申请项目列表</Menu.Item>
                     <Menu.Item key="userrole">项目用户权限</Menu.Item>
                     <Menu.Item key="userlist">注册用户列表</Menu.Item>
+                    <Menu.Item key="userbind-verify">
+                        <Link to="/userbind-verify">用户绑定审核</Link>
+                    </Menu.Item>
                 </SubMenu>
                 <SubMenu key='about' title="关于">
                     <Menu.Item key="help">使用帮助</Menu.Item>

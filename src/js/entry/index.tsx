@@ -18,6 +18,7 @@ import './index.less';
 // import Login from '../component/login';
 import RecvCode from '../component/QQLogin/RecvCode';
 import LoginProvider from '../component/QQLogin/LoginProvider';
+import UserbindVerify from '../component/UserbindVerify';
 
 const {
     Content
@@ -39,6 +40,8 @@ function Home(props) {
                         <Route breadcrumbName="历史日志" path="/historylog" component={HistoryLog} />
                         <Route breadcrumbName="实时日志" path="/realtimelog" component={RealtimeLog} />
                         <Route breadcrumbName="离线日志" path="/offlinelog" component={OfflineLog} />
+
+                        <Route breadcrumbName="用户绑定审核" path="/userbind-verify" component={UserbindVerify} />
                     </Switch>
                 </div>
             </div>
