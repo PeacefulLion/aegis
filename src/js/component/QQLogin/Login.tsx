@@ -62,28 +62,12 @@ export default function Login(props: LoginProps) {
         }); 
     }
 
-    if (props.userInfo) {
-        // 已登陆 -> 
-        if (props.userInfo.verify_state === 2) {
-            // 登陆成功且审核成功，此时不显示东西
-            return null;
-        } else {
-            // 显示审核中 Or 老用户绑定
-            return (
-                <div className="login-container">
-                    <div className="align-center">
-                        <PleaseWait setUserInfo={ props.setUserInfo } />
-                    </div>
-                </div>
-            )            
-        }
-    } else {
-        // 未登陆
+    const getOpenid = (loginName?: string) => {
         if (openid) {
             return (
                 <div className="login-container">
                     <div className="align-center">
-                        <BindRTX onSubmit= { onSubmit } />
+                        <BindRTX loginName={ loginName } onSubmit= { onSubmit } />
                     </div>
                 </div>
             )
@@ -100,6 +84,32 @@ export default function Login(props: LoginProps) {
                 </div>
             ); 
         }
+    }
+
+    if (props.userInfo) {
+        // 已登陆 -> 
+        if (props.userInfo.verify_state === 2) {
+            // 登陆成功且审核成功，此时不显示东西
+            return null;
+        } else {
+            if (props.userInfo.verify_state === 0) {
+                console.log('openid,openid,openid,openid', openid)
+
+                return getOpenid(props.userInfo.chineseName);
+            } else {
+                // 显示审核中 Or 老用户绑定
+                return (
+                    <div className="login-container">
+                        <div className="align-center">
+                            <PleaseWait setUserInfo={ props.setUserInfo } />
+                        </div>
+                    </div>
+                )
+            }     
+        }
+    } else {
+        // 未登陆
+        return getOpenid();
     }
 
 }
