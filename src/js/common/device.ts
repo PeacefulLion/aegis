@@ -21,8 +21,14 @@ const regexp: [string, RegExp, number][] = [
     [ 'chrome', /\bChrome\/([\d\.]*)/i, 1],
     [ 'ie', /\bmsie\/([\d\.]*)/i, 1],
     [ 'firefox', /\bfirefox\/([\d\.]*)/i, 1],
-    [ 'safari', /bsafari\/([\d\.]*)/i, 1],
+    [ 'safari', /bsafari\/([\d\.]*)/i, 1]
 ];
+
+const webviewCoreRegExp: [string, RegExp][] = [
+    ['X5', /tbs/i],
+    ['UIWebview', /Core\/UIWebView/i],
+    ['WKWebview', /Core\/WKWebView/i]
+]
 
 function getUa(): string {
     return typeof navigator !== 'undefined' && navigator && navigator.userAgent || '';
@@ -58,7 +64,12 @@ export function getDevice(ua: string): Device {
         device['is' + Up(name)] = !!match;
         device[name + 'Version'] = version;
     });
-    
 
+    webviewCoreRegExp.forEach(([name, exp]) => {
+        if(exp.test(ua)) {
+            device['is' + Up(name)] = true;
+        }
+    });
+    
     return device;
 }

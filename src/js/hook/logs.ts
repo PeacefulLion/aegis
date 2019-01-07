@@ -4,7 +4,6 @@ import api from '../common/api';
 import { Up, getDevice } from '../common/device';
 import Log from '../page/historylog';
 import logType from '../common/const/logType';
-import { platform } from 'os';
 
 const {
     useState,
@@ -27,7 +26,8 @@ export interface Log {
 export interface FormatLog extends Log{
     platform: Icon[],
     appIcon: Icon[],
-    time: string
+    webview: string[],
+    time: string,
     device: any
 }
 
@@ -58,10 +58,11 @@ function formatLog(log: Log): FormatLog {
         uin: (log.uin || isNaN(log.uin as number) ? '-' : log.uin),
         device,
         appIcon: [],
-        platform: []
+        platform: [],
+        webview: []
     }, log);
 
-    ['android', 'ios', 'windows'].forEach((name) => {
+    ['android', 'iOS', 'windows'].forEach((name) => {
         if(device[name + 'Version']) {
             formatLog.platform.push({
                 name,
@@ -70,14 +71,20 @@ function formatLog(log: Log): FormatLog {
         }
     });
 
-    ['qq', 'wechat', 'now', 'huayang', 'qzone', 
-    'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou',
+    ['qq', 'wechat', 'huayang', 'qzone', 
+    'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou','now','nowsdk',
     'maxthon', '360', 'edge', 'chrome', 'firefox', 'safari'].forEach((name) => {
         if(device['is' + Up(name)]) {
             formatLog.appIcon.push({
                 name,
                 version: device[name + 'Version']
             });
+        }
+    });
+
+    ['UIWebview', 'WKWebview', 'X5'].forEach((name) => {
+        if(device['is' + Up(name)]) {
+            formatLog.webview.push(name);
         }
     });
 
@@ -99,7 +106,7 @@ export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: Summ
             level = [1, 2, 4]
         } = opts;
 
-        const data: Log[] = await api.get('//badjs2.ivweb.io/controller/logAction/queryLogList.do', {
+        const result = await api.get('//badjs2.ivweb.io/controller/logAction/queryLogList.do', {
             params: {
                 id,
                 startDate,
@@ -112,7 +119,7 @@ export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: Summ
             }
         }) as any;
 
-        const formatLogs = data.map((item) => {
+        const formatLogs = result.data.data.map((item) => {
             return formatLog(item);
         });
         
