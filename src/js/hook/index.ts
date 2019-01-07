@@ -6,6 +6,7 @@ import Log from '../page/historylog';
 import logType from '../common/const/logType';
 import { platform } from 'os';
 
+
 const {
     useState,
     useEffect
@@ -70,9 +71,9 @@ function formatLog(log: Log): FormatLog {
         }
     });
 
-    ['qq', 'wechat', 'now', 'huayang', 'qzone', 
-    'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou',
-    'maxthon', '360', 'edge', 'chrome', 'firefox', 'safari'].forEach((name) => {
+    ['qq', 'wechat', 'now', 'huayang', 'qzone',
+        'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou',
+        'maxthon', '360', 'edge', 'chrome', 'firefox', 'safari'].forEach((name) => {
         if(device['is' + Up(name)]) {
             formatLog.appIcon.push({
                 name,
@@ -84,42 +85,67 @@ function formatLog(log: Log): FormatLog {
     return formatLog;
 }
 
+let keepAliveTimeoutId: NodeJS.Timeout;
+let currentIndex;
+let websocket: WebSocket;
+const maxShow = 100;
 
-export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: SummitOptions) => Promise<FormatLog[]>] {
+export function realtimeLogs(value: Log[]) {
     const [logs, setLogs] = useState(value);
 
-    async function getLogs(opts: SummitOptions) {
-        const {
-            id,
-            startDate,
-            endDate,
-            include,
-            exclude,
-            index = 0,
-            level = [1, 2, 4]
-        } = opts;
+    function listenLogs(opts: SummitOptions) {
 
-        const data: Log[] = await api.get('//badjs2.ivweb.io/controller/logAction/queryLogList.do', {
-            params: {
-                id,
-                startDate,
-                endDate,
-                _t: Date.now(),
+        const {include, exclude, level, id} = opts;
+        var host = location.host;
+        if (host.indexOf(':') < 0) {
+            host += ':8081';
+        }
+
+        websocket = new WebSocket(`ws://${host}/ws/realtimeLog`);
+
+        currentIndex = 0;
+        websocket.onmessage = function(evt: any) {
+
+            let data = JSON.parse(evt.data).message;
+
+            let formatLogArray = formatLog(data);
+
+            let temp = logs;
+            temp.push(formatLogArray);
+
+            setLogs(temp);
+        };
+
+        websocket.onclose = function() {
+            clearTimeout(keepAliveTimeoutId);
+        };
+
+        websocket.onopen = function() {
+
+            websocket.send(JSON.stringify({
+                type: "INIT",
                 include,
                 exclude,
-                index,
-                level
-            }
-        }) as any;
+                level,
+                id
+            }));
 
-        const formatLogs = data.map((item) => {
-            return formatLog(item);
-        });
-        
-        setLogs(formatLogs);
-
-        return formatLogs;
+            keepAliveTimeoutId = setInterval(function() {
+                websocket.send(JSON.stringify({
+                    type: "KEEPALIVE"
+                }));
+            }, 5000);
+        };
+        console.log(`websocket start`)
     }
 
-    return [logs, setLogs, getLogs];
+    function stopLogs () {
+        websocket.close();
+        console.log(`websocket close`)
+    }
+
+    return [logs, listenLogs, stopLogs];
 }
+
+
+

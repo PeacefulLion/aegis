@@ -33,11 +33,13 @@ export interface Props {
   
 const LOGTYPE_OPTIONS = [
     'info',
-    'error'
+    'error',
+    'debug'
 ];
 
 export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs(), onSummit }:Props) {
     const [pageIndex, setPageIndex] = useState(0);
+    const [isListenning, setIsListenning] = useState(false);
     const [drawerVisiblie, setDrawerVisiblie] = useState(true);
     const [projectId, setProjectId] = useState(null);
     const list = useBusinessList(0);
@@ -45,8 +47,8 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
 
     const includeRef: any = useRef(null);
     const excludeRef: any = useRef(null);
-    const startTimeRef: any = useRef(null);
-    const endTimeRef: any = useRef(null);
+    // const startTimeRef: any = useRef(null);
+    // const endTimeRef: any = useRef(null);
     const checkBoxRef: any = useRef(null);
 
     function handlerClose() {
@@ -65,6 +67,8 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
                 level.push(logType.Error);
             } else if(value === 'info') {
                 level.push(logType.Info);
+            } else if(value === 'debug') {
+                level.push(logType.Info);
             }
         });
 
@@ -74,24 +78,24 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
     function handlerSumbit() {
         const include = includeRef.current.getTags();
         const exclude = excludeRef.current.getTags();
-        const startDate = startTimeRef.current.getTime().unix() * 1000;
-        const endDate = endTimeRef.current.getTime().unix() * 1000;
+        // const startDate = startTimeRef.current.getTime().unix() * 1000;
+        // const endDate = endTimeRef.current.getTime().unix() * 1000;
 
         if (!projectId) {
             return;
         }
-
+        setIsListenning(!isListenning);
         onSummit({
             id: projectId,
             include,
             exclude,
-            startDate,
-            endDate,
+            // startDate,
+            // endDate,
             index: pageIndex,
-            level: level
-        });
+            level: level,
+        }, isListenning);
 
-        setDrawerVisiblie(false);
+        // setDrawerVisiblie(false);
     }
 
     return (
@@ -128,12 +132,12 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
                         }
                     </Select>
                 </Form.Item>
-                <Form.Item label="起始时间" {...formItemLayout}>
-                    <DateInput ref={startTimeRef} time={start}></DateInput>
-                </Form.Item>
-                <Form.Item label="起始时间" {...formItemLayout}>
-                    <DateInput ref={endTimeRef} time={end}></DateInput>
-                </Form.Item>
+                {/*<Form.Item label="起始时间" {...formItemLayout}>*/}
+                    {/*<DateInput ref={startTimeRef} time={start}></DateInput>*/}
+                {/*</Form.Item>*/}
+                {/*<Form.Item label="起始时间" {...formItemLayout}>*/}
+                    {/*<DateInput ref={endTimeRef} time={end}></DateInput>*/}
+                {/*</Form.Item>*/}
                 <Form.Item label="日志类型" {...formItemLayout}>
                     <Checkbox.Group ref={checkBoxRef} options={LOGTYPE_OPTIONS} defaultValue={LOGTYPE_OPTIONS} onChange={onChange} />
                 </Form.Item>
@@ -147,9 +151,16 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
                         xs: { span: 24, offset: 0 },
                         sm: { span: 20, offset: 4 },
                     }}>
-                    <Button onClick={handlerSumbit} type="primary">
-                        <Icon type="search" />查询日志
-                    </Button>
+                    {isListenning ? (
+                        <Button onClick={handlerSumbit} type="danger">
+                            <Icon type="customer-service" />停止监听
+                        </Button>
+                    ):(
+                        <Button onClick={handlerSumbit} type="primary">
+                            <Icon type="customer-service" />开始监听
+                        </Button>
+                    )}
+
                 </Form.Item>
             </Form>
         </Drawer>

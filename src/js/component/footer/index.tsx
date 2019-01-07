@@ -1,11 +1,12 @@
-import * as React from 'react';
-import Layout from 'antd/lib/layout';
-import './index.less';
+import * as React from 'react'
+import { Layout } from 'antd'
+import './index.less'
+const { Footer } = Layout;
 
-export default function WrapFooter(props) {
+export default function commonFooter() {
     return (
-        <Layout.Footer className="footer"> 
-            code by ivweb
-        </Layout.Footer>
-    )
+      <Footer style={{ textAlign: 'center' }}>
+        ivweb 版权所有 © 2018 ivweb.io
+      </Footer>
+    );
 }

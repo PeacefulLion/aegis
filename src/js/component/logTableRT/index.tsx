@@ -33,7 +33,7 @@ interface LogPanelProps extends FormatLog {
     top?: number
 }
 
-function LogPanelInline(props:LogPanelProps) {
+function LogPanelInline(props: LogPanelProps) {
     const {
         appIcon,
         platform,
@@ -42,8 +42,6 @@ function LogPanelInline(props:LogPanelProps) {
         from,
         rowNum = 0,
         colNum = 0,
-        left,
-        top
     } = props;
 
     return (
@@ -126,7 +124,7 @@ function ColumnPaltform(appIcon: IconProps[], record: FormatLog, index: number) 
 
 function ColumnFrom(appIcon: IconProps[], record: FormatLog, index: number) {
     return (
-        <div>{record.from}</div>
+       <div>{record.from}</div>
     );
 }
 
@@ -187,9 +185,14 @@ export default function LogTable(props: LogTableProps) {
                 </Form>
             </div>
 
-            <Table dataSource={logs} rowKey="index"
-                expandedRowRender={LogPanelInline}
-                expandRowByClick={true}
+            <Table dataSource={logs}
+                   rowKey={(record:LogPanelProps, index: number) => {
+                       return `${record.date}${record.msg}${Math.random()}`;
+                   }}
+                   expandedRowRender={(record:LogPanelProps,index: number, indent: number, expanded: boolean) => {
+                       return LogPanelInline(record)
+                   }}
+                   expandRowByClick={true}
             >
                 <Column
                     title="#"
