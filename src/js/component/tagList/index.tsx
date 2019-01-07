@@ -57,7 +57,7 @@ const TagList = forwardRef((props: TagListProps, ref) => {
                 tags.map((tag, index) => {
                     const isLongTag = tag.length > 20;
                     const tagElem = (
-                        <Tag color={props.color} key={tag} closable={true} afterClose={(e) => {console.log(e); handleClose(tag)}}>
+                        <Tag color={props.color} key={tag} closable={true} afterClose={() => handleClose(tag)}>
                             {isLongTag ? `${tag.slice(0, 20)}...` : tag}
                         </Tag>
                     );

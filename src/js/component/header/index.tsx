@@ -1,43 +1,75 @@
-import * as React from 'react';;
-import Layout from 'antd/lib/layout';
-import Avatar from 'antd/lib/avatar';
-import { Link } from 'react-router-dom';
+import * as React from 'react'
+import { Layout, Row, Col, Icon, Badge, Menu, Dropdown, Avatar, Popover } from 'antd'
+import { Link, withRouter } from 'react-router-dom'
+import './index.less'
 
 import './index.less';
 import { loginCtx } from '../QQLogin';
+const { Header } = Layout;
 
-interface HeaderProps {
-    id?: number
+function handleLogOut() {
+
 }
 
-export default function WraperHeader(props: HeaderProps) {
-    const {
-        id
-    } = props;
+function commonHeader(props) {
+    const { profile = {} } = props;
+    let username = profile.user ? profile.user.name : '';
+    const menu = (
+      <Menu>
+        <Menu.Item>
+          修改密码
+        </Menu.Item>
+        <Menu.Item>
+          设置
+        </Menu.Item>
+        <Menu.Item>
+          <a onClick={handleLogOut}>注销</a>
+        </Menu.Item>
+      </Menu>
+    );
+
+    const content = (
+      <div>
+        <p>欢迎使用wardmonitor</p>
+      </div>
+    );
 
     return (
-        <Layout.Header className="header">
-            <div className="logo">
-                WARDMONITOR
-            </div>
-            <div className="navlink">
-                <div className="item">
-                    <Avatar></Avatar>
-                </div>
-                <loginCtx.Consumer>{({ userInfo }) =>
-                    <div className="item">
+      <Header style={{ background: '#fff', padding: 0 }}>
+        <Row type="flex" justify="end" align="middle">
+            <Col>
+                <Badge className="header-icon" count={5}>
+                    <Link to="/mailbox">
+                        <Icon type="mail" />
+                    </Link>
+                </Badge>
+                <Popover content={content} title="消息盒子" trigger="click">
+                    <Badge className="header-icon" dot>
+                        <a href="#">
+                        <Icon type="notification" />
+                        </a>
+                    </Badge>
+                </Popover>
+            </Col>
+            <Col>
+                <loginCtx.Consumer>{({ userInfo }) => (
+                    <div style={{ margin: '0 15px' }} className="item">
                     {
                         userInfo ? `👏 欢迎, ${ userInfo.loginName }` : '未登陆'
                     }
                     </div>
-                }</loginCtx.Consumer>
-                <div className="item">
-                    <Link to="/setting">设置</Link>
-                </div>
-                <div className="item">
-                    <Link to="/logout">退出</Link>
-                </div>
-            </div>
-        </Layout.Header>
+                )}</loginCtx.Consumer>
+            </Col>
+            <Col span={3}>
+                <Dropdown overlay={menu}>
+                <a className="ant-dropdown-link" href="#">
+                    <Avatar style={{ verticalAlign: 'middle'}}>{username}</Avatar> <Icon type="down" />
+                </a>
+                </Dropdown>
+            </Col>
+        </Row>
+      </Header>
     )
 }
+
+export default withRouter(commonHeader);
