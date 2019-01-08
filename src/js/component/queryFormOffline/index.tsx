@@ -50,7 +50,7 @@ export default function QueryFormOffline({onSummit}: Props) {
     const offlineIdRef: any = useRef(null);
 
     const list = useBusinessList(0);
-    let [offlineList, setOfflineList, getOfflineList] = useOfflineList();
+    let [offlineList, getOfflineList] = useOfflineList();
 
     function handlerClose() {
         setDrawerVisiblie(false);
@@ -83,8 +83,8 @@ export default function QueryFormOffline({onSummit}: Props) {
 
     async function projectChanged(projectId) {
         setProjectId(projectId);
-        offlineList = await getOfflineList(projectId);
-        setOfflineList(offlineList);
+        await getOfflineList(projectId);
+        setOfflineId('')
     }
 
     function addWatchUin(e) {
