@@ -5,6 +5,7 @@ import {
     NavItem
 } from '../action/menu';
 
+// @ts-ignore
 import menuData from '../config/menu';
    
 export type MenuState = {
