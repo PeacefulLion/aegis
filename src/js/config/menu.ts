@@ -1,4 +1,12 @@
-const menu = [{
+export type MenuRoute = {
+    key: string, 
+    name: string, 
+    icon?: string, 
+    url?: string,
+    child?: MenuRoute[]
+}
+
+const menu: MenuRoute[] = [{
     key: '5',
     name: '主页',
     icon: 'home',
@@ -47,6 +55,10 @@ const menu = [{
     }, {
         name: '注册用户列表',
         key: '303'
+    }, {
+        name: '用户绑定审核', 
+        key: '304',
+        url: '/userbind-verify'
     }]
 }, {
     key: '4',
