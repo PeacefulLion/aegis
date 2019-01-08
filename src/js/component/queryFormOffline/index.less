@@ -10,6 +10,7 @@
     //     background-position: 0 0;
     // }
 }
+
 .ward-drawer-btn {
     position: absolute;
     left: -14px;
@@ -20,4 +21,24 @@
 
 .ward-drawer-offline-config {
     padding: 0 4px;
+}
+
+.offline-form-modal-table {
+    margin-top: 12px;
+    width: 100%;
+    tr {
+        border-top: 1px solid #ddd;
+        height: 37px;
+        td {
+            text-align: center;
+        }
+        .watch-uid {
+            text-align: left;
+            padding-left: 10px;
+            width: 50%;
+        }
+        &:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+    }
 }

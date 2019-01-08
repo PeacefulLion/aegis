@@ -8,17 +8,21 @@ const menu = [{
     name: '日志',
     icon: 'file',
     child: [{
-        name: '实时日志',
+        name: '历史日志',
         key: '102',
         url: '/historylog'
     }, {
         name: '实时日志',
         key: '103',
-        // url: '/realtimelog'
+        url: '/realtimelog'
+    }, {
+        name: '离线日志',
+        key: '104',
+        url: '/offlinelog'
     }, {
         name: '统计',
-        key: '104',
-        // url: '/statics'
+        key: '105',
+        url: '/statics'
     }]
 }, {
     key: '2',
