@@ -8,6 +8,8 @@ import { getAllMenu, updateNavPath, MenuItem } from '../../action/menu'
 
 import './index.less'
 import { MenuMode } from 'antd/lib/menu';
+import { routeCtx } from '../MenuRouteLayout/menu-route-layout-ctx';
+import { MenuRouteState, UpdateNavPathDispatch, MenuRouteCtx } from '../MenuRouteLayout/types';
 
 const SubMenu = Menu.SubMenu
 const { Sider } = Layout;
@@ -42,13 +44,9 @@ function SideBarMenu(nodes = [], pkey?: string | number) {
     });
 }
 
-function Sidebar(props) {
-    const {
-        updateNavPath,
-        items,
-        openKeys = [],
-        activeKey = ''
-    } = props;
+export default function Sidebar(props: MenuRouteCtx) {
+    const { state, updateNavPath } = props; 
+    const { menuRoutes, activeKey, openKeys } = state; 
 
     const [collapsed, setCollapsed] = useState(false);
     const [mode, setMode] = useState('inline');
@@ -59,6 +57,7 @@ function Sidebar(props) {
     }
 
     function handlerMenuClick(item) {
+        console.log('menu click', item); 
         updateNavPath(item.keyPath.reverse());
     }
     
@@ -76,7 +75,7 @@ function Sidebar(props) {
                 onClick={handlerMenuClick}
             >
                 { 
-                    SideBarMenu(items)
+                    SideBarMenu(menuRoutes)
                 }
             </Menu>
             <div className="sider-trigger">
@@ -89,20 +88,3 @@ function Sidebar(props) {
         </Sider>
     )
 }
-
-function mapStateToProps(state) {
-    return {
-        items: state.menu.items,
-        openKeys: state.menu.openKeys,
-        activeKey: state.menu.activeKey,
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        getAllMenu: bindActionCreators(getAllMenu, dispatch),
-        updateNavPath: bindActionCreators(updateNavPath, dispatch)
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
