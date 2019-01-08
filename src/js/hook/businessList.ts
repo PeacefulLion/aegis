@@ -19,8 +19,8 @@ export function useBusinessList(value = 0): Business[] {
 
     useEffect(() => {
         (async () => {
-            const data = await api.get('//badjs2.ivweb.io/controller/userAction/getBusiness.do') as any;
-            setList(data.item);
+            const result = await api.get('//badjs2.ivweb.io/controller/userAction/getBusiness.do');
+            setList(result.data.item);
         })();
     }, [value]);
 
