@@ -35,9 +35,6 @@ export default function LoginProvider(props: LoginProviderProps) {
     const [initLoading, setInitLoading] = React.useState(true);
       
     React.useEffect(() => {
-        // 说明已经初始化完成
-        if (!initLoading) return; 
-        
         console.log('To Get UserInfo')
         getUserInfo().then(userInfo => {
             console.log('LoginProvider Result:', userInfo); 
@@ -49,7 +46,7 @@ export default function LoginProvider(props: LoginProviderProps) {
             console.log('Not Login', didnotLogin); 
             setInitLoading(false); 
         })
-    });
+    }, []);
 
     // logout: 请求接口并清除本地 Login State 
     const logout = () => {

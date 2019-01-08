@@ -5,10 +5,10 @@ import { queryParse } from '../../common/utils';
 export default function RecvCode() {
     const query = queryParse(window.location.search.substring(1)); 
 
+    // 发送一次消息到 main 窗口
     useEffect(() => {
-        // 发送消息到 main 窗口
         window.parent.postMessage(query, location.origin); 
-    }); 
+    }, []); 
 
     return (
         <div className="recv-container">

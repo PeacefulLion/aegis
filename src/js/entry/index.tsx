@@ -11,6 +11,8 @@ import "./index.less";
 import LoginProvider from '../component/QQLogin/LoginProvider';
 
 function UseRecvCode() {
+    // 如果满足这些条件，说明当前页面是作为 iframe 插入、且是QQ登陆的时候的跳转页，URL 里带有 code 参数
+    // 因此需要将 code 回传到父级组件中。
     if (location.pathname === '/qq-connect' || location.hash === '#/qq-connect' ||
         location.search.includes('code=')
     ) {
