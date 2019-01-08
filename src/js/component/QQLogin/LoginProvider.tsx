@@ -1,5 +1,5 @@
 import * as React from "react"; 
-import { getUserInfo, UserInfo } from "./login_cgi"; 
+import { getUserInfo, UserInfo, logoutReq } from "./login_cgi"; 
 import Login from "./Login";
 import { Loading } from "./Loading"
 
@@ -11,7 +11,8 @@ export type LoginAction = {
 export type UserInfoOrNot = UserInfo | undefined; 
 
 export type LoginCtx = {
-    userInfo: UserInfoOrNot
+    userInfo: UserInfoOrNot,
+    logout: Function
 }
 
 export type SetUserInfo = React.Dispatch<
@@ -19,7 +20,8 @@ export type SetUserInfo = React.Dispatch<
 >;
 
 export const loginCtx = React.createContext<LoginCtx>({
-    userInfo: undefined
+    userInfo: undefined, 
+    logout: () => {}
 })
 
 export type LoginProviderProps = {
@@ -36,7 +38,6 @@ export default function LoginProvider(props: LoginProviderProps) {
         // 说明已经初始化完成
         if (!initLoading) return; 
         
-
         console.log('To Get UserInfo')
         getUserInfo().then(userInfo => {
             console.log('LoginProvider Result:', userInfo); 
@@ -50,9 +51,21 @@ export default function LoginProvider(props: LoginProviderProps) {
         })
     });
 
+    // logout: 请求接口并清除本地 Login State 
+    const logout = () => {
+        return logoutReq().then(ok => {
+            setUserInfo(undefined); 
+        }).catch(err => {
+            console.log('loutou 报错', err); 
+            console.log('可能是跨域造成的，但是即便是跨域，我们的session也被清除了，只是 response 被浏览器拦了'); 
+            setUserInfo(undefined); 
+        })
+    }
+
     return (
         <loginCtx.Provider value={{
             userInfo,
+            logout
         }}>
             {
                 initLoading ? (

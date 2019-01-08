@@ -68,3 +68,8 @@ export function updateSession() {
     // 更新 Session 
     return fromBadjs.get<UserInfo>('/api/users/update_session'); 
 }
+
+export function logoutReq() {
+    // http://badjs2.ivweb.io
+    return fromBadjs.get<any>('/logout'); 
+}
