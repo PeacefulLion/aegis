@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel ./src/*.html",
-    "build": "parcel build ./src/index.html"
+    "build": "parcel --public-url /badjs3/ build ./src/index.html"
   },
   "dependencies": {
     "antd": "^3.11.5",

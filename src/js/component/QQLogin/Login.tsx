@@ -15,7 +15,7 @@ type LoginProps = {
 
 export default function Login(props: LoginProps) {
     const client_id = 101539450; 
-    const redirect_uri = `http://guardjs.badjs2.ivweb.io/qq-connect`; 
+    const redirect_uri = `${ location.origin }/badjs3`; 
     const getCodeUrl = `https://graph.qq.com/oauth2.0/authorize?client_id=${ client_id }&response_type=code&state=test&redirect_uri=${ encodeURIComponent(redirect_uri) }`;
 
     const [openid, setOpenid] = useState(''); 
