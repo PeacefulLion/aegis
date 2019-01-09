@@ -20,9 +20,9 @@ export function useOfflineList(): [Offline[], (opts: SummitOptions) => Promise<O
 
     async function getOfflineList(value) {
         if (value) {
-            const {data} = await api.get(`//badjs2.ivweb.io/controller/logAction/showOfflineFiles.do?id=${value}`) as any;
+            const { data } = await api.get(`//badjs2.ivweb.io/controller/logAction/showOfflineFiles.do?id=${value}`) as any;
 
-            const offlineList = data.data.map(d => {
+            const offlineList = data.map(d => {
                 const arr = d.id.split("_");
                 let name = arr[0];
                 if (arr[2]) {

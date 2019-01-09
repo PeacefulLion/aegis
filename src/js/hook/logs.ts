@@ -106,7 +106,9 @@ export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: Summ
             level = [1, 2, 4]
         } = opts;
 
-        const result = await api.get('//badjs2.ivweb.io/controller/logAction/queryLogList.do', {
+        const data = await api({
+            method: 'GET',
+            url: '/controller/logAction/queryLogList.do',
             params: {
                 id,
                 startDate,
@@ -118,8 +120,8 @@ export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: Summ
                 level
             }
         }) as any;
-
-        const formatLogs = result.data.data.map((item) => {
+        
+        const formatLogs = data.map((item) => {
             return formatLog(item);
         });
         

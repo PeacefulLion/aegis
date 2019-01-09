@@ -28,7 +28,6 @@ export function Frame(props) {
             <Layout>
             <Header profile={auth} logout={actions.logout} />
             <Content style={{ margin: '0 16px' }}>
-                <h1>{ JSON.stringify(navpath) }</h1>
                 <NavPath data={navpath} />
                 <div style={{ minHeight: document.documentElement.offsetHeight }}>
                     <Route path={'/Home'} component={Home} exactly={true} />
