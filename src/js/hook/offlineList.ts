@@ -2,35 +2,41 @@ import * as React from 'react';
 import api from '../common/api';
 import * as dayjs from 'dayjs';
 
-const {
-    useState,
-    useEffect
-} = React;
+const {useState} = React;
 
 export interface Offline {
     id: number,
     name: string
 }
 
-export function useOfflineList(value = 0): Offline[] {
-    const [list, setList] = useState([]);
+export interface SummitOptions {
+    id: number,
+    fileId: string
+}
 
-    useEffect(() => {
-        (async () => {
-            const data = await api.get('//badjs2.ivweb.io/controller/logAction/showOfflineFiles.do?id=453') as any;
-            setList(data.map(d => {
+
+export function useOfflineList(): [Offline[], (opts: SummitOptions) => Promise<Offline[]>] {
+    const [offlineList, setOfflineList] = useState([]);
+
+    async function getOfflineList(value) {
+        if (value) {
+            const {data} = await api.get(`//badjs2.ivweb.io/controller/logAction/showOfflineFiles.do?id=${value}`) as any;
+
+            const offlineList = data.data.map(d => {
                 const arr = d.id.split("_");
                 let name = arr[0];
                 if (arr[2]) {
-                    var dateStr = dayjs(new Date(arr[2] - 0)).format('MM-DD hh:mm');
+                    const dateStr = dayjs.default(new Date(arr[2] - 0)).format('MM-DD hh:mm');
                     name += " (" + dateStr + ")";
                 }
                 return {id: d.id, name}
-            }));
-        })();
-    }, [value]);
+            });
+            setOfflineList(offlineList);
+            return offlineList;
+        }
+    }
 
-    return list;
+    return [offlineList, getOfflineList];
 }
 
 export default useOfflineList;

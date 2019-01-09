@@ -1,12 +1,12 @@
 import * as React from 'react';
 import LogTable from '../../component/logTable';
-import {useLogs} from '../../hook/logs';
-
-import './index.less';
+import {useOfflineLogs} from '../../hook/offlineLogs';
 import QueryForm from '../../component/queryFormOffline';
 
+import './index.less';
+
 export default function Log() {
-    const [logs, setLogs, getLogs] = useLogs([]);
+    const [logs, setLogs, getLogs] = useOfflineLogs([]);
 
     return (
         <div>

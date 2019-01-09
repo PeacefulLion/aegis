@@ -1,4 +1,12 @@
-const menu = [{
+export type MenuRoute = {
+    key: string, 
+    name: string, 
+    icon?: string, 
+    url?: string,
+    child?: MenuRoute[]
+}
+
+const menu: MenuRoute[] = [{
     key: '5',
     name: '主页',
     icon: 'home',
@@ -8,17 +16,21 @@ const menu = [{
     name: '日志',
     icon: 'file',
     child: [{
-        name: '实时日志',
+        name: '历史日志',
         key: '102',
         url: '/historylog'
     }, {
         name: '实时日志',
         key: '103',
-        // url: '/realtimelog'
+        url: '/realtimelog'
+    }, {
+        name: '离线日志',
+        key: '104',
+        url: '/offlinelog'
     }, {
         name: '统计',
-        key: '104',
-        // url: '/statics'
+        key: '105',
+        url: '/statics'
     }]
 }, {
     key: '2',
@@ -47,6 +59,10 @@ const menu = [{
     }, {
         name: '注册用户列表',
         key: '303'
+    }, {
+        name: '用户绑定审核', 
+        key: '304',
+        url: '/userbind-verify'
     }]
 }, {
     key: '4',

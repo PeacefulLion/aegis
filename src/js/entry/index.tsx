@@ -30,16 +30,20 @@ function Root(props) {
 }
 
 function Container() {
-    if (location.pathname === '/qq-connect') {
+    return <Root store={ store } />
+}
+
+function UseRecvCode() {
+    if (location.pathname === '/qq-connect' || location.hash === '#/qq-connect' ||
+        location.search.includes('code=')
+    ) {
         return <RecvCode />
     } else {
-        return (
-            <Root store={ store } />
-        )
+        return <LoginProvider component={ Container } />
     }
 }
 
 ReactDom.render(
-    <LoginProvider component={ Container } />,
+    <UseRecvCode />,
     document.getElementById('root')
 );

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Checkbox, Form, Button, Icon, Select, Drawer} from 'antd';
+import {Checkbox, Form, Button, Icon, Select, Drawer, Modal, Input} from 'antd';
 import TagList from '../tagList';
 import logType from '../../common/const/logType';
 import {firstUpperCase} from '../../common/util';
@@ -25,7 +25,7 @@ const formItemLayout = {
 };
 
 export interface Props {
-    onSummit: Function
+    onSummit: Function,
 }
 
 const LOGTYPE_OPTIONS = [
@@ -40,13 +40,17 @@ export default function QueryFormOffline({onSummit}: Props) {
     const [drawervisible, setDrawerVisiblie] = useState(true);
     const [projectId, setProjectId] = useState(null);
     const [offlineId, setOfflineId] = useState(null);
-    const list = useBusinessList(0);
-    const offlineList = useOfflineList();
+    const [modalVisible, setModalVisible] = useState(false);
     const [level, setLevel] = useState([logType.Debug, logType.Info, logType.Error, logType.Offline]);
+    const [uins, setUins] = useState([]);
 
     const includeRef: any = useRef(null);
     const excludeRef: any = useRef(null);
     const checkBoxRef: any = useRef(null);
+    const offlineIdRef: any = useRef(null);
+
+    const list = useBusinessList(0);
+    let [offlineList, getOfflineList] = useOfflineList();
 
     function handlerClose() {
         setDrawerVisiblie(false);
@@ -54,10 +58,6 @@ export default function QueryFormOffline({onSummit}: Props) {
 
     function handlerOpen() {
         setDrawerVisiblie(!drawervisible); // 取反
-    }
-
-    function selectChanged() {
-
     }
 
     function onChange(value: any[]) {
@@ -69,16 +69,51 @@ export default function QueryFormOffline({onSummit}: Props) {
         setLevel(level);
     }
 
+    function showModal() {
+        if (!projectId) {
+            alert('请先选择项目')
+            return;
+        }
+        setModalVisible(true);
+    }
+
+    function hideModal() {
+        setModalVisible(!modalVisible)
+    }
+
+    async function projectChanged(projectId) {
+        setProjectId(projectId);
+        await getOfflineList(projectId);
+        setOfflineId('')
+    }
+
+    function addWatchUin(e) {
+        const value = e.target.value;
+        if (!isNaN(value) && uins.indexOf(value) === -1) {
+            uins.push(value);
+            setUins(uins);
+        }
+        e.target.value = '';
+    }
+
+    function removeWatchUin(uin) {
+        const index = uins.indexOf(uin);
+        uins.splice(index, 1);
+        setUins(uins);
+    }
+
     function searchOfflineLog() {
         const include = includeRef.current.getTags();
         const exclude = excludeRef.current.getTags();
+        const fileId = offlineId;
 
-        if (!projectId) {
+        if (!projectId || !fileId) {
             return;
         }
 
         onSummit({
             id: projectId,
+            fileId,
             include,
             exclude,
             index: pageIndex,
@@ -106,8 +141,7 @@ export default function QueryFormOffline({onSummit}: Props) {
                     <Select
                         showSearch
                         value={projectId}
-                        onSelect={setProjectId}
-                        onChange={selectChanged}
+                        onSelect={projectChanged}
                         filterOption={(input, option: any) =>
                             option.props.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }
@@ -124,11 +158,44 @@ export default function QueryFormOffline({onSummit}: Props) {
                     </Select>
                 </Form.Item>
                 <Form.Item>
-                    <a className="ward-drawer-offline-config">设置离线日志自动拉取</a>
+                    <a className="ward-drawer-offline-config" onClick={showModal}>设置离线日志自动拉取</a>
+                    <Modal
+                        title="设置离线日志自动拉取"
+                        cancelText="Close"
+                        visible={modalVisible}
+                        onCancel={hideModal}
+                        footer={[
+                            <Button key="back" onClick={hideModal}>Close</Button>
+                        ]}
+                    >
+                        <Input placeholder="添加监听的UIN"
+                               onPressEnter={addWatchUin}
+                               prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
+                               className="input"/>
+                        <table className="offline-form-modal-table">
+                            <tbody>
+                            {
+                                uins.map(uin => {
+                                    return (
+                                        <tr key={`uin-${uin}`}>
+                                            <td className="watch-uid">{uin}</td>
+                                            <td>监听中</td>
+                                            <td>
+                                                <a onClick={removeWatchUin.bind(null, uin)} href="javascript:;">删除</a>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
+                            }
+                            </tbody>
+                        </table>
+                    </Modal>
                 </Form.Item>
                 <Form.Item label="选择日志" {...formItemLayout}>
                     <Select
                         showSearch
+                        ref={offlineIdRef}
+                        disabled={!projectId}
                         value={offlineId}
                         onSelect={setOfflineId}
                         filterOption={(input, option: any) =>
