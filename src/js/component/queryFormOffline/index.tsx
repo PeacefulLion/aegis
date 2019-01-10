@@ -5,6 +5,7 @@ import logType from '../../common/const/logType';
 import {firstUpperCase} from '../../common/util';
 import {useBusinessList} from '../../hook/businessList';
 import {useOfflineList} from '../../hook/offlineList';
+import {useOfflineUin} from '../../hook/offlineUin';
 
 import './index.less';
 
@@ -42,7 +43,7 @@ export default function QueryFormOffline({onSummit}: Props) {
     const [offlineId, setOfflineId] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [level, setLevel] = useState([logType.Debug, logType.Info, logType.Error, logType.Offline]);
-    const [uins, setUins] = useState([]);
+    const [uins, addUin, removeUin, getUins] = useOfflineUin();
 
     const includeRef: any = useRef(null);
     const excludeRef: any = useRef(null);
@@ -69,11 +70,12 @@ export default function QueryFormOffline({onSummit}: Props) {
         setLevel(level);
     }
 
-    function showModal() {
+    async function showModal() {
         if (!projectId) {
             alert('请先选择项目')
             return;
         }
+        await getUins(projectId);
         setModalVisible(true);
     }
 
@@ -88,18 +90,17 @@ export default function QueryFormOffline({onSummit}: Props) {
     }
 
     function addWatchUin(e) {
-        const value = e.target.value;
-        if (!isNaN(value) && uins.indexOf(value) === -1) {
-            uins.push(value);
-            setUins(uins);
+        const uin = e.target.value;
+        if (!isNaN(uin) && uins.indexOf(uin) === -1) {
+            addUin({uin, id: projectId});
         }
         e.target.value = '';
     }
 
     function removeWatchUin(uin) {
-        const index = uins.indexOf(uin);
-        uins.splice(index, 1);
-        setUins(uins);
+        removeUin({uin, id: projectId})
+        // const index = uins.indexOf(uin);
+        // uins.splice(index, 1);
     }
 
     function searchOfflineLog() {
