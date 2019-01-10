@@ -1,7 +1,7 @@
 import * as React from 'react';
 import dayjs from 'dayjs';
 import api from '../common/api';
-import { Up, getDevice } from '../common/device';
+import {Up, getDevice} from '../common/device';
 import Log from '../page/historylog';
 import logType from '../common/const/logType';
 
@@ -22,7 +22,7 @@ export interface Log {
     colNum?: number,
 }
 
-export interface FormatLog extends Log{
+export interface FormatLog extends Log {
     platform: Icon[],
     appIcon: Icon[],
     webview: string[],
@@ -57,7 +57,7 @@ function formatLog(log: Log): FormatLog {
     }, log);
 
     ['android', 'iOS', 'windows'].forEach((name) => {
-        if(device[name + 'Version']) {
+        if (device[name + 'Version']) {
             formatLog.platform.push({
                 name,
                 version: device[name + 'Version']
@@ -66,9 +66,9 @@ function formatLog(log: Log): FormatLog {
     });
 
     ['qq', 'wechat', 'huayang', 'qzone',
-    'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou','now','nowsdk',
-    'maxthon', '360', 'edge', 'chrome', 'firefox', 'safari'].forEach((name) => {
-        if(device['is' + Up(name)]) {
+        'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou', 'now', 'nowsdk',
+        'maxthon', '360', 'edge', 'chrome', 'firefox', 'safari'].forEach((name) => {
+        if (device['is' + Up(name)]) {
             formatLog.appIcon.push({
                 name,
                 version: device[name + 'Version']
@@ -77,7 +77,7 @@ function formatLog(log: Log): FormatLog {
     });
 
     ['UIWebview', 'WKWebview', 'X5'].forEach((name) => {
-        if(device['is' + Up(name)]) {
+        if (device['is' + Up(name)]) {
             formatLog.webview.push(name);
         }
     });
@@ -95,15 +95,16 @@ export function useOfflineLogs(value: FormatLog[]): [FormatLog[], Function, (opt
             fileId
         } = opts;
 
-        const result = await api.get('//badjs2.ivweb.io/controller/logAction/showOfflineLog.do', {
+        let data = await api.get('//badjs2.ivweb.io/controller/logAction/showOfflineLog.do', {
             params: {
                 id,
                 fileId
             }
         }) as any;
-
-        const formatLogs = result.data.data.map((item) => {
-            return formatLog(item);
+        data = JSON.parse(data);
+        const {logs, userAgent} = data;
+        const formatLogs = logs.map((item) => {
+            return formatLog(Object.assign(item, {userAgent}));
         });
 
         setLogs(formatLogs);
