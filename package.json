@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel ./src/*.html",
-    "build": "parcel --public-url /badjs3/ build ./src/index.html"
+    "clean": "rm -r dist/",
+    "build": "cross-env NODE_ENV=production parcel build ./src/index.html --no-source-maps --public-url /badjs3/ --detailed-report",
+    "tar": "tar -cvf dist/wardmonitor.tar dist/",
+    "release": "npm run clean && npm run build && npm run tar && echo '已打包: dist/wardmonitor.tar; rz 到服务器 tar -xvf 解压即可'"
   },
   "dependencies": {
     "antd": "^3.11.5",
@@ -34,6 +37,7 @@
     "@types/redux": "^3.6.0",
     "babel-eslint": "^10.0.1",
     "babel-polyfill": "^6.26.0",
+    "cross-env": "^5.2.0",
     "eslint": "^5.10.0",
     "eslint-config-ivweb": "^0.1.5",
     "eslint-plugin-class-property": "^1.1.0",
