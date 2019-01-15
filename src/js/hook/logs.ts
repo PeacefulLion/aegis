@@ -1,7 +1,7 @@
 import * as React from 'react';
 import api from '../common/api';
 import logType from '../common/const/logType';
-import {formatLog, FormatLog, Log} from '../common/util/formatLog';
+import {formatLog, FormatLog, Log} from './common';
 
 const {
     useState

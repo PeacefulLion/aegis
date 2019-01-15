@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import * as React from 'react';
+import { withRouter } from 'react-router-dom';
 
 const validate = function(history) {
-    const isLoggedIn = !!window.localStorage.getItem("uid");
-    if (!isLoggedIn && history.location.pathname != "/login") {
-        history.replace("/login");
+    const isLoggedIn = !!window.localStorage.getItem('uid');
+    if (!isLoggedIn && history.location.pathname != '/login') {
+        history.replace('/login');
     }
 };
 
@@ -13,7 +13,7 @@ const validate = function(history) {
  * Higher-order component (HOC) to wrap restricted pages
  */
 export default function authHOC(BaseComponent) {
-    class Restricted extends Component {
+    class Restricted extends React.Component {
         componentWillMount() {
             this.checkAuthentication(this.props);
         }
