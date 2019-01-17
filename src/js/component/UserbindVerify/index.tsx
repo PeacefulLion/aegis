@@ -1,36 +1,8 @@
 import * as React from "react"; 
-
 import { Table, Divider } from "antd"; 
 import { getVerifyUsers, verifyAnUser } from "./bind-cgi";
 import { loginCtx, UserInfo, UserInfoWithOpenid } from "../QQLogin";
 
-
-const dataSource = [{
-    key: '1',
-    name: '胡彦斌',
-    age: 32,
-    address: '西湖区湖底公园1号'
-  }, {
-    key: '2',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号'
-  }];
-  
-//   const columns = [{
-//     title: '姓名',
-//     dataIndex: 'name',
-//     key: 'name',
-//   }, {
-//     title: '年龄',
-//     dataIndex: 'age',
-//     key: 'age',
-//   }, {
-//     title: '住址',
-//     dataIndex: 'address',
-//     key: 'address',
-//   }];
-  
 
 function UB(props: { userInfo: UserInfo }) {
     const [userList, setUserList] = React.useState([] as UserInfoWithOpenid[]); 
@@ -88,7 +60,7 @@ function UB(props: { userInfo: UserInfo }) {
                         })
                     }>审核通过?</a>
                     } else if (+record.verify_state === 0) {
-                        return <span>- 无操作</span>
+                        return <span>无操作</span>
                     } else {
                         return <span>已审核</span>
                     }
