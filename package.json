@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel ./src/*.html",
-    "clean": "rm -r dist/",
+    "clean": "rimraf dist/",
     "build": "cross-env NODE_ENV=production parcel build ./src/index.html --no-source-maps --public-url /badjs3/ --detailed-report",
     "tar": "tar -cvf dist/wardmonitor.tar dist/",
     "release": "npm run clean && npm run build && npm run tar && echo '已打包: dist/wardmonitor.tar; rz 到服务器 tar -xvf 解压即可'"
@@ -45,6 +45,7 @@
     "koa": "^2.6.2",
     "less": "^3.9.0",
     "parcel": "^1.11.0",
+    "rimraf": "^2.6.3",
     "typescript": "^3.2.2"
   },
   "repository": {
