@@ -1,5 +1,5 @@
 import * as React from "react"; 
-import { Table, Divider } from "antd"; 
+import { Table, Divider, message } from "antd"; 
 import { getVerifyUsers, verifyAnUser } from "./bind-cgi";
 import { loginCtx, UserInfo, UserInfoWithOpenid } from "../QQLogin";
 
@@ -53,9 +53,10 @@ function UB(props: { userInfo: UserInfo }) {
                         () => verifyAnUser(record).then(() => {
                             // 审核成功
                             initLoad(); 
+                            message.success('审核成功'); 
                         }).catch(err => {
                             if (err) {
-                                alert('错误，原因：' + JSON.stringify(err)); 
+                                message.error('错误，原因：' + JSON.stringify(err))
                             }
                         })
                     }>审核通过?</a>

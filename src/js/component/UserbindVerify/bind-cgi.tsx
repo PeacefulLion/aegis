@@ -1,5 +1,6 @@
 import { fromBadjs } from "../../common/api"; 
 import { UserInfoWithOpenid, VerifyStateValue } from "../QQLogin";
+import { Modal } from "antd"; 
 
 // export function isUserInfoResp(resp: LoginBySuccess): resp is UserInfo {
 //     if ((resp as OpenidInfo).openid) {
@@ -24,12 +25,23 @@ export function trustAnUser(loginName: string) {
     });
 }
 
+function confirmPromise(userName: string) {
+    return new Promise((res, rej) => {
+        Modal.confirm({
+            title: '你确定吗？', 
+            content: `给用户 ${ userName } 通过审核吗？`, 
+            onOk: function() {
+                res(); 
+            }, 
+            onCancel: () => rej(false)
+        });
+    });
+}
+
 export function verifyAnUser(user: UserInfoWithOpenid) {
     console.log(user); 
 
-    const goNext = confirm(`给用户 ${ user.loginName } 通过审核吗？`); 
-
-    if (goNext) {
+    return confirmPromise(user.loginName).then(ok => {
         return trustAnUser(user.loginName).then(res => {
             if (res.code === 0) {
                 return Promise.resolve(); 
@@ -37,7 +49,5 @@ export function verifyAnUser(user: UserInfoWithOpenid) {
                 return Promise.reject(res); 
             }
         })
-    } else {
-        return Promise.reject(false); 
-    }
+    })
 }
