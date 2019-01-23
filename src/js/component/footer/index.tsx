@@ -6,7 +6,7 @@ const { Footer } = Layout;
 export default function commonFooter() {
     return (
       <Footer style={{ textAlign: 'center' }}>
-        ivweb 版权所有 © 2018 ivweb.io
+        ivweb 版权所有 © 2019 ivweb.io
       </Footer>
     );
 }
