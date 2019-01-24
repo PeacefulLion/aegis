@@ -1,20 +1,17 @@
 import * as React from "react"; 
-import { useBusinessList, Business } from '../../hook/businessList';
+import { Business } from '../../hook/businessList';
 import { InfoItem } from './cgi';
-import ReactHighcharts from "react-highcharts";
 
-import * as HightChart from "highcharts";
+import * as Highcharts from "highcharts";
 import { getChartsData } from "./calc";
 
-export type HightChartProps = {
+export type HighchartsProps = {
     items: InfoItem[], 
     list: Business[],
     renderId: string
 }
 
-
-
-export default function HightChartWarpper(props: HightChartProps) {
+export default function HighchartsWarpper(props: HighchartsProps) {
     const [renderId, setRenderId] = React.useState(props.renderId);
 
     // Set New One 
@@ -29,7 +26,7 @@ export default function HightChartWarpper(props: HightChartProps) {
     React.useEffect(() => {
         const config = getChartsData(items, list);
 
-        config && HightChart.chart($div.current, config);        
+        config && Highcharts.chart($div.current, config);        
     }, [renderId])
 
     return (

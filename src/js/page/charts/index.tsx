@@ -3,7 +3,7 @@ import DrawerContainer, { drawerCtx } from '../../component/drawer-container';
 import { Form, Select, Button, Icon } from "antd";
 import { loadList } from "./cgi";
 import * as React from 'react';
-import HightChartWarpper from "./hight-chart-warpper";
+import HighchartsWarpper from "./high-chart-warpper";
 import './index.less';
 
 /**
@@ -83,7 +83,7 @@ export default function Charts() {
             </DrawerContainer>
             
             {/* The Chart Container & Data */}
-            <HightChartWarpper renderId={renderId.toString()} 
+            <HighchartsWarpper renderId={renderId.toString()} 
                 items={ items } list={ list } />
         </div>
     );
