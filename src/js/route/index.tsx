@@ -12,6 +12,8 @@ import Footer from '../component/footer';
 import Home from '../page/home';
 import Historylog from '../page/historylog';
 import OfflineLog from '../page/offlinelog';
+import Charts from '../page/charts';
+
 
 import authHOC from '../common/util/auth'
 import { fetchProfile, logout } from '../action/auth';
@@ -33,6 +35,7 @@ export function Frame(props) {
                     <Route path={'/Home'} component={Home} exactly={true} />
                     <Route path={'/historylog'} component={Historylog} exactly={true} />
                     <Route path={'/offlinelog'} component={OfflineLog} exactly={true} />
+                    <Route path={'/charts'} component={ Charts } exactly={true} />
                     <Route path="/userbind-verify" component={ UserbindVerify } exactly={true} />
                 </div>
             </Content>

@@ -28,9 +28,9 @@ const menu: MenuRoute[] = [{
         key: '104',
         url: '/offlinelog'
     }, {
-        name: '统计',
+        name: '图表',
         key: '105',
-        url: '/statics'
+        url: '/charts'
     }]
 }, {
     key: '2',
