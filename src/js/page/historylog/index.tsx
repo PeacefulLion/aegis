@@ -5,7 +5,7 @@ import { useLogs } from '../../hook/logs';
 import './index.less';
 import QueryForm from '../../component/queryForm';
 
-export default function Log() {
+export default function Log(props) {
     const [logs, setLogs, getLogs] = useLogs([]);
 
     return (

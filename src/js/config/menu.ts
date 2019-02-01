@@ -16,15 +16,15 @@ const menu: MenuRoute[] = [{
     name: '日志',
     icon: 'file',
     child: [{
-        name: '历史日志',
+        name: '项目历史日志',
         key: '102',
         url: '/historylog'
     }, {
-        name: '实时日志',
+        name: '项目实时日志',
         key: '103',
         url: '/realtimelog'
     }, {
-        name: '离线日志',
+        name: '项目离线日志',
         key: '104',
         url: '/offlinelog'
     }, {

@@ -37,8 +37,8 @@ function commonHeader(props) {
     return (
       <Header style={{ background: '#fff', padding: 0 }}>
         <Row type="flex" justify="end" align="middle">
-            <Col>
-                <Badge className="header-icon" count={5}>
+            {/* <Col>
+                <Badge className="header-icon" count={0}>
                     <Link to="/mailbox">
                         <Icon type="mail" />
                     </Link>
@@ -50,7 +50,7 @@ function commonHeader(props) {
                         </a>
                     </Badge>
                 </Popover>
-            </Col>
+            </Col> */}
             <Col>
                 <loginCtx.Consumer>{({ userInfo }) => (
                     <div style={{ margin: '0 15px' }} className="item">

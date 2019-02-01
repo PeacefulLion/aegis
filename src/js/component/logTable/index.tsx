@@ -56,25 +56,25 @@ function LogPanelInline(props:LogPanelProps) {
                         Time
                     </span>
                 </Col>
-                <Col span={20}>{time}</Col>
+                <Col span={20} className="logdetail-info">{time}</Col>
             </Row>
             <Row className="logdetail-row">
                 <Col span={4}>
                     <span className="label">IP</span>
                 </Col>
-                <Col span={20}>{ip}</Col>
+                <Col span={20} className="logdetail-info">{ip}</Col>
             </Row>
             <Row className="logdetail-row">
                 <Col span={4}>
                     <span className="label">userAgent</span>
                 </Col>
-                <Col span={20}>{userAgent}</Col>
+                <Col span={20} className="logdetail-info">{userAgent}</Col>
             </Row>
             <Row className="logdetail-row">
                 <Col span={4}>
                     <span className="label">Form</span>
                 </Col>
-                <Col span={20}>
+                <Col span={20} className="logdetail-info">
                     {
                         <a target="_blank" href={`${from}`}>
                             {
@@ -100,7 +100,7 @@ function LogPanelInline(props:LogPanelProps) {
                         App
                     </span>
                 </Col>
-                <Col span={20}>
+                <Col span={20} className="logdetail-info">
                     {VersionIconList(appIcon)}
                 </Col>
             </Row>
@@ -108,7 +108,7 @@ function LogPanelInline(props:LogPanelProps) {
                 <Col span={4}>
                     <span className="label">Paltform</span>
                 </Col>
-                <Col span={20}>
+                <Col span={20} className="logdetail-info">
                     {VersionIconList(platform)}
                 </Col>
             </Row>
@@ -116,7 +116,7 @@ function LogPanelInline(props:LogPanelProps) {
                 <Col span={4}>
                     <span className="label">ExtraInfo</span>
                 </Col>
-                <Col span={20}>
+                <Col span={20} className="logdetail-info">
                     {
                         webview.length > 0 ? (
                             <span>浏览器内核为 {webview.join(';')}</span>
