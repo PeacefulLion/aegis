@@ -18,6 +18,6 @@ UI框架 echarts + ant-design
 
 2. 登录 badjs2.ivweb.io 获取登录态
 
-3. 打开 guardjs.badjs2.ivweb.io/index.html 开始调试
+3. 打开 badjs2.ivweb.io/badjs3 开始调试
 
 
