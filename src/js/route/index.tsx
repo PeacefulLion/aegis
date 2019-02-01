@@ -11,6 +11,7 @@ import Footer from '../component/footer';
 
 import Home from '../page/home';
 import Historylog from '../page/historylog';
+import Realtimelog from '../page/realtimelog';
 import OfflineLog from '../page/offlinelog';
 import Charts from '../page/charts';
 
@@ -34,6 +35,7 @@ export function Frame(props) {
                 <div style={{ minHeight: document.documentElement.offsetHeight }}>
                     <Route path={'/Home'} component={Home} exactly={true} />
                     <Route path={'/historylog'} component={Historylog} exactly={true} />
+                    <Route path={'/realtimelog'} component={Realtimelog} exactly={true} />
                     <Route path={'/offlinelog'} component={OfflineLog} exactly={true} />
                     <Route path={'/charts'} component={ Charts } exactly={true} />
                     <Route path="/userbind-verify" component={ UserbindVerify } exactly={true} />
