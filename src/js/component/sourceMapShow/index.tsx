@@ -266,7 +266,7 @@ export default function SourceMapShow({ codeLine, codeColumn, mapUrl, sourceUrl}
                 footer={<div>代码结束</div>}
                 bordered
                 dataSource={data}
-                renderItem={item => (<List.Item className={['item', item.indexOf('^') !== -1 ? 'color-red' : ''].join(' ')}>{item}</List.Item>)}
+                renderItem={item => (<List.Item className={['item', item.indexOf('^') !== -1 || item.indexOf('>') !== -1 ? 'color-red' : ''].join(' ')}>{item}</List.Item>)}
             />
             {/*<div className={'changeline'}>{data.join('\n')}</div>*/}
         </div>
