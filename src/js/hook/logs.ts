@@ -22,8 +22,9 @@ export interface SummitOptions {
 }
 
 
-export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: SummitOptions) => Promise<FormatLog[]>] {
+export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: SummitOptions) => Promise<FormatLog[]>, number] {
     const [logs, setLogs] = useState(value);
+    const [logKey, setLogKey] = useState(Date.now());
 
     async function getLogs(opts: SummitOptions) {
         const {
@@ -56,9 +57,9 @@ export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: Summ
         });
 
         setLogs(formatLogs);
-
+        setLogKey(Date.now());
         return formatLogs;
     }
 
-    return [logs, setLogs, getLogs];
+    return [logs, setLogs, getLogs, logKey];
 }

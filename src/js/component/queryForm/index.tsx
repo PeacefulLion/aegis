@@ -104,7 +104,7 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
             onClose={handlerClose}
             visible={drawerVisiblie}
         >
-            <div className="ward-drawer-btn" onClick={handlerOpen}>
+            <div className="ward-left-btn" onClick={handlerOpen}>
                 { !drawerVisiblie ? <Icon type="caret-left" /> : <Icon type="caret-right" /> }
             </div>
             <Form>

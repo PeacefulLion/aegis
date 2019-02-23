@@ -12,9 +12,11 @@
     "release": "npm run clean && npm run build && npm run tar && echo '已打包: dist/wardmonitor.tar; rz 到服务器 tar -xvf 解压即可'"
   },
   "dependencies": {
+    "@types/echarts": "^4.1.3",
     "antd": "^3.11.5",
     "axios": "^0.18.0",
     "dayjs": "^1.7.8",
+    "echarts": "^4.2.0-rc.2",
     "highcharts": "^7.0.2",
     "proptypes": "^1.1.0",
     "react": "^16.7.0-alpha.0",
