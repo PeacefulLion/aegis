@@ -38,11 +38,17 @@ const LOGTYPE_OPTIONS = [
     'error',
     'debug'
 ];
+const codeFileInfoInit = {
+    originalFileName: '',
+    line: '',
+    column: ''
+}
 
 export default function SourceMapShow({ codeLine, codeColumn, mapUrl, sourceUrl}:Props) {
     // const [g_showResult, setShowResult] = useState(null);
     // const [g_sourcemap_flag, setSourcemapFlag] = useState(null);
     const [data, setData] = useState([]);
+    const [codeFileInfo, setCodeFileInfo] = useState(codeFileInfoInit);
     const [initFlag, setInitFlag] = useState(false);
 
     let g_showResult = null;
@@ -62,7 +68,15 @@ export default function SourceMapShow({ codeLine, codeColumn, mapUrl, sourceUrl}
         });
         let mapString = await getMapString(mapUrl);
         // let mapString = await getMapString();
-        await getCodeFileInfo(mapString, codeLine, codeColumn);
+        const info = await getCodeFileInfo(mapString, codeLine, codeColumn);
+        console.log(`setCodeFileInfo info`)
+        console.log(info)
+        if (info) {
+            setCodeFileInfo(info);
+        } else {
+            setCodeFileInfo(codeFileInfoInit);
+        }
+
         setInitFlag(true);
     }
 
@@ -89,7 +103,7 @@ export default function SourceMapShow({ codeLine, codeColumn, mapUrl, sourceUrl}
         let linesBefore = 10;
         let linesAfter = 10;
         let lines = content.split("\n");
-        console.log(lines)
+        // console.log(lines)
         let line = codeFileInfo.line;
         if(line > lines.length){
             console.log("Line " + line + " outside of file bounds (" + lines.length + " lines total).");
@@ -97,7 +111,7 @@ export default function SourceMapShow({ codeLine, codeColumn, mapUrl, sourceUrl}
             let minLine = Math.max(0, line-(linesBefore + 1));
             let maxLine = Math.min(lines.length, line+linesAfter);
             let code = lines.slice(minLine, maxLine);
-            console.log("Code Section: ");
+            // console.log("Code Section: ");
             let padLength = Math.max(("" + minLine).length, ("" + maxLine).length) + 1;
 
 
@@ -106,19 +120,19 @@ export default function SourceMapShow({ codeLine, codeColumn, mapUrl, sourceUrl}
             for(let i = 0 ; i < code.length ; i++) {
                 const codeString = formatLineNumber(++currentLine, line, padLength) + code[i];
                 listArray.push(codeString);
-                console.log(codeString);
+                // console.log(codeString);
                 if (currentLine == line && codeFileInfo.column) {
                     const codeTrangle = pad('', padLength + 2 + codeFileInfo.column);
                     listArray.push(codeTrangle + '^');
-                    console.log( codeTrangle + '%c^', "color:red");
+                    // console.log( codeTrangle + '%c^', "color:red");
                 }
             }
             // data = listArray;
             setData(listArray);
         }
 
-        console.log("");
-        console.log("");
+        // console.log("");
+        // console.log("");
     }
 
     function showCode(codeText) {
@@ -184,7 +198,7 @@ export default function SourceMapShow({ codeLine, codeColumn, mapUrl, sourceUrl}
             return;
         }
 
-        await sourceMap.SourceMapConsumer.with(mapString, null, async consumer => {
+        return await sourceMap.SourceMapConsumer.with(mapString, null, async consumer => {
 
             console.log(consumer.sources);
 
@@ -195,7 +209,7 @@ export default function SourceMapShow({ codeLine, codeColumn, mapUrl, sourceUrl}
             console.log(codeFileInfo);
             let originalFileName = codeFileInfo.source.replace("webpack:///", "").replace("/~/", "/node_modules/").replace(/\?[0-9a-zA-Z\*\=]+$/, "");
             // document.querySelector('#tip').innerHTML = `请上传源文件： ${originalFileName}`;
-
+            codeFileInfo.originalFileName = originalFileName;
             g_showResult = openFileInit(codeFileInfo);
 
             if (sourceUrl) {
@@ -209,65 +223,25 @@ export default function SourceMapShow({ codeLine, codeColumn, mapUrl, sourceUrl}
 
     }
 
-    // function handlerClose() {
-    //     setDrawerVisiblie(false);
-    // }
-    //
-    // function handlerOpen() {
-    //     setDrawerVisiblie(!drawerVisiblie); // 取反
-    // }
-    //
-    // function onChange(value: any[]) {
-    //     const level = [1];
-    //
-    //     value.forEach((value) => {
-    //         if(value === 'error') {
-    //             level.push(logType.Error);
-    //         } else if(value === 'info') {
-    //             level.push(logType.Info);
-    //         } else if(value === 'debug') {
-    //             level.push(logType.Info);
-    //         }
-    //     });
-    //
-    //     setLevel(level);
-    // }
-    //
-    // function handlerSumbit() {
-    //     const include = includeRef.current.getTags();
-    //     const exclude = excludeRef.current.getTags();
-    //     // const startDate = startTimeRef.current.getTime().unix() * 1000;
-    //     // const endDate = endTimeRef.current.getTime().unix() * 1000;
-    //
-    //     if (!projectId) {
-    //         return;
-    //     }
-    //     setIsListenning(!isListenning);
-    //     onSummit({
-    //         id: projectId,
-    //         include,
-    //         exclude,
-    //         // startDate,
-    //         // endDate,
-    //         index: pageIndex,
-    //         level: level,
-    //     }, isListenning);
-    //
-    //     // setDrawerVisiblie(false);
-    // }
-
     return (
         <div>
-            {/*sourcemap2222*/}
-            {/*<Input type='file' onChange={changeHandler}/><br/>*/}
-            {/*<div id='tip'></div>*/}
-            <List
-                header={<div>代码如下（上下10行）</div>}
-                footer={<div>代码结束</div>}
-                bordered
-                dataSource={data}
-                renderItem={item => (<List.Item className={['item', item.indexOf('^') !== -1 || item.indexOf('>') !== -1 ? 'color-red' : ''].join(' ')}>{item}</List.Item>)}
-            />
+            {
+                !mapUrl ?
+                    <div>该项目没有sourcemap</div> :
+                    <div>
+                        <div>文件名：{codeFileInfo.originalFileName}</div>
+                        <div>行数：{codeFileInfo.line}</div>
+                        <div>列数：{codeFileInfo.column}</div>
+                    </div>
+
+            }
+            {/*<List*/}
+                {/*header={<div>代码如下（上下10行）</div>}*/}
+                {/*footer={<div>代码结束</div>}*/}
+                {/*bordered*/}
+                {/*dataSource={data}*/}
+                {/*renderItem={item => (<List.Item className={['item', item.indexOf('^') !== -1 || item.indexOf('>') !== -1 ? 'color-red' : ''].join(' ')}>{item}</List.Item>)}*/}
+            {/*/>*/}
             {/*<div className={'changeline'}>{data.join('\n')}</div>*/}
         </div>
     )

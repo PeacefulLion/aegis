@@ -21,6 +21,10 @@ export interface SummitOptions {
     level: logType[]
 }
 
+export interface getSMInfoOptions {
+    name: string,
+}
+
 
 export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: SummitOptions) => Promise<FormatLog[]>] {
     const [logs, setLogs] = useState(value);
@@ -61,4 +65,27 @@ export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: Summ
     }
 
     return [logs, setLogs, getLogs];
+}
+
+export function useSMInfos(value: any): [any, Function, (opts: getSMInfoOptions) => Promise<any>]{
+    const [SMInfos, setSMInfos] = useState(value);
+
+    async function getSMInfos(opts: getSMInfoOptions) {
+        const {
+            name
+        } = opts;
+
+        const data = await api({
+            method: 'GET',
+            url: '/controller/sourcemapAction/query.do',
+            params: {
+                name
+            }
+        }) as any;
+        setSMInfos(data);
+
+        return data;
+    }
+
+    return [SMInfos, getSMInfos];
 }
