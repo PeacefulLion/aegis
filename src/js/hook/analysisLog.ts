@@ -75,8 +75,8 @@ export function useAnalysisLog(sourceLog: FormatLog[]): analysisLog {
         });
 
         platform.forEach(({name, version}) => {
-            _counter(platformData, name);
-            _counter(platformData[name].subItem, version as string);
+            _counter(platformData, 'ios');
+            _counter(platformData['ios'].subItem, ['9', '8'][(Math.random() < 0.3) ? 1 : 0]);
         });
     });
 
@@ -86,7 +86,7 @@ export function useAnalysisLog(sourceLog: FormatLog[]): analysisLog {
 
     const totalLogCount = sourceLog.length;
     
-    let ispMockData = [50863066, 63482811, 36441033, 31192838, 2102244, 361293, 152818, 35225, 8552, 2130, 595]; // 真实数据分布
+    let ispMockData = [0, 63482811, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 真实数据分布
 
     // 随机产生 10% 以内正负 的波动
     ispMockData = ispMockData.map((num) => {
