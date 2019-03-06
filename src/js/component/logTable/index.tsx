@@ -45,6 +45,7 @@ function LogPanelInline(props:LogPanelProps) {
         colNum = 0,
         webview,
         userAgent,
+        uin,
         left,
         top
     } = props;
@@ -64,6 +65,12 @@ function LogPanelInline(props:LogPanelProps) {
                     <span className="label">IP</span>
                 </Col>
                 <Col span={20} className="logdetail-info">{ip}</Col>
+            </Row>
+            <Row className="logdetail-row">
+                <Col span={4}>
+                    <span className="label">uin</span>
+                </Col>
+                <Col span={20} className="logdetail-info">{uin}</Col>
             </Row>
             <Row className="logdetail-row">
                 <Col span={4}>
@@ -216,7 +223,6 @@ export default function LogTable(props: LogTableProps) {
                         地区分布
                     </Button>
                 </Button.Group>
-
             </div>
             <AnalysisPanel logs={logs} showApp={showApp} showPlatform={showPlatform} showISP={showISP} showWebviewCore={showWebviewCore} showMap={showMap}></AnalysisPanel>
             <Table dataSource={logs} rowKey="index"
@@ -229,6 +235,11 @@ export default function LogTable(props: LogTableProps) {
                     width={10}
                     className="logtable-index"
                     render={ColumnIndex}
+                />
+                <Column
+                    title="Uin"
+                    dataIndex="uin"
+                    key="uin"
                 />
                 <Column
                     title="Message"

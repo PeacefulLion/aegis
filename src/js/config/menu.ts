@@ -52,7 +52,8 @@ const menu: MenuRoute[] = [{
     icon: 'project',
     child: [{
         name: '申请项目列表',
-        key: '301'
+        key: '301',
+        url: '/applyprojectlist'
     }, {
         name: '项目用户权限',
         key: '302'
