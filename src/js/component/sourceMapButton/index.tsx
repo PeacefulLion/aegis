@@ -27,8 +27,8 @@ function SourceMapButton(props) {
             return
         }
         getSMInfo().then((result) => {
-            const {project, fname} = result;
-            history.push({ pathname: "/sourcemap", map: `http://badjs2.ivweb.io/sm/${project}/${fname}.map`, line, column });
+            const { path } = result;
+            history.push({ pathname: "/sourcemap", map: path, line, column });
         }).catch((err) => {
             history.push({ pathname: "/sourcemap", line, column });
         })
