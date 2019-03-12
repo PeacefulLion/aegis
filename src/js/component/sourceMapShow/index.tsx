@@ -207,6 +207,10 @@ export default function SourceMapShow({ codeLine, codeColumn, mapUrl, sourceUrl}
                 column
             })
             console.log(codeFileInfo);
+            // 查看压缩后的位置
+            // const content = consumer.sourceContentFor(codeFileInfo.source)
+            // console.log(content);
+            // showFileContent(codeFileInfo, content);
             let originalFileName = codeFileInfo.source.replace("webpack:///", "").replace("/~/", "/node_modules/").replace(/\?[0-9a-zA-Z\*\=]+$/, "");
             // document.querySelector('#tip').innerHTML = `请上传源文件： ${originalFileName}`;
             codeFileInfo.originalFileName = originalFileName;
