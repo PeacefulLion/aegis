@@ -30,5 +30,5 @@ export default function authHOC(BaseComponent) {
             return <BaseComponent {...this.props} />;
         }
     }
-    return withRouter(Restricted);
+    return withRouter(Restricted as any);
 }

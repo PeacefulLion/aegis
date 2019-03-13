@@ -5,6 +5,7 @@ import Icon from '../icon';
 import './index.less';
 import AnalysisPanel from '../analysisPanel';
 
+import SourceMapButton from '../sourceMapButton'
 const {
     useState,
     useEffect
@@ -36,6 +37,7 @@ interface LogPanelProps extends FormatLog {
 
 function LogPanelInline(props:LogPanelProps) {
     const {
+        target,
         appIcon,
         platform,
         ip,
@@ -84,21 +86,25 @@ function LogPanelInline(props:LogPanelProps) {
                 </Col>
                 <Col span={20} className="logdetail-info">
                     {
-                        <a target="_blank" href={`${from}`}>
-                            {
-                                rowNum ? (
-                                    <span>{rowNum}行</span>
-                                ) : null
-                            }
-                            {
-                                colNum ? (
-                                    <span>{colNum}列</span>
-                                ) : null
-                            }
-                            <p>
-                                {from}
-                            </p>
-                        </a>
+                        <div>
+                            <a target="_blank" href={`${from}`}>
+                                {
+                                    rowNum ? (
+                                        <span>{rowNum}行</span>
+                                    ) : null
+                                }
+                                {
+                                    colNum ? (
+                                        <span>{colNum}列</span>
+                                    ) : null
+                                }
+                                <p>
+                                    {from}
+                                </p>
+                            </a>
+
+                            <SourceMapButton target={target} rowNum={rowNum} colNum={colNum}></SourceMapButton>
+                        </div>
                     }
                 </Col>
             </Row>
