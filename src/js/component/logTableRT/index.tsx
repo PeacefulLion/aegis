@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Row, Col, Table, Tooltip, Switch, Form, Icon } from 'antd';
-import { Icon as IconProps, FormatLog as FormatLog } from '../../hook/logs'
+import { Row, Col, Table, Tooltip, Switch, Form } from 'antd';
+import { FormatLog, Icon as IconProps } from '../../hook/common';
+import Icon from '../icon';
 
 import './index.less';
 import SourceMapButton from "../sourceMapButton";

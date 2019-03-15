@@ -18,8 +18,6 @@ const {
     useState
 } = React;
 
-
-
 function Root(props) {
     const [route, setRoute] = useState(routeInst);
     return (

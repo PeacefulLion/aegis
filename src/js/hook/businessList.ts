@@ -1,10 +1,5 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import api from '../common/api';
-
-const {
-    useState,
-    useEffect
-} = React;
 
 export interface Business {
     chineseName: string,

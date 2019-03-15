@@ -14,7 +14,11 @@ import Historylog from '../page/historylog';
 import Realtimelog from '../page/realtimelog';
 import OfflineLog from '../page/offlinelog';
 import Charts from '../page/charts';
+
+import ApplyProjectList from '../page/applyProjectList';
+import ApplyProject from '../page/applyProject';
 import Sourcemap from '../page/sourcemap';
+
 
 
 import authHOC from '../common/util/auth'
@@ -36,9 +40,11 @@ export function Frame(props) {
                 <div style={{ minHeight: document.documentElement.offsetHeight }}>
                     <Route path={'/Home'} component={Home} exactly={true} />
                     <Route path={'/historylog'} component={Historylog} exactly={true} />
+                    <Route path={'/applyproject'} component={ApplyProject} exactly={true} />
                     <Route path={'/realtimelog'} component={Realtimelog} exactly={true} />
                     <Route path={'/offlinelog'} component={OfflineLog} exactly={true} />
                     <Route path={'/charts'} component={ Charts } exactly={true} />
+                    <Route path={'/applyprojectlist'} component={ApplyProjectList} exactly={true} />
                     <Route path={'/sourcemap'} component={ Sourcemap } exactly={true} />
                     <Route path="/userbind-verify" component={ UserbindVerify } exactly={true} />
                 </div>

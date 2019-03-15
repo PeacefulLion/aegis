@@ -1,5 +1,5 @@
-# WARDMONITOR
-基于 badjs 
+# Aegis
+基于 badjs 的前端监控体系平台
 
 ## 开发 
 语言 ts
@@ -9,8 +9,8 @@ UI框架 echarts + ant-design
 
 ## whistle 配置
 ```
-//badjs2.ivweb.io/badjs3/ localhost:1234/
-/^https?://badjs2\.ivweb\.io/(.*\.(js|css|png|jpg|gif|jpeg|svg|blob).*)$/ localhost:1234/$1
+//badjs2.ivweb.io/index.html localhost:1234/index.html
+//badjs2.ivweb.io/aegis/ localhost:1234/aegis
 ```
 
 ## 调试

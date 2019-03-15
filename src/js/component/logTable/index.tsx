@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Row, Col, Table, Tooltip, Switch, Form, Button } from 'antd';
-import { Icon as IconProps, FormatLog as FormatLog } from '../../hook/logs'
+import { Icon as IconProps, FormatLog as FormatLog } from '../../hook/common';
 import Icon from '../icon';
 import './index.less';
+import AnalysisPanel from '../analysisPanel';
 
 import SourceMapButton from '../sourceMapButton'
 const {
@@ -46,6 +47,7 @@ function LogPanelInline(props:LogPanelProps) {
         colNum = 0,
         webview,
         userAgent,
+        uin,
         left,
         top
     } = props;
@@ -65,6 +67,12 @@ function LogPanelInline(props:LogPanelProps) {
                     <span className="label">IP</span>
                 </Col>
                 <Col span={20} className="logdetail-info">{ip}</Col>
+            </Row>
+            <Row className="logdetail-row">
+                <Col span={4}>
+                    <span className="label">uin</span>
+                </Col>
+                <Col span={20} className="logdetail-info">{uin}</Col>
             </Row>
             <Row className="logdetail-row">
                 <Col span={4}>
@@ -174,14 +182,55 @@ export default function LogTable(props: LogTableProps) {
         logs
     } = props;
 
+    const [showApp, setShowApp] = useState(false);
+    const [showPlatform, setShowPlatform] = useState(false);
+    const [showISP, setShowISP] = useState(false);
+    const [showWebviewCore, setshowWebviewCore] = useState(false);
+    const [showMap, setShowMap] = useState(false);
+
+    const handlerClickApp = function() {
+        setShowApp(!showApp);
+    }
+
+    const handlerClickPlatform = function() {
+        setShowPlatform(!showPlatform);
+    }
+
+    const handlerClickISP = function() {
+        setShowISP(!showISP);
+    }
+
+    const handlerClickWebviewCore = function() {
+        setshowWebviewCore(!showWebviewCore);
+    }
+
+    const handlerClickMap = function() {
+        setShowMap(!showMap);
+    }
+
+
     return (
         <div className="logtable">
             <div className="logtable-control">
-                <Button type="primary">
-                    错误分析
-                </Button>
+                <Button.Group>
+                    <Button type="primary" onClick={handlerClickApp}>
+                        终端分布
+                    </Button>
+                    <Button type="primary" onClick={handlerClickPlatform}>
+                        客户端分布
+                    </Button>
+                    <Button type="primary" onClick={handlerClickISP}>
+                        运营商分布
+                    </Button>
+                    <Button type="primary" onClick={handlerClickWebviewCore}>
+                        webview内核分布
+                    </Button>
+                    <Button type="primary" onClick={handlerClickMap}>
+                        地区分布
+                    </Button>
+                </Button.Group>
             </div>
-
+            <AnalysisPanel logs={logs} showApp={showApp} showPlatform={showPlatform} showISP={showISP} showWebviewCore={showWebviewCore} showMap={showMap}></AnalysisPanel>
             <Table dataSource={logs} rowKey="index"
                 expandedRowRender={LogPanelInline}
                 expandRowByClick={true}
@@ -192,6 +241,11 @@ export default function LogTable(props: LogTableProps) {
                     width={10}
                     className="logtable-index"
                     render={ColumnIndex}
+                />
+                <Column
+                    title="Uin"
+                    dataIndex="uin"
+                    key="uin"
                 />
                 <Column
                     title="Message"

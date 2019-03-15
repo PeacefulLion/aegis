@@ -51,17 +51,22 @@ const menu: MenuRoute[] = [{
     name: '项目管理',
     icon: 'project',
     child: [{
-        name: '申请项目列表',
-        key: '301'
+        name: '申请项目',
+        key: '301',
+        url: '/applyproject'
+    }, {
+        name: '审核项目',
+        key: '302',
+        url: '/applyprojectlist'
     }, {
         name: '项目用户权限',
-        key: '302'
-    }, {
-        name: '注册用户列表',
         key: '303'
     }, {
+        name: '注册用户列表',
+        key: '304'
+    }, {
         name: '用户绑定审核', 
-        key: '304',
+        key: '305',
         url: '/userbind-verify'
     }]
 }, {

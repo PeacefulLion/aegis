@@ -6,12 +6,12 @@ import './index.less';
 import QueryForm from '../../component/queryForm';
 
 export default function Log(props) {
-    const [logs, setLogs, getLogs] = useLogs([]);
+    const [logs, setLogs, getLogs, logKey] = useLogs([]);
 
     return (
         <div>
             <QueryForm onSummit={getLogs}></QueryForm>
-            <LogTable logs={logs} />
+            <LogTable key={logKey} logs={logs} />
         </div>
     )
 }
