@@ -22,7 +22,7 @@ export default function BindRTX(props: BindRTXProps) {
             '确定吗？该操作无法撤销。', 
             '',
             '提交后，由后台审核通过；在审核通过之后再次登陆即可登陆。',
-            '相关负责人：xxx'
+            '相关负责人：adamhe;tickli;'
         ].join('\n')); 
 
         if (yes) { 
