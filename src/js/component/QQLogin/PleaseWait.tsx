@@ -9,35 +9,35 @@ export type PleaseWaitProps = {
 
 export default function PleaseWait(props: PleaseWaitProps) {
     const [inited, setInited] = React.useState(false);
-    const [onload, setLoad] = React.useState(false); 
+    const [onload, setLoad] = React.useState(false);
 
     React.useEffect(() => {
         if (!inited) {
-            setInited(true); 
-            updateSession().then(userInfo => {            
-                console.log('Update Session userInfo', userInfo); 
+            setInited(true);
+            updateSession().then(userInfo => {
+                console.log('Update Session userInfo', userInfo);
                 if (userInfo.verify_state === 2) {
-                    props.setUserInfo(userInfo); 
-                }     
+                    props.setUserInfo(userInfo);
+                }
             })
         }
-    }); 
+    });
 
     const toload = () => {
-        setLoad(true); 
+        setLoad(true);
         updateSession().then(userInfo => {
             setTimeout(() => {
-                setLoad(false); 
+                setLoad(false);
                 if (userInfo.verify_state === 2) {
-                    props.setUserInfo(userInfo); 
+                    props.setUserInfo(userInfo);
                 }
-            }, 1000); 
-            console.log('Update Session userInfo', userInfo); 
+            }, 1000);
+            console.log('Update Session userInfo', userInfo);
         }).catch(err => {
-            setLoad(false); 
+            setLoad(false);
         })
     }
-    
+
     return (
         <div className="recv-container">
             <div className="recv-input-area" >
@@ -50,10 +50,10 @@ export default function PleaseWait(props: PleaseWaitProps) {
                         <Icon type="reload" onClick={ toload } />
                     )
                 }
-                
-                <p>后台审核中，负责人: xxx</p>
+
+                <p>后台审核中，负责人: adamhe;tickli</p>
             </div>
         </div>
-    ); 
+    );
 }
 
