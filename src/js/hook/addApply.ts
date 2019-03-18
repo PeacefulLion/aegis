@@ -1,13 +1,8 @@
+import { useState, useEffect } from 'react';
 import api from '../../js/common/api';
 
-export default addApply() {
-    api.post('',  {
-        name: test
-        description: asdas
-        url: *.qq.com
-        blacklist: {"ip":[],"ua":[]}
-        online: 1
-        limitpv: 
-        userName: admahe
+export default function addApply(data) {
+    api.post('//badjs2.ivweb.io/user/controller/applyAction/addApply.do', {
+
     })
 }

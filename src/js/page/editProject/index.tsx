@@ -2,12 +2,20 @@ import * as React from 'react';
 import ProjectFrom from '../../component/projectForm';
 import { withRouter } from 'react-router-dom'; 
 import api from '../../common/api';
-import { Modal } from 'antd'; 
+import { Modal, Empty } from 'antd';
+import { useProject, Project } from '../../hook/project';
+import { CGI_STATUS } from '../../hook/cgiStatus';
 
 const RouterWrap = withRouter((props) => {
     const {
-        history 
+        history,
+        match
     } = props;
+
+    const {
+        data,
+        status
+    } = useProject(match.params.projectId);
 
     function doApply(values) {
         const {
@@ -41,7 +49,7 @@ const RouterWrap = withRouter((props) => {
         })
             .then((result) => {
                 const modal = Modal.success({
-                    title: '申请成功',
+                    title: '修改成功',
                     onOk: () => {
                         history.push('/applyprojectlist'); // 跳去申请页面
                         modal.destroy();
@@ -50,15 +58,21 @@ const RouterWrap = withRouter((props) => {
             })
             .catch((result) => {
                 const modal = Modal.error({
-                    title: '申请失败',
+                    title: '修改失败',
                     content: JSON.stringify(result, null, 2)
                 });
             })
     }
 
-    return <ProjectFrom btnText="申请项目" onSummit={doApply}></ProjectFrom>;
+    return status === CGI_STATUS.SUCCESS ? (
+        <ProjectFrom btnText="编辑项目" onSummit={doApply} {...data}></ProjectFrom>
+    ) : (
+        <Empty>
+            加载失败
+        </Empty>
+    );
 });
 
-export default function ApplyProject() {
-    return <RouterWrap />
+export default function EditProject(props) {
+    return <RouterWrap {...props} />
 }
