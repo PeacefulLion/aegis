@@ -152,7 +152,7 @@ export default function LogTable(props: LogTableProps) {
     const {
         logs
     } = props;
-
+    const expands = logs.slice(0, 10).map(record => `${record.uin}${record.date}`)
     const [showTime, setShowTime] = useState(false);
     const [showIp, setShowIp] = useState(false);
     const [showUin, setShowUin] = useState(false);
@@ -163,7 +163,6 @@ export default function LogTable(props: LogTableProps) {
     const [showNetType, setShowNetType] = useState(false);
     const [showLogPanel, setShowLogPanel] = useState(false);
     const [record, setRecord] = useState(null);
-
     return (
         <div className="logtable">
             <div className="logtable-control">
@@ -193,13 +192,12 @@ export default function LogTable(props: LogTableProps) {
             </div>
 
             <Table dataSource={logs}
-                   rowKey={(record:LogPanelProps, index: number) => {
-                       return `${record.date}${record.msg}${Math.random()}`;
-                   }}
+                   rowKey={record => `${record.uin}${record.date}`}
                    expandedRowRender={(record:LogPanelProps,index: number, indent: number, expanded: boolean) => {
                        return LogPanelInline(record)
                    }}
                    expandRowByClick={true}
+                   expandedRowKeys={expands}
             >
                 <Column
                     title="#"
