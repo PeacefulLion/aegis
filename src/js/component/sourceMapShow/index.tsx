@@ -208,9 +208,9 @@ export default function SourceMapShow({ codeLine, codeColumn, mapUrl, sourceUrl}
             })
             console.log(codeFileInfo);
             // 查看压缩后的位置
-            // const content = consumer.sourceContentFor(codeFileInfo.source)
-            // console.log(content);
-            // showFileContent(codeFileInfo, content);
+            const content = consumer.sourceContentFor(codeFileInfo.source)
+            console.log(content);
+            showFileContent(codeFileInfo, content);
             let originalFileName = codeFileInfo.source.replace("webpack:///", "").replace("/~/", "/node_modules/").replace(/\?[0-9a-zA-Z\*\=]+$/, "");
             // document.querySelector('#tip').innerHTML = `请上传源文件： ${originalFileName}`;
             codeFileInfo.originalFileName = originalFileName;
@@ -236,17 +236,15 @@ export default function SourceMapShow({ codeLine, codeColumn, mapUrl, sourceUrl}
                         <div>文件名：{codeFileInfo.originalFileName}</div>
                         <div>行数：{codeFileInfo.line}</div>
                         <div>列数：{codeFileInfo.column}</div>
+                        <List
+                            header={<div>代码如下（上下10行）</div>}
+                            footer={<div>代码结束</div>}
+                            bordered
+                            dataSource={data}
+                            renderItem={item => (<List.Item className={['item', item.indexOf('^') !== -1 || item.indexOf('>') !== -1 ? 'color-red' : ''].join(' ')}>{item}</List.Item>)}
+                        />
                     </div>
-
             }
-            {/*<List*/}
-                {/*header={<div>代码如下（上下10行）</div>}*/}
-                {/*footer={<div>代码结束</div>}*/}
-                {/*bordered*/}
-                {/*dataSource={data}*/}
-                {/*renderItem={item => (<List.Item className={['item', item.indexOf('^') !== -1 || item.indexOf('>') !== -1 ? 'color-red' : ''].join(' ')}>{item}</List.Item>)}*/}
-            {/*/>*/}
-            {/*<div className={'changeline'}>{data.join('\n')}</div>*/}
         </div>
     )
 }
