@@ -11,6 +11,7 @@ export interface Log {
     ip: string,
     level: logType,
     from: string,
+    version: number,
     rowNum?: number,
     colNum?: number,
 }
@@ -20,7 +21,8 @@ export interface FormatLog extends Log {
     appIcon: Icon[],
     webview: string[],
     time: string,
-    device: any
+    device: any,
+    version: number
 }
 
 export interface Icon {
@@ -32,12 +34,13 @@ export function formatLog(log: Log): FormatLog {
     const device = getDevice(log.userAgent);
 
     const formatLog: FormatLog = Object.assign({
-        time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        time: dayjs(log.date).format('YYYY-MM-DD HH:mm:ss'),
         uin: (log.uin || isNaN(log.uin as number) ? '-' : log.uin),
         device,
         appIcon: [],
         platform: [],
-        webview: []
+        webview: [],
+        version: log.version || 1
     }, log);
 
     ['android', 'iOS', 'windows'].forEach((name) => {

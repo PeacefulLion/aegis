@@ -50,7 +50,8 @@ function LogPanelInline(props: LogPanelProps) {
         userAgent,
         uin,
         left,
-        top
+        top,
+        version
     } = props;
 
     return (
@@ -140,6 +141,14 @@ function LogPanelInline(props: LogPanelProps) {
                             <span>浏览器内核为 {webview.join(';')}</span>
                         ) : null
                     }
+                </Col>
+            </Row>
+            <Row className="logdetail-row">
+                <Col span={4}>
+                    <span className="label">version</span>
+                </Col>
+                <Col span={20} className="logdetail-info">
+                    {version}
                 </Col>
             </Row>
         </div>

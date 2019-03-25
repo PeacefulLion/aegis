@@ -45,6 +45,7 @@ function LogPanelInline(props: LogPanelProps) {
         from,
         rowNum = 0,
         colNum = 0,
+        version
     } = props;
 
     return (
@@ -112,6 +113,14 @@ function LogPanelInline(props: LogPanelProps) {
                     {VersionIconList(platform)}
                 </Col>
             </Row>
+            <Row className="logdetail-row">
+                <Col span={4}>
+                    <span className="label">version</span>
+                </Col>
+                <Col span={20} className="logdetail-info">
+                    {version}
+                </Col>
+            </Row>
         </div>
     );
 }
@@ -135,6 +144,12 @@ function ColumnPaltform(appIcon: IconProps[], record: FormatLog, index: number) 
 function ColumnFrom(appIcon: IconProps[], record: FormatLog, index: number) {
     return (
        <div>{record.from}</div>
+    );
+}
+
+function ColumnVersion(appIcon: IconProps[], record: FormatLog, index: number) {
+    return (
+        <div>{record.version}</div>
     );
 }
 
@@ -162,6 +177,7 @@ export default function LogTable(props: LogTableProps) {
     const [showApp, setShowApp] = useState(false);
     const [showPlatform, setShowPlatform] = useState(false);
     const [showFrom, setShowFrom] = useState(false);
+    const [showVersion, setShowVersion] = useState(false);
     const [showMsg, setShowMsg] = useState(true);
     const [showNetType, setShowNetType] = useState(false);
     const [showLogPanel, setShowLogPanel] = useState(false);
@@ -190,6 +206,9 @@ export default function LogTable(props: LogTableProps) {
                     </Form.Item>
                     <Form.Item label="From">
                         <Switch checked={showFrom} onChange={setShowFrom} />
+                    </Form.Item>
+                    <Form.Item label="Version">
+                        <Switch checked={showVersion} onChange={setShowVersion} />
                     </Form.Item>
                 </Form>
             </div>
@@ -279,6 +298,17 @@ export default function LogTable(props: LogTableProps) {
                             key="from"
                             width={100}
                             render={ColumnFrom}
+                        />
+                    ) : null
+                }
+                {
+                    showVersion ? (
+                        <Column
+                            title="Version"
+                            dataIndex="version"
+                            key="version"
+                            width={100}
+                            render={ColumnVersion}
                         />
                     ) : null
                 }
