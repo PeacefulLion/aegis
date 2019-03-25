@@ -33,7 +33,8 @@ function VersionIconList(data: IconProps[]) {
 
 interface LogPanelProps extends FormatLog {
     left?: number,
-    top?: number
+    top?: number,
+    target?: string
 }
 
 function LogPanelInline(props: LogPanelProps) {

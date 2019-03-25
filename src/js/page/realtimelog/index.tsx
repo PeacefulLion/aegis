@@ -11,7 +11,7 @@ export default function Log() {
         if (isListenning) {
             stopLogs();
         } else {
-            listenLogs(opts: SummitOptions);
+            listenLogs(opts);
         }
     }
 
