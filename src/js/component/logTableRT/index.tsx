@@ -46,6 +46,7 @@ function LogPanelInline(props: LogPanelProps) {
         from,
         rowNum = 0,
         colNum = 0,
+        version
     } = props;
 
     return (
@@ -113,6 +114,14 @@ function LogPanelInline(props: LogPanelProps) {
                     {VersionIconList(platform)}
                 </Col>
             </Row>
+            <Row className="logdetail-row">
+                <Col span={4}>
+                    <span className="label">version</span>
+                </Col>
+                <Col span={20} className="logdetail-info">
+                    {version}
+                </Col>
+            </Row>
         </div>
     );
 }
@@ -139,6 +148,12 @@ function ColumnFrom(appIcon: IconProps[], record: FormatLog, index: number) {
     );
 }
 
+function ColumnVersion(appIcon: IconProps[], record: FormatLog, index: number) {
+    return (
+        <div>{record.version}</div>
+    );
+}
+
 function ColumnApp(platform: IconProps[], record: FormatLog, index: number) {
     return (
         <Tooltip title={record.userAgent}>
@@ -156,18 +171,18 @@ export default function LogTable(props: LogTableProps) {
     const {
         logs
     } = props;
-
+    const expands = logs.slice(0, 10).map(record => `${record.uin}${record.date}`)
     const [showTime, setShowTime] = useState(false);
     const [showIp, setShowIp] = useState(false);
     const [showUin, setShowUin] = useState(false);
     const [showApp, setShowApp] = useState(false);
     const [showPlatform, setShowPlatform] = useState(false);
     const [showFrom, setShowFrom] = useState(false);
+    const [showVersion, setShowVersion] = useState(false);
     const [showMsg, setShowMsg] = useState(true);
     const [showNetType, setShowNetType] = useState(false);
     const [showLogPanel, setShowLogPanel] = useState(false);
     const [record, setRecord] = useState(null);
-
     return (
         <div className="logtable">
             <div className="logtable-control">
@@ -193,17 +208,19 @@ export default function LogTable(props: LogTableProps) {
                     <Form.Item label="From">
                         <Switch checked={showFrom} onChange={setShowFrom} />
                     </Form.Item>
+                    <Form.Item label="Version">
+                        <Switch checked={showVersion} onChange={setShowVersion} />
+                    </Form.Item>
                 </Form>
             </div>
 
             <Table dataSource={logs}
-                   rowKey={(record:LogPanelProps, index: number) => {
-                       return `${record.date}${record.msg}${Math.random()}`;
-                   }}
+                   rowKey={record => `${record.uin}${record.date}`}
                    expandedRowRender={(record:LogPanelProps,index: number, indent: number, expanded: boolean) => {
                        return LogPanelInline(record)
                    }}
                    expandRowByClick={true}
+                   expandedRowKeys={expands}
             >
                 <Column
                     title="#"
@@ -282,6 +299,17 @@ export default function LogTable(props: LogTableProps) {
                             key="from"
                             width={100}
                             render={ColumnFrom}
+                        />
+                    ) : null
+                }
+                {
+                    showVersion ? (
+                        <Column
+                            title="Version"
+                            dataIndex="version"
+                            key="version"
+                            width={100}
+                            render={ColumnVersion}
                         />
                     ) : null
                 }
