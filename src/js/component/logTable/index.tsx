@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { Row, Col, Table, Tooltip, Switch, Form, Button } from 'antd';
-import { Icon as IconProps, FormatLog as FormatLog } from '../../hook/common';
+import {Row, Col, Table, Tooltip, Switch, Form, Button} from 'antd';
+import {Icon as IconProps, FormatLog as FormatLog} from '../../hook/common';
 import Icon from '../icon';
 import './index.less';
 import AnalysisPanel from '../analysisPanel';
 
 import SourceMapButton from '../sourceMapButton'
+
 const {
     useState,
     useEffect
 } = React;
 
-const { Column, ColumnGroup } = Table;
+const {Column, ColumnGroup} = Table;
 
 function VersionIcon(props: IconProps) {
     return (
@@ -35,7 +36,7 @@ interface LogPanelProps extends FormatLog {
     top?: number
 }
 
-function LogPanelInline(props:LogPanelProps) {
+function LogPanelInline(props: LogPanelProps) {
     const {
         target,
         appIcon,
@@ -103,7 +104,10 @@ function LogPanelInline(props:LogPanelProps) {
                                 </p>
                             </a>
 
-                            <SourceMapButton target={target} rowNum={rowNum} colNum={colNum}></SourceMapButton>
+                            {
+                                target ? <SourceMapButton target={target} rowNum={rowNum}
+                                                          colNum={colNum}></SourceMapButton> : null
+                            }
                         </div>
                     }
                 </Col>
@@ -188,23 +192,23 @@ export default function LogTable(props: LogTableProps) {
     const [showWebviewCore, setshowWebviewCore] = useState(false);
     const [showMap, setShowMap] = useState(false);
 
-    const handlerClickApp = function() {
+    const handlerClickApp = function () {
         setShowApp(!showApp);
     }
 
-    const handlerClickPlatform = function() {
+    const handlerClickPlatform = function () {
         setShowPlatform(!showPlatform);
     }
 
-    const handlerClickISP = function() {
+    const handlerClickISP = function () {
         setShowISP(!showISP);
     }
 
-    const handlerClickWebviewCore = function() {
+    const handlerClickWebviewCore = function () {
         setshowWebviewCore(!showWebviewCore);
     }
 
-    const handlerClickMap = function() {
+    const handlerClickMap = function () {
         setShowMap(!showMap);
     }
 
@@ -230,10 +234,11 @@ export default function LogTable(props: LogTableProps) {
                     </Button>
                 </Button.Group>
             </div>
-            <AnalysisPanel logs={logs} showApp={showApp} showPlatform={showPlatform} showISP={showISP} showWebviewCore={showWebviewCore} showMap={showMap}></AnalysisPanel>
+            <AnalysisPanel logs={logs} showApp={showApp} showPlatform={showPlatform} showISP={showISP}
+                           showWebviewCore={showWebviewCore} showMap={showMap}></AnalysisPanel>
             <Table dataSource={logs} rowKey="index"
-                expandedRowRender={LogPanelInline}
-                expandRowByClick={true}
+                   expandedRowRender={LogPanelInline}
+                   expandRowByClick={true}
             >
                 <Column
                     title="#"

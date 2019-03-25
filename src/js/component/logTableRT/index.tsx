@@ -86,7 +86,10 @@ function LogPanelInline(props: LogPanelProps) {
                                 </p>
                             </a>
 
-                            <SourceMapButton target={target} rowNum={rowNum} colNum={colNum}></SourceMapButton>
+                            {
+                                target ? <SourceMapButton target={target} rowNum={rowNum}
+                                                          colNum={colNum}></SourceMapButton> : null
+                            }
                         </div>
                     }
                 </Col>
