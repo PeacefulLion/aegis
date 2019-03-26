@@ -219,7 +219,7 @@ export default function LogTable(props: LogTableProps) {
                        return LogPanelInline(record)
                    }}
                    expandRowByClick={true}
-                   expandedRowKeys={expands}
+                   // expandedRowKeys={expands}
             >
                 <Column
                     title="#"
