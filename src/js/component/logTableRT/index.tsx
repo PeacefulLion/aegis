@@ -32,7 +32,8 @@ function VersionIconList(data: IconProps[]) {
 
 interface LogPanelProps extends FormatLog {
     left?: number,
-    top?: number
+    top?: number,
+    target?: string
 }
 
 function LogPanelInline(props: LogPanelProps) {
@@ -170,6 +171,7 @@ export default function LogTable(props: LogTableProps) {
     const {
         logs
     } = props;
+    logs.reverse();
     const expands = logs.slice(0, 10).map(record => `${record.uin}${record.date}`)
     const [showTime, setShowTime] = useState(false);
     const [showIp, setShowIp] = useState(false);
