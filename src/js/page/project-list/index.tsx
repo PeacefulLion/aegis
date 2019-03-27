@@ -1,6 +1,7 @@
 import * as React from 'react';;
 import { useApplyProjectList, applyProjectItem } from '../../hook/applyProjectList';
 import APPLY_STATUS from "../../common/const/applyStatus";
+import { Link } from 'react-router-dom';
 import { Row, Col, Table, Tooltip, Switch, Form, Button, Select } from 'antd';
 
 const {
@@ -49,8 +50,15 @@ export default function ApplyProjectList(props) {
                 />
                 <Column
                     title="项目名"
-                    dataIndex="name"
                     key="name"
+                    dataIndex="name"
+                    render={(name, record: applyProjectItem) => {
+                        return (
+                            <Link key="link" to={`/projectedit/${record.id}`} >
+                                {name}
+                            </Link>
+                        )
+                    }}
                 />
                 <Column
                     title="申请人"
@@ -60,19 +68,20 @@ export default function ApplyProjectList(props) {
                 <Column
                     title="状态"
                     key="status"
-                    render={(record: applyProjectItem, text) => {
+                    dataIndex="status"
+                    render={(status, record: applyProjectItem) => {
                         const changeProjectStatus = (value) => {
                             setProjectStatus(record.id, value);
                         };
                         return (
-                            <Select defaultValue={optionName[status]} style={{ width: 120 }} onChange={changeProjectStatus}>
+                            <Select key="select" defaultValue={optionName[status]} style={{ width: 120 }} onChange={changeProjectStatus}>
                             {
                                 optionName.map((name, index) => {
                                     return <Option key={name} value={index}>{name}</Option>
                                 })
                             }
                             </Select>
-                        );
+                        )
                     }}
                 />
             </Table>

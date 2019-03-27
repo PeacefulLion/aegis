@@ -2,7 +2,7 @@ import * as React from 'react';
 import ProjectFrom from '../../component/projectForm';
 import { withRouter } from 'react-router-dom'; 
 import api from '../../common/api';
-import { Modal, Empty } from 'antd';
+import { Modal, Empty, Spin } from 'antd';
 import { useProject, Project } from '../../hook/project';
 import { CGI_STATUS } from '../../hook/cgiStatus';
 
@@ -30,6 +30,7 @@ const RouterWrap = withRouter((props) => {
         } = values;
     
         const params = {
+            id: data.id,
             name,
             description,
             url,
@@ -51,7 +52,7 @@ const RouterWrap = withRouter((props) => {
                 const modal = Modal.success({
                     title: '修改成功',
                     onOk: () => {
-                        history.push('/applyprojectlist'); // 跳去申请页面
+                        history.push('/projectlist'); // 跳去申请页面
                         modal.destroy();
                     }
                 });
@@ -68,7 +69,8 @@ const RouterWrap = withRouter((props) => {
         <ProjectFrom btnText="编辑项目" onSummit={doApply} {...data}></ProjectFrom>
     ) : (
         <Empty>
-            加载失败
+            {  status === CGI_STATUS.FAIL ? '加载失败' : ''}
+            {  status === CGI_STATUS.LOADING ? <Spin></Spin> : null}
         </Empty>
     );
 });

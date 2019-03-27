@@ -53,11 +53,11 @@ const menu: MenuRoute[] = [{
     child: [{
         name: '申请项目',
         key: '301',
-        url: '/applyproject'
+        url: '/projectapply'
     }, {
-        name: '审核项目',
+        name: '项目列表',
         key: '302',
-        url: '/applyprojectlist'
+        url: '/projectlist'
     }, {
         name: '项目用户权限',
         key: '303'

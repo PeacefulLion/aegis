@@ -8,7 +8,7 @@ export interface Project {
     "passTime"?: number
     "ip": string[]
     "userAgent": string[] 
-    "userName": number
+    "userName": string
     "status": number
     "name": string
     "appkey": string
@@ -25,23 +25,18 @@ export interface Result{
     status: CGI_STATUS
 }
 
-export function useProject(projectId = 0): Result {
-    const [data, setData] = useState(null);
+export function useProject(applyId = 0): Result {
     const [status, setStatus] = useCGIStatus();
+    const [projectId, setProjectId] = useState(applyId);
 
     useEffect(() => {
         (async () => {
             setStatus(CGI_STATUS.LOADING);
-            const result = await api.get('//badjs2.ivweb.io/controller/applyAction/queryByApplyId.do', {
+            const data = await api.get('//badjs2.ivweb.io/controller/applyAction/queryByApplyId.do', {
                 params: {
-                    projectId
+                    applyId: projectId
                 }
             }) as any;
-
-            const {
-                data
-            } = result;
-
             if(data) {
                 data.ip = [];
                 data.useAgent = [];
@@ -49,19 +44,19 @@ export function useProject(projectId = 0): Result {
                 try {
                     const blacklist = JSON.parse(data.blacklist);
                     data.ip = blacklist.ip;
-                    data.userAgent = blacklist.userAgent;
+                    data.userAgent = blacklist.ua;
                 } catch(e) {
                     console.log(e);
                 }
-
+                setData(data);
                 setStatus(CGI_STATUS.SUCCESS);
             } else {
                 setStatus(CGI_STATUS.FAIL);
             }
-            
-            setData(data);
         })();
     }, [projectId]);
+
+    const [data, setData] = useState(null);
 
     return {
         data,

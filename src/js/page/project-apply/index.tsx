@@ -43,7 +43,7 @@ const RouterWrap = withRouter((props) => {
                 const modal = Modal.success({
                     title: '申请成功',
                     onOk: () => {
-                        history.push('/applyprojectlist'); // 跳去申请页面
+                        history.push('/projectlist'); // 跳去申请页面
                         modal.destroy();
                     }
                 });

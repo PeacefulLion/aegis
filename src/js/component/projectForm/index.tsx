@@ -17,7 +17,7 @@ const formItemLayout = {
 function checkUrl(rule, value, callback) {
     if(/^(?=^.{3,255}$)[\*a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/ig.test(value)) {
         callback();
-    } else if(/^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[\*a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*(\/\w+\.\w+)*$/ig.test(value)) {
+    } else if(/^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[\*a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*(\/\w+\.\w+)*\/?$/ig.test(value)) {
         callback();
     } else if(value === '*') {
         callback();
@@ -44,12 +44,21 @@ function checkIP(rule, value, callback) {
 
 export function ApplyProject(props) {
     const {
-        match,
-        location,
-        history,
         form,
         onSummit,
-        btnText
+        btnText,
+        ip = [],
+        userAgent = [],
+        userName,
+        status = 0,
+        name = '',
+        appkey,
+        url = '', 
+        blacklist,
+        description = '',
+        mail = '',
+        online = 0,
+        limitpv = 300
     } = props;
 
     const {
@@ -77,7 +86,7 @@ export function ApplyProject(props) {
                 {...formItemLayout}
             >   
                 {getFieldDecorator('name', {
-                    initialValue: '',
+                    initialValue: name,
                     rules: [{
                         required: true,
                         min: 1
@@ -96,7 +105,7 @@ export function ApplyProject(props) {
                 如果不希望服务器做 referer 检查, 请填写 *"
             >   
                 {getFieldDecorator('url', {
-                    initialValue: '',
+                    initialValue: url,
                     rules: [{
                         required: true,
                         validator: checkUrl,
@@ -111,7 +120,7 @@ export function ApplyProject(props) {
                 label="业务描述"
             >   
                 {getFieldDecorator('description', {
-                    initialValue: ''
+                    initialValue: description
                 })(
                     <Input placeholder="业务描述" />
                 )}
@@ -123,7 +132,7 @@ export function ApplyProject(props) {
                 help="格式如下： 127.0.0.5,132.5.3.*,132.4.*"
             >   
                 {getFieldDecorator('ip', {
-                    initialValue: '',
+                    initialValue: ip.join(','),
                     rules: [{
                         validator: checkIP,
                     }],
@@ -138,7 +147,7 @@ export function ApplyProject(props) {
                 help="格式如下： Baiduspider,Googlespider"
             >
                 {getFieldDecorator('userAgent', {
-                    initialValue: ''
+                    initialValue: userAgent.join(',')
                 })(
                     <Input placeholder="拦截指定userAgent上报" />
                 )}
@@ -150,7 +159,7 @@ export function ApplyProject(props) {
                 label="项目是否上线"
             >   
                 {getFieldDecorator('online', {
-                    initialValue: false,
+                    initialValue: Boolean(online),
                     valuePropName: 'checked'
                 })(
                     <Switch></Switch>
@@ -164,7 +173,7 @@ export function ApplyProject(props) {
                 help="低于此值将认为没有上线，不统计分数"
             >
                 {getFieldDecorator('limitpv', {
-                    initialValue: 300
+                    initialValue: limitpv
                 })(
                     <Input type="number" placeholder="300"  />
                 )}
@@ -173,10 +182,10 @@ export function ApplyProject(props) {
             <Form.Item
                 {...formItemLayout}
                 label="负责人"
-                help="多个负责人请用','分割，例如 lewischeng,linkzhu"
+                help=""
             >   
                 {getFieldDecorator('userName', {
-                    initialValue: ''
+                    initialValue: userName
                 })(
                     <Input placeholder="项目负责人" />
                 )}
@@ -187,7 +196,7 @@ export function ApplyProject(props) {
                 sm: { span: 20, offset: 4 },
             }}>
             <Button type="primary" htmlType="submit">
-                提交申请
+                {btnText}
             </Button>
         </Form.Item>
         </Form>
