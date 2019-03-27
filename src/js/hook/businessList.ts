@@ -21,10 +21,12 @@ export function useBusinessList(value = 0): [Business[], number, Function] {
             const last = getLastSelect();
             const lastLog = data.item.find(l => {
                 return l.id.toString() === last;
-            }) || {id: 0};
+            });
 
             setList(data.item);
-            setProjectId(lastLog.id);
+            if (lastLog && lastLog.id) {
+                setProjectId(lastLog.id);
+            }
         })();
     }, [value]);
 

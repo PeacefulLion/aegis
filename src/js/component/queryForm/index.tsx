@@ -5,7 +5,7 @@ import { Checkbox, Form, Button, Icon, Select, Drawer } from 'antd';
 import { DateInput } from '../rangeDateInput';
 import TagList from '../tagList';
 import logType from '../../common/const/logType';
-import {setLastSelect} from '../../../js/common/utils';
+import { setLastSelect } from '../../../js/common/utils';
 
 import { useBusinessList } from '../../hook/businessList';
 
