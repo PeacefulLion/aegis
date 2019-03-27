@@ -141,7 +141,7 @@ export default function QueryFormOffline({onSummit}: Props) {
             onClose={handlerClose}
             visible={drawervisible}
         >
-            <div className="ward-drawer-btn" onClick={handlerOpen}>
+            <div className="ward-left-btn" onClick={handlerOpen}>
                 {!drawervisible ? <Icon type="caret-left"/> : <Icon type="caret-right"/>}
             </div>
             <Form>
