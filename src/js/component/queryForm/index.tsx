@@ -1,11 +1,13 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import dayjs from 'dayjs';
 import { Checkbox, Form, Button, Icon, Select, Drawer } from 'antd';
 import { DateInput } from '../rangeDateInput';
 import TagList from '../tagList';
 import logType from '../../common/const/logType';
+import { setLastSelect } from '../../../js/common/utils';
 
-import { useBusinessList, Business } from '../../hook/businessList';
+import { useBusinessList } from '../../hook/businessList';
 
 import './index.less';
 
@@ -30,7 +32,7 @@ export interface Props {
     end?: dayjs.Dayjs
     onSummit: Function
 }
-  
+
 const LOGTYPE_OPTIONS = [
     'info',
     'error'
@@ -39,8 +41,7 @@ const LOGTYPE_OPTIONS = [
 export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs(), onSummit }:Props) {
     const [pageIndex, setPageIndex] = useState(0);
     const [drawerVisiblie, setDrawerVisiblie] = useState(true);
-    const [projectId, setProjectId] = useState(null);
-    const list = useBusinessList(0);
+    const [list, projectId, setProjectId] = useBusinessList(0);
     const [level, setLevel] = useState([logType.Debug, logType.Info, logType.Error]);
 
     const includeRef: any = useRef(null);
@@ -57,9 +58,14 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
         setDrawerVisiblie(!drawerVisiblie); // 取反
     }
 
+    function setSelectProjectId(id) {
+        setProjectId(id);
+        setLastSelect(id);
+    }
+
     function onChange(value: any[]) {
         const level = [1];
-        
+
         value.forEach((value) => {
             if(value === 'error') {
                 level.push(logType.Error);
@@ -112,8 +118,9 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
                     <Select
                         showSearch
                         value={projectId}
-                        onSelect={setProjectId}
+                        onSelect={setSelectProjectId}
                         filterOption={(input, option: any) =>
+                            option.props.value.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
                             option.props.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }
                     >

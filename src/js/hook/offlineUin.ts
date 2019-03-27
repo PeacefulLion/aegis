@@ -14,7 +14,7 @@ export interface Options {
 }
 
 
-export function useOfflineUin(): [Uin[], (opts: Options) => Promise<Uin[]>, (opts: Options) => Promise<Uin[]>, (opts: Uin) => Promise<Uin[]>] {
+export function useOfflineUin(): [Uin[], (opts: Options) => Promise<Uin[]>, (opts: Options) => Promise<Uin[]>, (opts: number) => Promise<Uin[]>] {
     const [uins, setUins] = useState([]);
 
     async function getUins(id) {

@@ -1,28 +1,28 @@
-import * as React from "react"; 
+import * as React from "react";
 
 import { Icon, Drawer } from 'antd';
 
 import "./common-form.less";
 
 export type DrawerCtx = {
-    visible: boolean, 
+    visible: boolean,
     setVisible: (visible: boolean) => any,
     toggleVisible: Function
 }
 
 export const drawerCtx = React.createContext({
-    visible: false, 
+    visible: false,
     setVisible: x => !!x,
 } as DrawerCtx);
 
 export default function DrawerContainer(props: React.Props<{}>) {
     const [visible, setVisible] = React.useState(true);
-    const toggleVisible = () => setVisible(!visible); 
+    const toggleVisible = () => setVisible(!visible);
 
     return (
         <drawerCtx.Provider value={{
-            visible: false, 
-            setVisible, 
+            visible: false,
+            setVisible,
             toggleVisible
         }}>
             <Drawer
@@ -34,12 +34,12 @@ export default function DrawerContainer(props: React.Props<{}>) {
                 onClose={ toggleVisible }
                 visible={ visible }
             >
-                <div className="common-ward-drawer-btn" onClick={ toggleVisible }>
+                <div className="ward-left-btn" onClick={ toggleVisible }>
                     { visible ?
                         <Icon type="caret-right"/> :
                         <Icon type="caret-left"/> }
                 </div>
-                
+
                 { props.children }
             </Drawer>
         </drawerCtx.Provider>

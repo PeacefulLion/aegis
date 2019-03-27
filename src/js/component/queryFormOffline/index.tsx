@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import {Checkbox, Form, Button, Icon, Select, Drawer, Modal, Input} from 'antd';
 import TagList from '../tagList';
 import logType from '../../common/const/logType';
@@ -6,8 +7,10 @@ import {firstUpperCase} from '../../common/util';
 import {useBusinessList} from '../../hook/businessList';
 import {useOfflineList} from '../../hook/offlineList';
 import {useOfflineUin} from '../../hook/offlineUin';
+import {setLastSelect} from '../../common/utils';
 
 import './index.less';
+
 
 const {
     useState,
@@ -39,7 +42,6 @@ const LOGTYPE_OPTIONS = [
 export default function QueryFormOffline({onSummit}: Props) {
     const [pageIndex, setPageIndex] = useState(0);
     const [drawervisible, setDrawerVisiblie] = useState(true);
-    const [projectId, setProjectId] = useState(null);
     const [offlineId, setOfflineId] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [level, setLevel] = useState([logType.Debug, logType.Info, logType.Error, logType.Offline]);
@@ -50,8 +52,13 @@ export default function QueryFormOffline({onSummit}: Props) {
     const checkBoxRef: any = useRef(null);
     const offlineIdRef: any = useRef(null);
 
-    const list = useBusinessList(0);
+    const [list, projectId, setProjectId] = useBusinessList(0);
+
     let [offlineList, getOfflineList] = useOfflineList();
+
+    useEffect(()=>{
+        getOfflineList(projectId);
+    }, [projectId]);
 
     function handlerClose() {
         setDrawerVisiblie(false);
@@ -85,7 +92,7 @@ export default function QueryFormOffline({onSummit}: Props) {
 
     async function projectChanged(projectId) {
         setProjectId(projectId);
-        await getOfflineList(projectId);
+        setLastSelect(projectId);
         setOfflineId('')
     }
 
@@ -134,7 +141,7 @@ export default function QueryFormOffline({onSummit}: Props) {
             onClose={handlerClose}
             visible={drawervisible}
         >
-            <div className="ward-drawer-btn" onClick={handlerOpen}>
+            <div className="ward-left-btn" onClick={handlerOpen}>
                 {!drawervisible ? <Icon type="caret-left"/> : <Icon type="caret-right"/>}
             </div>
             <Form>
@@ -144,6 +151,7 @@ export default function QueryFormOffline({onSummit}: Props) {
                         value={projectId}
                         onSelect={projectChanged}
                         filterOption={(input, option: any) =>
+                            option.props.value.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
                             option.props.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }
                     >

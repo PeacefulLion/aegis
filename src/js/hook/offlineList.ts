@@ -10,12 +10,7 @@ export interface Offline {
     name: string
 }
 
-export interface Options {
-    id: number
-}
-
-
-export function useOfflineList(): [Offline[], (opts: Options) => Promise<Offline[]>] {
+export function useOfflineList(): [Offline[], (opts: number) => Promise<Offline[]>] {
     const [offlineList, setOfflineList] = useState([]);
 
     async function getOfflineList(value) {

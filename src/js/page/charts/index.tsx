@@ -7,26 +7,25 @@ import HighchartsWarpper from "./high-chart-warpper";
 import './index.less';
 
 /**
- * 页面 Container 
+ * 页面 Container
  */
 export default function Charts() {
-    const list = useBusinessList(0);
+    const [list, projectId, setProjectId] = useBusinessList(0);
 
     // CGI 参数, 用于请求 loadList
     // projectId, timeScope
-    const [projectId, setProjectId] = React.useState(-1);
     const [timeScope, setTimeScope] = React.useState(1);
     const [renderId, setRenderId] = React.useState(Date.now())
 
     // CGI 返回结果: 错误次数统计情况
     const [items, setItems] = React.useState([]);
-    
-    // OnSubmit -> Fetch List -> Update List 
-    const onSubmit = () => 
+
+    // OnSubmit -> Fetch List -> Update List
+    const onSubmit = () =>
         loadList(projectId, timeScope, list)
             .then(setItems)
             .then(() => setRenderId(renderId + 1));
-    
+
     return (
         <div>
             <DrawerContainer>
@@ -53,7 +52,7 @@ export default function Charts() {
                             }
                         </Select>
                     </Form.Item>
-                        
+
                     {/* Form: timeScope */}
                     <Form.Item label="时间范围">
                         <Select value={timeScope} onSelect={setTimeScope}>
@@ -68,9 +67,9 @@ export default function Charts() {
 
                     <Form.Item>
                         {/* When Clicking Btn, Drawer Will Close */}
-                        <drawerCtx.Consumer>{ctx => 
+                        <drawerCtx.Consumer>{ctx =>
                             <Button type="primary" onClick={e => {
-                                e.preventDefault(); 
+                                e.preventDefault();
                                 onSubmit().then(ok => {
                                     ctx.toggleVisible()
                                 })
@@ -81,9 +80,9 @@ export default function Charts() {
                     </Form.Item>
                 </Form>
             </DrawerContainer>
-            
+
             {/* The Chart Container & Data */}
-            <HighchartsWarpper renderId={renderId.toString()} 
+            <HighchartsWarpper renderId={renderId.toString()}
                 items={ items } list={ list } />
         </div>
     );
