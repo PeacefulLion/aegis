@@ -21,7 +21,7 @@ export function retcodeInterceptor(resp: AxiosResponse) {
     const {
         transformRetcode = true
     } = config;
-    
+
     if(!transformRetcode) { // 如果不转换，直接退出
         return resp;
     }
@@ -49,15 +49,15 @@ export function errorInterceptor(err) {
 
 export const fromBadjs = {
     get<T>(pathname: string, query: QueryObj = {}): Promise< T > {
-        const qstr = queryStringify(query); 
-        const qs = qstr ? `?${qstr}` : ''; 
-        return api.get(`http://badjs2.ivweb.io${pathname}${qs}`) as any;
-    }, 
+        const qstr = queryStringify(query);
+        const qs = qstr ? `?${qstr}` : '';
+        return api.get(`https://badjs2.ivweb.io${pathname}${qs}`) as any;
+    },
 
     post<T>(pathname: string, data: object): Promise< T > {
-        return api.post(`http://badjs2.ivweb.io${pathname}`, data) as any;
+        return api.post(`https://badjs2.ivweb.io${pathname}`, data) as any;
     }
-} 
+}
 
 
 api.interceptors.response.use(null, errorInterceptor);

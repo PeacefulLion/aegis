@@ -1,30 +1,30 @@
-import { fromBadjs } from "../../common/api"; 
+import { fromBadjs } from "../../common/api";
 
 export type OpenidInfo = {
     openid: string
 }
 
-export type LoginBySuccess = OpenidInfo | UserInfo; 
+export type LoginBySuccess = OpenidInfo | UserInfo;
 
-export type BindOpenidSuccess = UserInfo; 
+export type BindOpenidSuccess = UserInfo;
 
-export type VerifyStateValue = 0 | 1 | 2; 
+export type VerifyStateValue = 0 | 1 | 2;
 export type UserInfo = {
     /**
      * RTX
      */
-    loginName: string, 
+    loginName: string,
     chineseName: string,
 
     /**
      * 权限
      */
-    role: 0 | 1, 
+    role: 0 | 1,
 
     /**
-     * email 
+     * email
      */
-    email: string | null, 
+    email: string | null,
 
     /**
      * 验证状态 0: 未验证; 1: 审核中; 2: 已验证
@@ -41,9 +41,9 @@ export type UserInfoWithOpenid = UserInfo & {
 
 export function isUserInfoResp(resp: LoginBySuccess): resp is UserInfo {
     if ((resp as OpenidInfo).openid) {
-        return false; 
+        return false;
     } else {
-        return true; 
+        return true;
     }
 }
 
@@ -54,17 +54,17 @@ export function loginBy(code: string, redirect_uri: string) {
 }
 
 export function bindOpenid(openid: string, loginName: string) {
-    // 调接口 
+    // 调接口
     return fromBadjs.post<BindOpenidSuccess>('/api/users/bind-openid', {
         openid, loginName
     });
 }
 
 export function getUserInfo() {
-    return fromBadjs.get<UserInfo>('/api/users/me'); 
+    return fromBadjs.get<UserInfo>('/api/users/me');
 }
 
 export function updateSession() {
-    // 更新 Session 
-    return fromBadjs.get<UserInfo>('/api/users/update_session'); 
+    // 更新 Session
+    return fromBadjs.get<UserInfo>('/api/users/update_session');
 }
