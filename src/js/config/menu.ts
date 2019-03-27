@@ -59,10 +59,11 @@ const menu: MenuRoute[] = [{
         key: '302',
         url: '/projectlist'
     }, {
-        name: '项目用户权限',
-        key: '303'
+        name: '项目用户管理',
+        key: '303',
+        url: '/projectmember'
     }, {
-        name: '注册用户列表',
+        name: '注册用户管理',
         key: '304'
     }, {
         name: '用户绑定审核', 

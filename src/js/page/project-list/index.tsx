@@ -1,5 +1,6 @@
 import * as React from 'react';;
-import { useApplyProjectList, applyProjectItem } from '../../hook/applyProjectList';
+import { useApplyProjectList, applyProjectItem } from '../../hook/projectList';
+
 import APPLY_STATUS from "../../common/const/applyStatus";
 import { Link } from 'react-router-dom';
 import { Row, Col, Table, Tooltip, Switch, Form, Button, Select } from 'antd';
@@ -30,18 +31,17 @@ export default function ApplyProjectList(props) {
 
     return (
         <div>
-            <div className="logtable-control">
-                <Button.Group>
-                    状态类型
-                    <Select defaultValue={optionName[status]} style={{ width: 120 }} onChange={handleChange}>
-                        {
-                            optionName.map((name, index) => {
-                                return <Option key={name} value={index}>{name}</Option>
-                            })
-                        }
-                    </Select>
-                </Button.Group>
-            </div>
+            <Form layout="inline">
+                <Form.Item label="状态类型">
+                <Select defaultValue={optionName[status]} style={{ width: 120 }} onChange={handleChange}>
+                    {
+                        optionName.map((name, index) => {
+                            return <Option key={name} value={index}>{name}</Option>
+                        })
+                    }
+                </Select>
+                </Form.Item>
+            </Form>
             <Table dataSource={list} key={status}>
                 <Column
                     title="上报ID"
@@ -73,15 +73,13 @@ export default function ApplyProjectList(props) {
                         const changeProjectStatus = (value) => {
                             setProjectStatus(record.id, value);
                         };
-                        return (
-                            <Select key="select" defaultValue={optionName[status]} style={{ width: 120 }} onChange={changeProjectStatus}>
+                        return <Select key={record.id} defaultValue={optionName[status]} style={{ width: 120 }} onChange={changeProjectStatus}>
                             {
                                 optionName.map((name, index) => {
                                     return <Option key={name} value={index}>{name}</Option>
                                 })
                             }
                             </Select>
-                        )
                     }}
                 />
             </Table>

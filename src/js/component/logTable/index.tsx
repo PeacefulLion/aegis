@@ -244,6 +244,7 @@ export default function LogTable(props: LogTableProps) {
                     </Button>
                 </Button.Group>
             </div>
+            
             <AnalysisPanel logs={logs} showApp={showApp} showPlatform={showPlatform} showISP={showISP}
                            showWebviewCore={showWebviewCore} showMap={showMap}></AnalysisPanel>
             <Table dataSource={logs} rowKey="index"

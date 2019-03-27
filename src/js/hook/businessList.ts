@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import api from '../common/api';
-import {getLastSelect} from '../common/utils';
+import { getLastSelect } from '../common/utils';
 
 export interface Business {
     chineseName: string,

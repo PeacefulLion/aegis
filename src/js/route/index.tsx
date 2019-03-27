@@ -49,7 +49,7 @@ export function Frame(props) {
                     <Route path={'/sourcemap'} component={ Sourcemap } exactly={true} />
                     <Route path={'/projectedit/:projectId'} component={ProjectEdit} exactly={true} />
                     <Route path="/userbind-verify" component={ UserbindVerify } exactly={true} />
-                    <Route path="/projectmember/:projectId/:role" component={ProjectMember} exactly={true} />
+                    <Route path="/projectmember" component={ProjectMember} exactly={true} />
                 </div>
             </Content>
             <Footer />

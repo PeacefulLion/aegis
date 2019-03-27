@@ -18,9 +18,9 @@ export interface applyProjectItem {
     userName: string
 }
 
-export function useApplyProjectList() {
+export function useApplyProjectList(_status = APPLY_STATUS.STATUS_CHECK) {
     const [list, setList] = useState([]);
-    const [status, setStatus] = useState(APPLY_STATUS.STATUS_CHECK);
+    const [status, setStatus] = useState(_status);
 
     useEffect(() => {
         (async () => {
