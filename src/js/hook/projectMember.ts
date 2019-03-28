@@ -4,6 +4,7 @@ import {
 } from 'react';
 import api from '../common/api';
 import { async } from 'q';
+import { NORMAL_USER } from '../common/const/role';
 
 export function useProjectMembers(role = 0, projectId = 0) {
     const [data, setData] = useState([]);
@@ -40,9 +41,39 @@ export function useProjectMembers(role = 0, projectId = 0) {
         }
     }
 
+    async function setUserRoleChange(recordId, role) {
+        api.post('//badjs2.ivweb.io/controller/userApplyAction/setRole.do', {
+            id: recordId,
+            role: role
+        });
+
+        const newData = data.map((item) => {
+            if(item.id === recordId) {
+                item.role = role;
+            }
+            return item;
+        });
+
+        setData(newData);
+    }
+
+    async function addUser(userName) {
+        const result = await api.post('/badjs2.ivweb.io/controller/userApplyAction/addUserApply.do', {
+            userName,
+            applyId: projectId
+        });
+
+        setData(data.concat({
+            chineseName: userName,
+            role: NORMAL_USER
+        }));
+    }
+
     return {
         data,
         getData,
-        deleteMember
+        addUser,
+        deleteMember,
+        setUserRoleChange
     };
 }

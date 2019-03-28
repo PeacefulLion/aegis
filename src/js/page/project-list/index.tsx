@@ -3,7 +3,7 @@ import { useApplyProjectList, applyProjectItem } from '../../hook/projectList';
 
 import APPLY_STATUS from "../../common/const/applyStatus";
 import { Link } from 'react-router-dom';
-import { Row, Col, Table, Tooltip, Switch, Form, Button, Select } from 'antd';
+import { Row, Col, Table, Tooltip, Switch, Form, Button, Select, Divider } from 'antd';
 
 const {
     useState,
@@ -42,6 +42,7 @@ export default function ApplyProjectList(props) {
                 </Select>
                 </Form.Item>
             </Form>
+            <Divider></Divider>
             <Table dataSource={list} key={status}>
                 <Column
                     title="上报ID"

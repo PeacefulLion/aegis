@@ -24,6 +24,7 @@ export default function auth(state = initialState, action: AuthAction) {
         case LOGIN_PENDING:
             return Object.assign({}, initialState, {loggingIn: true});
         case LOGIN_SUCCESS:
+        debugger;
             let user = action.payload.data;
             window.localStorage.setItem('uid', user.uid);
             return Object.assign({}, state, {user: user, loggingIn: false, loginErrors: null});

@@ -2,6 +2,7 @@ import * as React from "react";
 import { getUserInfo, UserInfo } from "./login_cgi"; 
 import Login from "./Login";
 import { Loading } from "./Loading"
+import "./login.less";
 
 export type LoginAction = {
     type: string, 
@@ -26,8 +27,6 @@ export type LoginProviderProps = {
     component: React.FunctionComponent
 }
 
-import "./login.less";
-
 export default function LoginProvider(props: LoginProviderProps) {
     const [userInfo, setUserInfo] = React.useState<UserInfoOrNot>(undefined); 
     const [initLoading, setInitLoading] = React.useState(true);
@@ -36,11 +35,9 @@ export default function LoginProvider(props: LoginProviderProps) {
         // 说明已经初始化完成
         if (!initLoading) return; 
         
-
         console.log('To Get UserInfo')
         getUserInfo().then(userInfo => {
             console.log('LoginProvider Result:', userInfo); 
-            
             setUserInfo(userInfo); 
             setInitLoading(false); 
         

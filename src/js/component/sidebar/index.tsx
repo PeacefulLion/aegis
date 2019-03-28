@@ -1,14 +1,11 @@
-import * as React from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { Layout, Menu, Icon } from 'antd'
-import { Link } from 'react-router-dom'
-import { getAllMenu, updateNavPath, MenuItem } from '../../action/menu'
-
+import * as React from 'react';
+import { Layout, Menu, Icon } from 'antd';
+import { Link } from 'react-router-dom';
+import { MenuMode } from 'antd/lib/menu';
+import menuConfig from '../../config/menu';
 
 import './index.less'
-import { MenuMode } from 'antd/lib/menu';
-
+import menu from '../../reducer/menu';
 const SubMenu = Menu.SubMenu
 const { Sider } = Layout;
 
@@ -17,36 +14,40 @@ const {
     useEffect
 } = React;
 
-function SideBarMenu(nodes = [], pkey?: string | number) {
+function SideBarMenu(nodes = []) {
     return nodes.map((item, i) => {
-        const menu = SideBarMenu(item.child, item.key);
+        const menu = SideBarMenu(item.child);
 
+        const {
+            showInMenu = true
+        } = item;
+        
         if (menu.length > 0) {
             return (
                 <SubMenu
                     key={item.key}
                     title={<span><Icon type={item.icon} /><span className="nav-text">{item.name}</span></span>}
                 >
-                {menu}
+                    {menu}
                 </SubMenu>
             );
         } else {
             return (
-                <Menu.Item key={item.key}>
-                {
-                    item.url ? <Link to={item.url}>{item.icon && <Icon type={item.icon} />}{item.name}</Link> : <span>{item.icon && <Icon type={item.icon} />}{item.name}</span>
-                }
-                </Menu.Item>
+                showInMenu ? (
+                    <Menu.Item key={item.key}>
+                        <Link to={item.path}>{item.icon && <Icon type={item.icon} />}{item.name}
+                        </Link> 
+                    </Menu.Item>
+                ) : null
             );
         }
     });
 }
 
-function Sidebar(props) {
+export default function Sidebar(props) {
     const {
-        updateNavPath,
-        items,
-        openKeys = [],
+        items = menuConfig,
+        openKeys = menuConfig.map((item) => item.key),
         activeKey = ''
     } = props;
 
@@ -58,10 +59,6 @@ function Sidebar(props) {
         setMode(!collapsed ? 'vertical' : 'inline')
     }
 
-    function handlerMenuClick(item) {
-        updateNavPath(item.keyPath.reverse());
-    }
-    
     return (
         <Sider
             trigger={null}
@@ -73,7 +70,6 @@ function Sidebar(props) {
                 mode={mode as MenuMode} theme="dark"
                 selectedKeys={[activeKey]}
                 defaultOpenKeys={openKeys}
-                onClick={handlerMenuClick}
             >
                 { 
                     SideBarMenu(items)
@@ -89,20 +85,3 @@ function Sidebar(props) {
         </Sider>
     )
 }
-
-function mapStateToProps(state) {
-    return {
-        items: state.menu.items,
-        openKeys: state.menu.openKeys,
-        activeKey: state.menu.activeKey,
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        getAllMenu: bindActionCreators(getAllMenu, dispatch),
-        updateNavPath: bindActionCreators(updateNavPath, dispatch)
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
