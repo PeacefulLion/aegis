@@ -54,7 +54,9 @@ export function Frame(props) {
                     return (
                     <Layout className="ant-layout-has-sider">
                         <Sidebar />
-                        <Layout>
+                        <Layout style={{
+                            marginLeft: 200
+                        }}>
                         <Header profile={auth} logout={actions.logout} />
                         <Content style={{ margin: '0 16px' }}>
                             {

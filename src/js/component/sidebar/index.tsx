@@ -64,6 +64,9 @@ export default function Sidebar(props) {
             trigger={null}
             collapsible
             collapsed={collapsed}
+            style={{
+                overflow: 'auto', height: '100vh', position: 'fixed', left: 0,
+            }}
         >
             <div className="ant-layout-logo"></div>
             <Menu

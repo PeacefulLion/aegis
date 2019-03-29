@@ -4,7 +4,8 @@ import logType from '../common/const/logType';
 import {formatLog, FormatLog, Log} from './common';
 
 const {
-    useState
+    useState,
+    useEffect
 } = React;
 
 export interface ApiResult {
@@ -24,7 +25,6 @@ export interface SummitOptions {
 export interface getSMInfoOptions {
     name: string,
 }
-
 
 export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: SummitOptions) => Promise<FormatLog[]>, number] {
     const [logs, setLogs] = useState(value);
@@ -66,6 +66,40 @@ export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: Summ
     }
 
     return [logs, setLogs, getLogs, logKey];
+}
+
+export function useLogsPool(logs) {
+    const [point, setPoint] = useState(10);
+    const [pool, setPool] = useState(logs);
+
+    useEffect(() => {
+        setPool(logs);
+    }, [logs]);
+
+    const [isEnd, setIsEnd] = useState(false);
+
+
+    function resetPool() {
+        setPoint(0);
+        setPool([]);
+        setIsEnd(false);
+    }
+
+    function getMore(num) {
+        if(point + num >= pool.length) {
+            setIsEnd(true);
+            setPoint(pool.length);
+        } else {
+            setPoint(point + num);
+        }
+    }
+
+    return {
+        logsPool: pool.slice(0, point),
+        getMore,
+        resetPool,
+        isEnd
+    }
 }
 
 export function useSMInfos(value: any): [any, Function, (opts: getSMInfoOptions) => Promise<any>]{

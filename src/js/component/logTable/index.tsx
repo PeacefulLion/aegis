@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {Row, Col, Table, Tooltip, Switch, Form, Button} from 'antd';
+import {Row, Col, Table, Tooltip, Switch, Form, Button, Typography} from 'antd';
 import {Icon as IconProps, FormatLog as FormatLog} from '../../hook/common';
 import Icon from '../icon';
 import './index.less';
 import AnalysisPanel from '../analysisPanel';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import SourceMapButton from '../sourceMapButton'
 
@@ -188,19 +189,35 @@ function ColumnApp(platform: IconProps[], record: FormatLog, index: number) {
 
 interface LogTableProps {
     logs: FormatLog[],
-    id?: number
+    id?: number,
+    isEnd: boolean,
+    loadMore: Function
 }
 
 export default function LogTable(props: LogTableProps) {
     const {
-        logs
+        logs,
+        isEnd,
+        loadMore
     } = props;
 
-    const [showApp, setShowApp] = useState(false);
-    const [showPlatform, setShowPlatform] = useState(false);
+    const [showStaticApp, setShowStaticApp] = useState(false);
+    const [showStaticPlatform, setShowStaticPlatform] = useState(false);
     const [showISP, setShowISP] = useState(false);
     const [showWebviewCore, setshowWebviewCore] = useState(false);
     const [showMap, setShowMap] = useState(false);
+
+    const [showTime, setShowTime] = useState(false);
+    const [showIp, setShowIp] = useState(false);
+    const [showUin, setShowUin] = useState(true);
+    const [showApp, setShowApp] = useState(false);
+    const [showPlatform, setShowPlatform] = useState(false);
+    const [showFrom, setShowFrom] = useState(false);
+    const [showVersion, setShowVersion] = useState(false);
+    const [showMsg, setShowMsg] = useState(true);
+    const [showNetType, setShowNetType] = useState(false);
+    const [showLogPanel, setShowLogPanel] = useState(false);
+    const [record, setRecord] = useState(null);
 
     const handlerClickApp = function () {
         setShowApp(!showApp);
@@ -222,53 +239,174 @@ export default function LogTable(props: LogTableProps) {
         setShowMap(!showMap);
     }
 
+    const handlerLoadMore = function() {
+        loadMore();
+    }
 
     return (
         <div className="logtable">
             <div className="logtable-control">
-                <Button.Group>
-                    <Button type="primary" onClick={handlerClickApp}>
-                        终端分布
-                    </Button>
-                    <Button type="primary" onClick={handlerClickPlatform}>
-                        客户端分布
-                    </Button>
-                    <Button type="primary" onClick={handlerClickISP}>
-                        运营商分布
-                    </Button>
-                    <Button type="primary" onClick={handlerClickWebviewCore}>
-                        webview内核分布
-                    </Button>
-                    <Button type="primary" onClick={handlerClickMap}>
-                        地区分布
-                    </Button>
-                </Button.Group>
+                <Form layout="inline">
+                    <Form.Item label="Time">
+                        <Switch checked={showTime} onChange={setShowTime} />
+                    </Form.Item>
+                    <Form.Item label="Uin">
+                        <Switch checked={showUin} onChange={setShowUin} />
+                    </Form.Item>
+                    <Form.Item label="IP">
+                        <Switch checked={showIp} onChange={setShowIp} />
+                    </Form.Item>
+                    <Form.Item label="App">
+                        <Switch checked={showApp} onChange={setShowApp} />
+                    </Form.Item>
+                    <Form.Item label="NetType">
+                        <Switch checked={showNetType} onChange={setShowNetType} />
+                    </Form.Item>
+                    <Form.Item label="Platform">
+                        <Switch checked={showPlatform} onChange={setShowPlatform} />
+                    </Form.Item>
+                    <Form.Item label="From">
+                        <Switch checked={showFrom} onChange={setShowFrom} />
+                    </Form.Item>
+                    <Form.Item label="Version">
+                        <Switch checked={showVersion} onChange={setShowVersion} />
+                    </Form.Item>
+                    <Form.Item label="Version">
+                        <Switch checked={showVersion} onChange={setShowVersion} />
+                    </Form.Item>
+                    <Form.Item label="统计操作系统分布分布">
+                        <Switch checked={showStaticPlatform} onChange={setShowStaticPlatform} />
+                    </Form.Item>
+                    <Form.Item label="统计webview内核分布">
+                        <Switch checked={showWebviewCore} onChange={setshowWebviewCore} />
+                    </Form.Item>
+                    <Form.Item label="统计客户端版本分布">
+                        <Switch checked={showStaticApp} onChange={setShowStaticApp} />
+                    </Form.Item>
+                    <Form.Item label="统计运营商分布">
+                        <Switch checked={showISP} onChange={setShowISP} />
+                    </Form.Item>
+                    <Form.Item label="统计地区分布">
+                        <Switch checked={showMap} onChange={setShowMap} />
+                    </Form.Item>
+                </Form>
             </div>
             
-            <AnalysisPanel logs={logs} showApp={showApp} showPlatform={showPlatform} showISP={showISP}
-                           showWebviewCore={showWebviewCore} showMap={showMap}></AnalysisPanel>
-            <Table dataSource={logs} rowKey="index"
-                   expandedRowRender={LogPanelInline}
-                   expandRowByClick={true}
-            >
-                <Column
-                    title="#"
-                    key="index"
-                    width={10}
-                    className="logtable-index"
-                    render={ColumnIndex}
-                />
-                <Column
-                    title="Uin"
-                    dataIndex="uin"
-                    key="uin"
-                />
-                <Column
-                    title="Message"
-                    dataIndex="msg"
-                    key="msg"
-                />
-            </Table>
+            <AnalysisPanel 
+                logs={logs}
+                showApp={showApp}
+                showPlatform={showPlatform}
+                showISP={showISP}
+                showWebviewCore={showWebviewCore}
+                showMap={showMap}
+            />
+            <InfiniteScroll
+                    initialLoad={false}
+                    pageStart={0}
+                    loadMore={handlerLoadMore}
+                    hasMore={!isEnd}
+                    useWindow={true}
+                >
+                    <Table dataSource={logs} rowKey="index"
+                        expandedRowRender={LogPanelInline}
+                        expandRowByClick={true}
+                        pagination={false}
+                        className="aegis-logtalbe"
+                    >
+                    <Column
+                        title="#"
+                        key="index"
+                        width={10}
+                        className="logtable-index"
+                        render={ColumnIndex}
+                    />
+                    {
+                        showTime ? (
+                            <Column
+                                title="Time"
+                                dataIndex="time"
+                                key="time"
+                                width={100}
+                            />
+                        ) : null
+                    }
+                    {
+                        showUin ? (
+                            <Column
+                                title="Uin"
+                                dataIndex="uin"
+                                key="uin"
+                                width={150}
+                            />
+                        ) : null
+                    }
+                    {
+                        showIp ? (
+                            <Column
+                                title="Ip"
+                                dataIndex="ip"
+                                key="ip"
+                                width={180}
+                            />
+                        ) : null
+                    }
+                    {
+                        showNetType ? (
+                            <Column
+                                title="NetType"
+                                dataIndex="device.netType"
+                                key="nettype"
+                                width={100}
+                            />
+                        ) : null
+                    }
+                    {
+                        showApp ? (
+                            <Column
+                                title="App"
+                                dataIndex="appIcon"
+                                key="appIcon"
+                                width={200}
+                                render={ColumnApp}
+                            />
+                        ) : null
+                    }
+                    {
+                        showPlatform ? (
+                            <Column
+                                title="Paltform"
+                                dataIndex="platform"
+                                key="platform"
+                                width={100}
+                                render={ColumnPaltform}
+                            />
+                        ) : null
+                    }
+                    {
+                        showFrom ? (
+                            <Column
+                                title="From"
+                                dataIndex="from"
+                                key="from"
+                                width={100}
+                                render={ColumnFrom}
+                            />
+                        ) : null
+                    }
+                    <Column
+                        title="Message"
+                        dataIndex="msg"
+                        key="msg"
+                        render={(msg) => {
+                            return (
+                                <Typography>
+                                    <Typography.Paragraph>{msg}</Typography.Paragraph>
+                                </Typography>
+                            )
+                        }}
+                    />
+                    </Table>
+                </InfiniteScroll>
         </div>
     );
 }
