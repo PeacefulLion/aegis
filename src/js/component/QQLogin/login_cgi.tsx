@@ -25,7 +25,10 @@ export type UserInfo = {
      * email
      */
     email: string | null,
-
+    /**
+     * 用户头像
+     */
+    avatar: string | null,
     /**
      * 验证状态 0: 未验证; 1: 审核中; 2: 已验证
      */

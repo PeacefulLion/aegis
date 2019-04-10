@@ -61,11 +61,13 @@ function commonHeader(props) {
                 )}</loginCtx.Consumer>
             </Col>
             <Col span={3}>
-                <Dropdown overlay={menu}>
-                <a className="ant-dropdown-link" href="#">
-                    <Avatar style={{ verticalAlign: 'middle'}}>{username}</Avatar> <Icon type="down" />
-                </a>
-                </Dropdown>
+                <loginCtx.Consumer>{({ userInfo }) => (
+                    <Dropdown overlay={menu}>
+                        <a className="ant-dropdown-link" href="#">
+                            <Avatar style={{ verticalAlign: 'middle'}} icon="user" src={ userInfo ? userInfo.avatar || '' : '' }>{username}</Avatar><Icon type="down" />
+                        </a>
+                    </Dropdown>
+                )}</loginCtx.Consumer>
             </Col>
         </Row>
       </Header>
