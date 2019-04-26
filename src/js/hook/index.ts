@@ -25,10 +25,7 @@ export function realtimeLogs(value: Log[]) {
     function listenLogs(opts: SummitOptions) {
 
         const {include, exclude, level, id} = opts;
-        var host = location.host;
-        if (host.indexOf(':') < 0) {
-            host += ':8081';
-        }
+        const host = location.host;
 
         const wsPro = location.protocol === 'http:' ? 'ws:' : 'wss:';
 
