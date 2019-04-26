@@ -23,7 +23,7 @@ export function realtimeLogs(value: Log[]) {
     const [logs, setLogs] = useState(value);
 
     function listenLogs(opts: SummitOptions) {
-
+        setLogs([]);
         const {include, exclude, level, id} = opts;
         const host = location.host;
 
