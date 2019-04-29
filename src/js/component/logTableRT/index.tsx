@@ -173,7 +173,7 @@ export default function LogTable(props: LogTableProps) {
     } = props;
     logs.reverse();
     const expands = logs.slice(0, 10).map(record => `${record.uin}${record.date}`)
-    const [showTime, setShowTime] = useState(false);
+    const [showTime, setShowTime] = useState(true);
     const [showIp, setShowIp] = useState(false);
     const [showUin, setShowUin] = useState(false);
     const [showApp, setShowApp] = useState(false);
@@ -236,7 +236,7 @@ export default function LogTable(props: LogTableProps) {
                             title="Time"
                             dataIndex="time"
                             key="time"
-                            width={100}
+                            width={118}
                         />
                     ) : null
                 }

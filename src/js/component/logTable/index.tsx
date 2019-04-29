@@ -207,7 +207,7 @@ export default function LogTable(props: LogTableProps) {
     const [showWebviewCore, setshowWebviewCore] = useState(false);
     const [showMap, setShowMap] = useState(false);
 
-    const [showTime, setShowTime] = useState(false);
+    const [showTime, setShowTime] = useState(true);
     const [showIp, setShowIp] = useState(false);
     const [showUin, setShowUin] = useState(true);
     const [showApp, setShowApp] = useState(false);
@@ -291,8 +291,8 @@ export default function LogTable(props: LogTableProps) {
                     </Form.Item>
                 </Form>
             </div>
-            
-            <AnalysisPanel 
+
+            <AnalysisPanel
                 logs={logs}
                 showApp={showApp}
                 showPlatform={showPlatform}
@@ -326,7 +326,7 @@ export default function LogTable(props: LogTableProps) {
                                 title="Time"
                                 dataIndex="time"
                                 key="time"
-                                width={100}
+                                width={118}
                             />
                         ) : null
                     }
