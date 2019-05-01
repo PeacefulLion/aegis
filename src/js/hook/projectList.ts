@@ -24,7 +24,7 @@ export function useApplyProjectList(_status = APPLY_STATUS.STATUS_CHECK) {
 
     useEffect(() => {
         (async () => {
-            const data = await api.get(`//badjs2.ivweb.io/user/controller/applyAction/queryListBySearch.do?statusType=${status}`) as any;
+            const data = await api.get(`//${location.host}/user/controller/applyAction/queryListBySearch.do?statusType=${status}`) as any;
 
             setList(data.item);
         })();
@@ -36,7 +36,7 @@ export function useApplyProjectList(_status = APPLY_STATUS.STATUS_CHECK) {
         });
 
         item.status = status;
-        const data = await api.get(`//badjs2.ivweb.io/user/controller/approveAction/doApprove.do?reply=${reply}&applyId=${id}&applyStatus=${status}`) as any;
+        const data = await api.get(`//${location.host}/user/controller/approveAction/doApprove.do?reply=${reply}&applyId=${id}&applyStatus=${status}`) as any;
 
         setList(list.concat([]));
     }

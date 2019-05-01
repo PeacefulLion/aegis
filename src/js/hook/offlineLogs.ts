@@ -24,7 +24,7 @@ export function useOfflineLogs(value: FormatLog[]): [FormatLog[], Function, (opt
             fileId
         } = opts;
 
-        let data = await api.get('//badjs2.ivweb.io/controller/logAction/showOfflineLog.do', {
+        let data = await api.get(`//${location.host}/controller/logAction/showOfflineLog.do`, {
             params: {
                 id,
                 fileId

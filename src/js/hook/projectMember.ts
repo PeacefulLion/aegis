@@ -18,7 +18,7 @@ export function useProjectMembers(role = 0, projectId = 0) {
             return;
         }
 
-        const data = await api.get('//badjs2.ivweb.io/user/controller/userAction/queryListByCondition.do', {
+        const data = await api.get(`//${location.host}/user/controller/userAction/queryListByCondition.do`, {
             params: {
                 role,
                 applyId: projectId
@@ -29,12 +29,12 @@ export function useProjectMembers(role = 0, projectId = 0) {
     }
 
     async function deleteMember(recordId) {
-        api.post('//badjs2.ivweb.io/controller/userApplyAction/remove.do', {
+        api.post(`//${location.host}/controller/userApplyAction/remove.do`, {
             id: recordId
         });
 
         const index = data.findIndex((item) => item.id === recordId);
-        
+
         if(index >= 0) {
             data.splice(index, 1);
             setData(data.concat([]));
@@ -42,7 +42,7 @@ export function useProjectMembers(role = 0, projectId = 0) {
     }
 
     async function setUserRoleChange(recordId, role) {
-        api.post('//badjs2.ivweb.io/controller/userApplyAction/setRole.do', {
+        api.post(`//${location.host}/controller/userApplyAction/setRole.do`, {
             id: recordId,
             role: role
         });
@@ -58,7 +58,7 @@ export function useProjectMembers(role = 0, projectId = 0) {
     }
 
     async function addUser(userName) {
-        const result = await api.post('/badjs2.ivweb.io/controller/userApplyAction/addUserApply.do', {
+        const result = await api.post(`//${location.host}/controller/userApplyAction/addUserApply.do`, {
             userName,
             applyId: projectId
         });

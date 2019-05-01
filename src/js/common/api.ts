@@ -51,11 +51,11 @@ export const fromBadjs = {
     get<T>(pathname: string, query: QueryObj = {}): Promise< T > {
         const qstr = queryStringify(query);
         const qs = qstr ? `?${qstr}` : '';
-        return api.get(`//badjs2.ivweb.io${pathname}${qs}`) as any;
+        return api.get(`//${location.host}${pathname}${qs}`) as any;
     },
 
     post<T>(pathname: string, data: object): Promise< T > {
-        return api.post(`//badjs2.ivweb.io${pathname}`, data) as any;
+        return api.post(`//${location.host}${pathname}`, data) as any;
     }
 }
 

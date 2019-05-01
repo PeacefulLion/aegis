@@ -16,7 +16,7 @@ export function useBusinessList(value = 0): [Business[], number, Function] {
 
     useEffect(() => {
         (async () => {
-            const data = await api.get('//badjs2.ivweb.io/controller/userAction/getBusiness.do') as any;
+            const data = await api.get(`//${location.host}/controller/userAction/getBusiness.do`) as any;
 
             const last = getLastSelect();
             const lastLog = data.item.find(l => {

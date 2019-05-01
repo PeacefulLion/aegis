@@ -1,1 +1,1 @@
-export const LOG_ACTION = '//badjs2.ivweb.io/controller/logAction';
+export const LOG_ACTION = `//${location.host}/controller/logAction`;

@@ -7,7 +7,7 @@ export interface Project {
     "createTime"?: number
     "passTime"?: number
     "ip": string[]
-    "userAgent": string[] 
+    "userAgent": string[]
     "userName": string
     "status": number
     "name": string
@@ -32,7 +32,7 @@ export function useProject(applyId = 0): Result {
     useEffect(() => {
         (async () => {
             setStatus(CGI_STATUS.LOADING);
-            const data = await api.get('//badjs2.ivweb.io/controller/applyAction/queryByApplyId.do', {
+            const data = await api.get(`//${location.host}/controller/applyAction/queryByApplyId.do`, {
                 params: {
                     applyId: projectId
                 }
@@ -40,7 +40,7 @@ export function useProject(applyId = 0): Result {
             if(data) {
                 data.ip = [];
                 data.useAgent = [];
-    
+
                 try {
                     const blacklist = JSON.parse(data.blacklist);
                     data.ip = blacklist.ip;

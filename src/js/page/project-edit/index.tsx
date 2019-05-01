@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ProjectFrom from '../../component/projectForm';
-import { withRouter } from 'react-router-dom'; 
+import { withRouter } from 'react-router-dom';
 import api from '../../common/api';
 import { Modal, Empty, Spin } from 'antd';
 import { useProject, Project } from '../../hook/project';
@@ -28,7 +28,7 @@ const RouterWrap = withRouter((props) => {
             limitpv,
             userName
         } = values;
-    
+
         const params = {
             id: data.id,
             name,
@@ -42,10 +42,10 @@ const RouterWrap = withRouter((props) => {
             limitpv,
             userName
         };
-    
+
         api({
             method: 'GET',
-            url: '//badjs2.ivweb.io/user/controller/applyAction/addApply.do',
+            url: `//${location.host}/user/controller/applyAction/addApply.do`,
             params
         })
             .then((result) => {
