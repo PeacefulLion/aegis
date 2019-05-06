@@ -51,6 +51,7 @@ export default function QueryFormOffline({onSummit}: Props) {
     const excludeRef: any = useRef(null);
     const checkBoxRef: any = useRef(null);
     const offlineIdRef: any = useRef(null);
+    const inputRef: any = useRef(null);
 
     const [list, projectId, setProjectId] = useBusinessList(0);
 
@@ -98,12 +99,14 @@ export default function QueryFormOffline({onSummit}: Props) {
 
     function addWatchUin(e) {
         const uin = e.target.value;
-        if (/^\w{4,40}$/.test(uin) && uins.indexOf(uin) === -1) {
-            addUin({uin, id: projectId});
-        } else {
-            alert('请检查UIN')
+        if (!/^\w{4,40}$/.test(uin)) {
+            return alert('UIN 为长度 4-40 的字母和数字');
         }
-        e.target.value = '';
+        if (uins.indexOf(uin) > -1) {
+            return alert('请检查输入的 UIN 是否已经存在');
+        }
+        addUin({uin, id: projectId});
+        inputRef.current.state.value = '';
     }
 
     function removeWatchUin(uin) {
@@ -179,7 +182,8 @@ export default function QueryFormOffline({onSummit}: Props) {
                             <Button key="back" onClick={hideModal}>Close</Button>
                         ]}
                     >
-                        <Input placeholder="添加监听的UIN"
+                        <Input placeholder="添加监听的 UIN，并按 Enter 键确认"
+                               ref={inputRef}
                                onPressEnter={addWatchUin}
                                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                className="input"/>
