@@ -98,7 +98,7 @@ export default function QueryFormOffline({onSummit}: Props) {
 
     function addWatchUin(e) {
         const uin = e.target.value;
-        if (!isNaN(uin) && uins.indexOf(uin) === -1) {
+        if (/^\w+$/.test(uin) && uins.indexOf(uin) === -1) {
             addUin({uin, id: projectId});
         }
         e.target.value = '';
