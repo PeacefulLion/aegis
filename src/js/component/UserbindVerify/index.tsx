@@ -19,7 +19,7 @@ function UB(props: { userInfo: UserInfo }) {
 
     const intro = (
         <div style={{ marginTop: '1.5em', paddingLeft: '16px' }}>
-            共计 { userList.length } 个用户，有 { userList.filter(e => +e.verify_state === 1).length } 个待审核 <br />
+            共计 { userList.length } 个用户，有 { userList.filter(e => + e.verify_state === 1).length } 个待审核 <br />
             
             审核状态分三种 0 1 2，分别对应: <br />
             

@@ -10,6 +10,7 @@ import ProjectMember from '../page/project-member';
 import ProjectList from '../page/project-list';
 import ProjectApply from '../page/project-apply';
 import UserbindVerify from "../component/UserbindVerify";
+import DailyStatics from '../page/project-daily-statics';
 
 import Sourcemap from '../page/sourcemap';
 
@@ -114,6 +115,11 @@ const menu: MenuRoute[] = [{
         key: '306',
         path: '/projectedit',
         component: ProjectEdit
+    }, {
+        name: '项目日志统计',
+        key: '307',
+        path: '/project-daily-statics',
+        component: DailyStatics
     }]
 }, {
     key: '4',
