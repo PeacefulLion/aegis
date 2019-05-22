@@ -271,9 +271,6 @@ export default function LogTable(props: LogTableProps) {
                     <Form.Item label="Version">
                         <Switch checked={showVersion} onChange={setShowVersion} />
                     </Form.Item>
-                    <Form.Item label="Version">
-                        <Switch checked={showVersion} onChange={setShowVersion} />
-                    </Form.Item>
                     <Form.Item label="统计操作系统分布分布">
                         <Switch checked={showStaticPlatform} onChange={setShowStaticPlatform} />
                     </Form.Item>

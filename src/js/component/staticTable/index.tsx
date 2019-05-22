@@ -20,7 +20,7 @@ export default function StaticTable(props: StaticTableProps) {
     const { statics } = props;
     return (
         <div>
-            <Table dataSource={statics} rowKey="index"
+            <Table dataSource={statics} rowKey="title"
                 expandRowByClick={true}
                 pagination={false}
                 className="aegis-logtalbe"
