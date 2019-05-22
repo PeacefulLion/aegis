@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 import dayjs from 'dayjs';
 import { Checkbox, Form, Button, Icon, Select, Drawer, DatePicker } from 'antd';
 import TagList from '../tagList';
+import moment from 'moment';
 import logType from '../../common/const/logType';
 import { setLastSelect } from '../../common/utils';
-import moment from 'moment'
 import { useBusinessList } from '../../hook/businessList';
 
 import './index.less';
@@ -76,7 +76,7 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
     }
     
     function isEarlyThanToday(date : any) {
-        return date > moment();
+        return date > dayjs();
     }
 
     return (
