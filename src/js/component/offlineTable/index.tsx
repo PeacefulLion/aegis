@@ -170,11 +170,9 @@ function ColumnFrom(appIcon: IconProps[], record: FormatLog, index: number) {
     );
 }
 
-function ColumnApp(platform: IconProps[], record: FormatLog, index: number) {
+function ColumnVersion(platform: IconProps[], record: FormatLog, index: number) {
     return (
-        <Tooltip title={record.userAgent}>
-            {VersionIconList(platform)}
-        </Tooltip>
+        <div>{record.version}</div>
     );
 }
 
@@ -318,6 +316,17 @@ export default function LogTable(props: LogTableProps) {
                                 key="from"
                                 width={100}
                                 render={ColumnFrom}
+                            />
+                        ) : null
+                    }
+                    {
+                        showVersion ? (
+                            <Column
+                                title="Version"
+                                dataIndex="version"
+                                key="version"
+                                width={10}
+                                render={ColumnVersion}
                             />
                         ) : null
                     }
