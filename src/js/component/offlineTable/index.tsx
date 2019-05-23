@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Row, Col, Table, Tooltip, Switch, Form, Button, Typography, Input } from 'antd';
-const Search = Input.Search;
+import { Row, Col, Table, Tooltip, Switch, Form, Button, Typography } from 'antd';
 import { Icon as IconProps, FormatLog as FormatLog } from '../../hook/common';
 import Icon from '../icon';
 import './index.less';
@@ -199,7 +198,8 @@ export default function LogTable(props: LogTableProps) {
     const {
         logs
     } = props;
-    const pageSize = 20;
+
+    const pageSize = 30;
     const [showStaticApp, setShowStaticApp] = useState(false);
     const [showStaticPlatform, setShowStaticPlatform] = useState(false);
     const [showISP, setShowISP] = useState(false);
@@ -219,8 +219,8 @@ export default function LogTable(props: LogTableProps) {
     const [record, setRecord] = useState(null);
     const [visibelLog, setVisibelLog] = useState(logs.slice(0, pageSize));
     const [isEnd, setIsEnd] = useState(false);
-    console.log(logs[0]);
-    // 订阅log，首次加载数据后，显示前20条
+
+    // 订阅log，首次加载数据后，显示前30条
     useEffect(() => {
         setVisibelLog(logs.slice(0, pageSize));
         setIsEnd(false);
@@ -259,7 +259,6 @@ export default function LogTable(props: LogTableProps) {
             setIsEnd(true);
         }
     }
-
     return (
         <div className="logtable">
             <div className="logtable-control">
