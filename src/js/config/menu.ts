@@ -18,9 +18,9 @@ import { ReactComponentLike } from "prop-types";
 
 
 export type MenuRoute = {
-    key: string, 
-    name: string, 
-    icon?: string, 
+    key: string,
+    name: string,
+    icon?: string,
     path?: string,
     showInMenu?: boolean,
     component?: ReactComponentLike,
@@ -88,7 +88,6 @@ const menu: MenuRoute[] = [{
     name: '项目管理',
     icon: 'project',
     path: '/project',
-    exactly: true,
     child: [{
         name: '申请项目',
         key: '301',
@@ -105,7 +104,7 @@ const menu: MenuRoute[] = [{
         path: '/projectmember',
         component: ProjectMember
     }, {
-        name: '用户绑定审核', 
+        name: '用户绑定审核',
         key: '305',
         path: '/userbind-verify',
         component: UserbindVerify

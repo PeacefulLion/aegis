@@ -215,8 +215,8 @@ export default function LogTable(props: LogTableProps) {
                 </Form>
             </div>
 
-            <Table dataSource={logs}
-                   rowKey={record => `${record.uin}${record.date}`}
+            <Table dataSource={logs} pagination={{pageSize: 50}}
+                   rowKey={record => `${record.uin}${record.time}`}
                    expandedRowRender={(record:LogPanelProps,index: number, indent: number, expanded: boolean) => {
                        return LogPanelInline(record)
                    }}

@@ -31,7 +31,7 @@ export interface FormatLog extends Log {
     platform: Icon[],
     appIcon: Icon[],
     webview: string[],
-    time: string,
+    time: number,
     device: any,
     version: number,
     index: number,

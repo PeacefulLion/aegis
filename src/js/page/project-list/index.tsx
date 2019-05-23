@@ -43,7 +43,7 @@ export default function ApplyProjectList(props) {
                 </Form.Item>
             </Form>
             <Divider></Divider>
-            <Table dataSource={list} key={status}>
+            <Table dataSource={list} key={status} pagination={{pageSize: 25}}>
                 <Column
                     title="上报ID"
                     dataIndex="id"

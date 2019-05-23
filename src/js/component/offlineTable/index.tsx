@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { Row, Col, Table, Tooltip, Switch, Form, Button, Typography } from 'antd';
+import { Row, Col, Table, Tooltip, Switch, Form, Typography } from 'antd';
 import { Icon as IconProps, FormatLog as FormatLog } from '../../hook/common';
 import Icon from '../icon';
 import './index.less';
-import AnalysisPanel from '../analysisPanel';
 import InfiniteScroll from 'react-infinite-scroller';
 import SourceMapButton from '../sourceMapButton'
-import { userInfo } from 'os';
 
 const {
     useState,
@@ -51,8 +49,6 @@ function LogPanelInline(props: LogPanelProps) {
         webview,
         userAgent,
         uin,
-        left,
-        top,
         version
     } = props;
 
@@ -116,11 +112,6 @@ function LogPanelInline(props: LogPanelProps) {
                 </Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
-                    <span className="label">
-                        App
-                    </span>
-                </Col>
                 <Col span={20} className="logdetail-info">
                     {VersionIconList(appIcon)}
                 </Col>
@@ -200,23 +191,14 @@ export default function LogTable(props: LogTableProps) {
     } = props;
 
     const pageSize = 30;
-    const [showStaticApp, setShowStaticApp] = useState(false);
-    const [showStaticPlatform, setShowStaticPlatform] = useState(false);
-    const [showISP, setShowISP] = useState(false);
-    const [showWebviewCore, setshowWebviewCore] = useState(false);
-    const [showMap, setShowMap] = useState(false);
 
     const [showTime, setShowTime] = useState(true);
     const [showIp, setShowIp] = useState(false);
-    const [showUin, setShowUin] = useState(true);
-    const [showApp, setShowApp] = useState(false);
+    const [showUin, setShowUin] = useState(false);
     const [showPlatform, setShowPlatform] = useState(false);
     const [showFrom, setShowFrom] = useState(false);
     const [showVersion, setShowVersion] = useState(false);
-    const [showMsg, setShowMsg] = useState(true);
     const [showNetType, setShowNetType] = useState(false);
-    const [showLogPanel, setShowLogPanel] = useState(false);
-    const [record, setRecord] = useState(null);
     const [visibelLog, setVisibelLog] = useState(logs.slice(0, pageSize));
     const [isEnd, setIsEnd] = useState(false);
 
@@ -226,39 +208,10 @@ export default function LogTable(props: LogTableProps) {
         setIsEnd(false);
     }, [logs]);
 
-    const handlerClickApp = function () {
-        setShowApp(!showApp);
-    }
-
-    const handlerClickPlatform = function () {
-        setShowPlatform(!showPlatform);
-    }
-
-    const handlerClickISP = function () {
-        setShowISP(!showISP);
-    }
-
-    const handlerClickWebviewCore = function () {
-        setshowWebviewCore(!showWebviewCore);
-    }
-
-    const handlerClickMap = function () {
-        setShowMap(!showMap);
-    }
-
     const handlerLoadMore = function () {
         setVisibelLog(logs.slice(0, visibelLog.length + pageSize));
     }
 
-    const searchLog = function(keyword) {
-        if (keyword) {
-            const searchResult = logs.filter(log => {
-                return log.msg.indexOf(keyword) != -1
-            })
-            setVisibelLog(searchResult);
-            setIsEnd(true);
-        }
-    }
     return (
         <div className="logtable">
             <div className="logtable-control">
@@ -272,9 +225,6 @@ export default function LogTable(props: LogTableProps) {
                     <Form.Item label="IP">
                         <Switch checked={showIp} onChange={setShowIp} />
                     </Form.Item>
-                    <Form.Item label="App">
-                        <Switch checked={showApp} onChange={setShowApp} />
-                    </Form.Item>
                     <Form.Item label="NetType">
                         <Switch checked={showNetType} onChange={setShowNetType} />
                     </Form.Item>
@@ -287,32 +237,8 @@ export default function LogTable(props: LogTableProps) {
                     <Form.Item label="Version">
                         <Switch checked={showVersion} onChange={setShowVersion} />
                     </Form.Item>
-                    <Form.Item label="统计操作系统分布分布">
-                        <Switch checked={showStaticPlatform} onChange={setShowStaticPlatform} />
-                    </Form.Item>
-                    <Form.Item label="统计webview内核分布">
-                        <Switch checked={showWebviewCore} onChange={setshowWebviewCore} />
-                    </Form.Item>
-                    <Form.Item label="统计客户端版本分布">
-                        <Switch checked={showStaticApp} onChange={setShowStaticApp} />
-                    </Form.Item>
-                    <Form.Item label="统计运营商分布">
-                        <Switch checked={showISP} onChange={setShowISP} />
-                    </Form.Item>
-                    <Form.Item label="统计地区分布">
-                        <Switch checked={showMap} onChange={setShowMap} />
-                    </Form.Item>
                 </Form>
             </div>
-
-            <AnalysisPanel
-                logs={visibelLog}
-                showApp={showApp}
-                showPlatform={showPlatform}
-                showISP={showISP}
-                showWebviewCore={showWebviewCore}
-                showMap={showMap}
-            />
             <InfiniteScroll
                 initialLoad={false}
                 pageStart={0}
@@ -320,11 +246,6 @@ export default function LogTable(props: LogTableProps) {
                 hasMore={!isEnd}
                 useWindow={true}
             >
-                <Search
-                    placeholder="输入搜索内容"
-                    onSearch={searchLog}
-                    className="search"
-                />
                 <Table dataSource={visibelLog} rowKey="index"
                     expandedRowRender={LogPanelInline}
                     expandRowByClick={true}
@@ -375,17 +296,6 @@ export default function LogTable(props: LogTableProps) {
                                 dataIndex="device.netType"
                                 key="nettype"
                                 width={100}
-                            />
-                        ) : null
-                    }
-                    {
-                        showApp ? (
-                            <Column
-                                title="App"
-                                dataIndex="appIcon"
-                                key="appIcon"
-                                width={200}
-                                render={ColumnApp}
                             />
                         ) : null
                     }
