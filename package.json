@@ -4,7 +4,7 @@
   "description": "基于 badjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "start": "parcel ./src/*.html --public-url /aegis/ ",
     "clean": "rimraf dist/",
     "build": "cross-env NODE_ENV=production parcel build ./src/index.html --no-source-maps --public-url /aegis/ --detailed-report",
@@ -46,6 +46,7 @@
     "@types/redux": "^3.6.0",
     "babel-eslint": "^10.0.1",
     "babel-polyfill": "^6.26.0",
+    "conventional-changelog-cli": "^2.0.21",
     "cross-env": "^5.2.0",
     "eslint": "^5.10.0",
     "eslint-config-ivweb": "^0.1.5",
