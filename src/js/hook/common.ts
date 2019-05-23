@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 export interface Log {
     uin: number | string,
     userAgent: string,
+    date: number,
     all: string,
     msg: string,
     ip: string,

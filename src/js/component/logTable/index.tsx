@@ -59,36 +59,36 @@ function LogPanelInline(props: LogPanelProps) {
     return (
         <div className="logdetail-panel">
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">
                         Time
                     </span>
                 </Col>
-                <Col span={20} className="logdetail-info">{time}</Col>
+                <Col span={21} className="logdetail-info">{time}</Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">IP</span>
                 </Col>
-                <Col span={20} className="logdetail-info">{ip}</Col>
+                <Col span={21} className="logdetail-info">{ip}</Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">uin</span>
                 </Col>
-                <Col span={20} className="logdetail-info">{uin}</Col>
+                <Col span={21} className="logdetail-info">{uin}</Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">userAgent</span>
                 </Col>
-                <Col span={20} className="logdetail-info">{userAgent}</Col>
+                <Col span={21} className="logdetail-info">{userAgent}</Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">Form</span>
                 </Col>
-                <Col span={20} className="logdetail-info">
+                <Col span={21} className="logdetail-info">
                     {
                         <div>
                             <a target="_blank" href={`${from}`}>
@@ -116,28 +116,28 @@ function LogPanelInline(props: LogPanelProps) {
                 </Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">
                         App
                     </span>
                 </Col>
-                <Col span={20} className="logdetail-info">
+                <Col span={21} className="logdetail-info">
                     {VersionIconList(appIcon)}
                 </Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">Paltform</span>
                 </Col>
-                <Col span={20} className="logdetail-info">
+                <Col span={21} className="logdetail-info">
                     {VersionIconList(platform)}
                 </Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">ExtraInfo</span>
                 </Col>
-                <Col span={20} className="logdetail-info">
+                <Col span={21} className="logdetail-info">
                     {
                         webview.length > 0 ? (
                             <span>浏览器内核为 {webview.join(';')}</span>
@@ -146,10 +146,10 @@ function LogPanelInline(props: LogPanelProps) {
                 </Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">version</span>
                 </Col>
-                <Col span={20} className="logdetail-info">
+                <Col span={21} className="logdetail-info">
                     {version}
                 </Col>
             </Row>

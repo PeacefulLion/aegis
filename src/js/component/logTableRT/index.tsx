@@ -52,24 +52,24 @@ function LogPanelInline(props: LogPanelProps) {
     return (
         <div className="logdetail-panel">
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">
                         Time
                     </span>
                 </Col>
-                <Col span={20}>{time}</Col>
+                <Col span={21}>{time}</Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">IP</span>
                 </Col>
-                <Col span={20}>{ip}</Col>
+                <Col span={21}>{ip}</Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">Form</span>
                 </Col>
-                <Col span={20}>
+                <Col span={21}>
                     {
                         <div>
                             <a target="_blank" href={`${from}`}>
@@ -97,28 +97,28 @@ function LogPanelInline(props: LogPanelProps) {
                 </Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">
                         App
                     </span>
                 </Col>
-                <Col span={20}>
+                <Col span={21}>
                     {VersionIconList(appIcon)}
                 </Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">Paltform</span>
                 </Col>
-                <Col span={20}>
+                <Col span={21}>
                     {VersionIconList(platform)}
                 </Col>
             </Row>
             <Row className="logdetail-row">
-                <Col span={4}>
+                <Col span={2}>
                     <span className="label">version</span>
                 </Col>
-                <Col span={20} className="logdetail-info">
+                <Col span={21} className="logdetail-info">
                     {version}
                 </Col>
             </Row>
@@ -172,7 +172,6 @@ export default function LogTable(props: LogTableProps) {
         logs
     } = props;
     logs.reverse();
-    const expands = logs.slice(0, 10).map(record => `${record.uin}${record.date}`)
     const [showTime, setShowTime] = useState(true);
     const [showIp, setShowIp] = useState(false);
     const [showUin, setShowUin] = useState(false);
@@ -180,10 +179,7 @@ export default function LogTable(props: LogTableProps) {
     const [showPlatform, setShowPlatform] = useState(false);
     const [showFrom, setShowFrom] = useState(false);
     const [showVersion, setShowVersion] = useState(false);
-    const [showMsg, setShowMsg] = useState(true);
     const [showNetType, setShowNetType] = useState(false);
-    const [showLogPanel, setShowLogPanel] = useState(false);
-    const [record, setRecord] = useState(null);
     return (
         <div className="logtable">
             <div className="logtable-control">
@@ -216,12 +212,11 @@ export default function LogTable(props: LogTableProps) {
             </div>
 
             <Table dataSource={logs} pagination={{pageSize: 50}}
-                   rowKey={record => `${record.uin}${record.time}`}
+                   rowKey={record => `${record.uin}${record.date}`}
                    expandedRowRender={(record:LogPanelProps,index: number, indent: number, expanded: boolean) => {
                        return LogPanelInline(record)
                    }}
                    expandRowByClick={true}
-                   // expandedRowKeys={expands}
             >
                 <Column
                     title="#"
