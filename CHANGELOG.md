@@ -3,6 +3,8 @@
 
 ### Bug Fixes
 
+* projectmember project search bug ([3315db1](https://github.com/iv-web/wardmonitor/commit/3315db1))
+* projectmember project search bug ([f0fc00a](https://github.com/iv-web/wardmonitor/commit/f0fc00a))
 * useEffect function must return a cleanup function or nothing ([99a5014](https://github.com/iv-web/wardmonitor/commit/99a5014))
 * 修复搜索框不容易显示的问题 ([8812b43](https://github.com/iv-web/wardmonitor/commit/8812b43))
 * 正则错误 ([9465576](https://github.com/iv-web/wardmonitor/commit/9465576))
@@ -11,17 +13,25 @@
 
 ### Features
 
-* 离线日志 ([715c872](https://github.com/iv-web/wardmonitor/commit/715c872))
+*  离线日志 ([715c872](https://github.com/iv-web/wardmonitor/commit/715c872))
+* add change log md ([cb86e7d](https://github.com/iv-web/wardmonitor/commit/cb86e7d))
+* add enter button in offline log query modal ([84fab8d](https://github.com/iv-web/wardmonitor/commit/84fab8d))
 * add highcharts ([09513db](https://github.com/iv-web/wardmonitor/commit/09513db))
 * add typescript config ([ec7d153](https://github.com/iv-web/wardmonitor/commit/ec7d153))
 * add version && fix time  bug ([27f3576](https://github.com/iv-web/wardmonitor/commit/27f3576))
 * badjs id 搜索 & 页面保留搜索记录 & 暂时不展开实时日志 ([6dd560e](https://github.com/iv-web/wardmonitor/commit/6dd560e))
 * BindRTX ([a807734](https://github.com/iv-web/wardmonitor/commit/a807734))
 * clear logs ([eef8aef](https://github.com/iv-web/wardmonitor/commit/eef8aef))
+* enhance offline search logic ([5141143](https://github.com/iv-web/wardmonitor/commit/5141143))
+* fix ([df87b68](https://github.com/iv-web/wardmonitor/commit/df87b68))
+* fix confict ([00cf650](https://github.com/iv-web/wardmonitor/commit/00cf650))
 * https ([6c15878](https://github.com/iv-web/wardmonitor/commit/6c15878))
 * ignore .DS_Store ([e71b994](https://github.com/iv-web/wardmonitor/commit/e71b994))
 * login ([7a2a3aa](https://github.com/iv-web/wardmonitor/commit/7a2a3aa))
+* offline log add version show ([5ae72fb](https://github.com/iv-web/wardmonitor/commit/5ae72fb))
 * RecvCode ([58aac58](https://github.com/iv-web/wardmonitor/commit/58aac58))
+* style ([c9d5712](https://github.com/iv-web/wardmonitor/commit/c9d5712))
+* test ([48522c9](https://github.com/iv-web/wardmonitor/commit/48522c9))
 * uin check alert ([ebb3343](https://github.com/iv-web/wardmonitor/commit/ebb3343))
 * uin 可以为字母和数字 ([519673b](https://github.com/iv-web/wardmonitor/commit/519673b))
 * update ([d4296c1](https://github.com/iv-web/wardmonitor/commit/d4296c1))
