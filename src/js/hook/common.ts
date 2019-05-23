@@ -5,7 +5,6 @@ import dayjs from 'dayjs';
 export interface Log {
     uin: number | string,
     userAgent: string,
-    date: number,
     all: string,
     msg: string,
     ip: string,
@@ -14,6 +13,8 @@ export interface Log {
     version: number,
     rowNum?: number,
     colNum?: number,
+    index: number,
+    time: number
 }
 
 export interface dailyStatic {
@@ -28,7 +29,8 @@ export interface FormatLog extends Log {
     time: string,
     device: any,
     version: number,
-    index: number
+    index: number,
+    msg: string
 }
 
 export interface Icon {
@@ -38,16 +40,16 @@ export interface Icon {
 
 export function formatLog(log: Log): FormatLog {
     const device = getDevice(log.userAgent);
-
-    const formatLog: FormatLog = Object.assign({
-        time: dayjs(log.date).format('YYYY-MM-DD HH:mm:ss'),
+    const formatLog: FormatLog = Object.assign(log, {
+        time: dayjs(log.time).format('YYYY-MM-DD HH:mm:ss'),
         uin: (log.uin || isNaN(log.uin as number) ? '-' : log.uin),
         device,
         appIcon: [],
         platform: [],
         webview: [],
-        version: log.version || 1
-    }, log);
+        version: log.version || 1,
+        index: log.index
+    });
 
     ['android', 'iOS', 'windows'].forEach((name) => {
         if (device[name + 'Version']) {

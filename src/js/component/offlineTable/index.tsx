@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Row, Col, Table, Tooltip, Switch, Form, Button, Typography, Input } from 'antd';
-const Search = Input.Search;
+import { Row, Col, Table, Tooltip, Switch, Form, Button, Typography } from 'antd';
 import { Icon as IconProps, FormatLog as FormatLog } from '../../hook/common';
 import Icon from '../icon';
 import './index.less';
@@ -199,6 +198,7 @@ export default function LogTable(props: LogTableProps) {
     const {
         logs
     } = props;
+
     const pageSize = 20;
     const [showStaticApp, setShowStaticApp] = useState(false);
     const [showStaticPlatform, setShowStaticPlatform] = useState(false);
@@ -219,7 +219,6 @@ export default function LogTable(props: LogTableProps) {
     const [record, setRecord] = useState(null);
     const [visibelLog, setVisibelLog] = useState(logs.slice(0, pageSize));
     const [isEnd, setIsEnd] = useState(false);
-    console.log(logs[0]);
     // 订阅log，首次加载数据后，显示前20条
     useEffect(() => {
         setVisibelLog(logs.slice(0, pageSize));
@@ -249,17 +248,6 @@ export default function LogTable(props: LogTableProps) {
     const handlerLoadMore = function () {
         setVisibelLog(logs.slice(0, visibelLog.length + pageSize));
     }
-
-    const searchLog = function(keyword) {
-        if (keyword) {
-            const searchResult = logs.filter(log => {
-                return log.msg.indexOf(keyword) != -1
-            })
-            setVisibelLog(searchResult);
-            setIsEnd(true);
-        }
-    }
-
     return (
         <div className="logtable">
             <div className="logtable-control">
@@ -321,11 +309,6 @@ export default function LogTable(props: LogTableProps) {
                 hasMore={!isEnd}
                 useWindow={true}
             >
-                <Search
-                    placeholder="输入搜索内容"
-                    onSearch={searchLog}
-                    className="search"
-                />
                 <Table dataSource={visibelLog} rowKey="index"
                     expandedRowRender={LogPanelInline}
                     expandRowByClick={true}

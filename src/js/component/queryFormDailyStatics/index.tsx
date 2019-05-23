@@ -41,7 +41,7 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
     const [pageIndex, setPageIndex] = useState(0);
     const [drawerVisiblie, setDrawerVisiblie] = useState(true);
     const [list, projectId, setProjectId] = useBusinessList(0);
-    const [selectDate, setSelectDate] = useState(moment().format("YYYY-MM-DD"));    
+    const [selectDate, setSelectDate] = useState(moment().add(-1, 'days').format("YYYY-MM-DD"));    
     function handlerClose() {
         setDrawerVisiblie(false);
     }
@@ -113,7 +113,7 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
                     </Select>
                 </Form.Item>
                 <Form.Item label="统计时间" {...formItemLayout}>
-                    <DatePicker onChange={changeDate} disabledDate={isEarlyThanToday} defaultValue={moment()}></DatePicker>
+                    <DatePicker onChange={changeDate} disabledDate={isEarlyThanToday} defaultValue={moment().add(-1, 'days')}></DatePicker>
                 </Form.Item>
                 <Form.Item wrapperCol={{
                         xs: { span: 24, offset: 0 },

@@ -12,16 +12,19 @@ export interface ApiResult {
 
 export interface SummitOptions {
     id: number,
-    fileId: string
+    fileId: string,
+    include: string[],
+    exclude: string[]
 }
 
 export function useOfflineLogs(value: FormatLog[]): [FormatLog[], Function, (opts: SummitOptions) => Promise<FormatLog[]>] {
     const [logs, setLogs] = useState(value);
-
     async function getLogs(opts: SummitOptions) {
         const {
             id,
-            fileId
+            fileId,
+            include,
+            exclude
         } = opts;
         const startTime = new Date().getTime();
         let data = await api.get(`//${location.host}/controller/logAction/showOfflineLog.do`, {
@@ -38,8 +41,16 @@ export function useOfflineLogs(value: FormatLog[]): [FormatLog[], Function, (opt
             setLogs([]);
             return []
         }
-
-        const {logs, userAgent} = data;
+        function exist(content, keyword) {
+            return content.indexOf(keyword) !== -1;
+        }
+        let {logs, userAgent} = data;
+        if (include.length > 0) {
+            logs = logs.filter(log => include.every(tag => exist(log.msg, tag)));
+        }
+        if (exclude.length > 0) {
+            logs = logs.filter(log => !exclude.some(tag => exist(log.msg, tag)));    
+        }
         const formatLogs = logs.map((item, index) => {
             return formatLog(Object.assign(item, {userAgent, index}));
         });
