@@ -1,5 +1,5 @@
 import * as React from 'react';
-import LogTable from '../../component/logTable';
+import LogTable from '../../component/offlineTable';
 import {useOfflineLogs} from '../../hook/offlineLogs';
 import QueryForm from '../../component/queryFormOffline';
 

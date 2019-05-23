@@ -1,19 +1,20 @@
 import * as React from 'react';
-import {Row, Col, Table, Tooltip, Switch, Form, Button, Typography} from 'antd';
-import {Icon as IconProps, FormatLog as FormatLog} from '../../hook/common';
+import { Row, Col, Table, Tooltip, Switch, Form, Button, Typography, Input } from 'antd';
+const Search = Input.Search;
+import { Icon as IconProps, FormatLog as FormatLog } from '../../hook/common';
 import Icon from '../icon';
 import './index.less';
 import AnalysisPanel from '../analysisPanel';
 import InfiniteScroll from 'react-infinite-scroller';
-
 import SourceMapButton from '../sourceMapButton'
+import { userInfo } from 'os';
 
 const {
     useState,
     useEffect
 } = React;
 
-const {Column, ColumnGroup} = Table;
+const { Column, ColumnGroup } = Table;
 
 function VersionIcon(props: IconProps) {
     return (
@@ -109,7 +110,7 @@ function LogPanelInline(props: LogPanelProps) {
 
                             {
                                 target ? <SourceMapButton target={target} rowNum={rowNum}
-                                                          colNum={colNum}></SourceMapButton> : null
+                                    colNum={colNum}></SourceMapButton> : null
                             }
                         </div>
                     }
@@ -196,11 +197,9 @@ interface LogTableProps {
 
 export default function LogTable(props: LogTableProps) {
     const {
-        logs,
-        isEnd,
-        loadMore
+        logs
     } = props;
-
+    const pageSize = 20;
     const [showStaticApp, setShowStaticApp] = useState(false);
     const [showStaticPlatform, setShowStaticPlatform] = useState(false);
     const [showISP, setShowISP] = useState(false);
@@ -218,6 +217,14 @@ export default function LogTable(props: LogTableProps) {
     const [showNetType, setShowNetType] = useState(false);
     const [showLogPanel, setShowLogPanel] = useState(false);
     const [record, setRecord] = useState(null);
+    const [visibelLog, setVisibelLog] = useState(logs.slice(0, pageSize));
+    const [isEnd, setIsEnd] = useState(false);
+    console.log(logs[0]);
+    // 订阅log，首次加载数据后，显示前20条
+    useEffect(() => {
+        setVisibelLog(logs.slice(0, pageSize));
+        setIsEnd(false);
+    }, [logs]);
 
     const handlerClickApp = function () {
         setShowApp(!showApp);
@@ -239,8 +246,18 @@ export default function LogTable(props: LogTableProps) {
         setShowMap(!showMap);
     }
 
-    const handlerLoadMore = function() {
-        loadMore();
+    const handlerLoadMore = function () {
+        setVisibelLog(logs.slice(0, visibelLog.length + pageSize));
+    }
+
+    const searchLog = function(keyword) {
+        if (keyword) {
+            const searchResult = logs.filter(log => {
+                return log.msg.indexOf(keyword) != -1
+            })
+            setVisibelLog(searchResult);
+            setIsEnd(true);
+        }
     }
 
     return (
@@ -290,7 +307,7 @@ export default function LogTable(props: LogTableProps) {
             </div>
 
             <AnalysisPanel
-                logs={logs}
+                logs={visibelLog}
                 showApp={showApp}
                 showPlatform={showPlatform}
                 showISP={showISP}
@@ -298,18 +315,23 @@ export default function LogTable(props: LogTableProps) {
                 showMap={showMap}
             />
             <InfiniteScroll
-                    initialLoad={false}
-                    pageStart={0}
-                    loadMore={handlerLoadMore}
-                    hasMore={!isEnd}
-                    useWindow={true}
+                initialLoad={false}
+                pageStart={0}
+                loadMore={handlerLoadMore}
+                hasMore={!isEnd}
+                useWindow={true}
+            >
+                <Search
+                    placeholder="输入搜索内容"
+                    onSearch={searchLog}
+                    className="search"
+                />
+                <Table dataSource={visibelLog} rowKey="index"
+                    expandedRowRender={LogPanelInline}
+                    expandRowByClick={true}
+                    pagination={false}
+                    className="aegis-logtalbe"
                 >
-                    <Table dataSource={logs} rowKey="index"
-                        expandedRowRender={LogPanelInline}
-                        expandRowByClick={true}
-                        pagination={false}
-                        className="aegis-logtalbe"
-                    >
                     <Column
                         title="#"
                         key="index"
@@ -402,8 +424,8 @@ export default function LogTable(props: LogTableProps) {
                             )
                         }}
                     />
-                    </Table>
-                </InfiniteScroll>
+                </Table>
+            </InfiniteScroll>
         </div>
     );
 }
