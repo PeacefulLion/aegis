@@ -98,7 +98,8 @@ export default function QueryFormOffline({onSummit}: Props) {
     }
 
     function addWatchUin(e) {
-        const uin = e.target.value;
+        let uin = e.target.value || inputRef.current.state.value;
+        uin = uin.trim();
         if (!/^\w{4,40}$/.test(uin)) {
             return alert('UIN 为长度 4-40 的字母和数字');
         }
@@ -182,11 +183,12 @@ export default function QueryFormOffline({onSummit}: Props) {
                             <Button key="back" onClick={hideModal}>Close</Button>
                         ]}
                     >
-                        <Input placeholder="添加监听的 UIN，并按 Enter 键确认"
+                        <Input placeholder="添加监听的 UIN"
                                ref={inputRef}
                                onPressEnter={addWatchUin}
                                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                               className="input"/>
+                               className="listen-input"/>
+                        <Button onClick={addWatchUin}>确认</Button>
                         <table className="offline-form-modal-table">
                             <tbody>
                             {
