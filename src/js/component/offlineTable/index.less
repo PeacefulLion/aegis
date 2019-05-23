@@ -1,0 +1,93 @@
+
+.log-type-default {
+    &:before {
+        position: absolute;
+        left:0 ;
+        top: 0;
+        width: 5px;
+        height: 100%;
+        content: '';
+        background-color: #88b6f2;
+    }
+}
+
+.log-type-error {
+    &:before {
+        position: absolute;
+        left:0 ;
+        top: 0;
+        width: 5px;
+        height: 100%;
+        content: '';
+        background-color: #f5222d;
+    }
+}
+
+.logtable-index {
+    position: relative;
+}
+
+.logtable {
+    position: relative;
+}
+
+.logtable-control {
+    margin-bottom: 16px;
+    // padding: 0 12px;
+}
+
+.logdetail-panel {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    background-clip: padding-box;
+    .label { 
+        font-weight: bold;
+        &:after {
+            content: ':';
+        }
+    }
+    .logdetail-row {
+        margin: 10px 0;
+        
+        .logdetail-info {
+            word-break:break-all;
+        }
+    }
+
+    .logpanel-iconwrap {
+        margin-right: 20px;
+    }
+}
+
+.aegis-logtalbe {
+    table-layout: fixed;
+}
+
+table.dataintable {
+    margin-top:15px;
+    border-collapse:collapse;
+    border:1px solid #aaa;
+    width:100%;
+  }
+  table.dataintable th {
+    vertical-align:baseline;
+    padding:5px 15px 5px 6px;
+    background-color:#3F3F3F;
+    border:1px solid #3F3F3F;
+    text-align:left;
+    color:#fff;
+  }
+  table.dataintable td {
+    vertical-align:text-top;
+    padding:6px 15px 6px 6px;
+    border:1px solid #aaa;
+  }
+  table.dataintable tr:nth-child(odd) {
+    background-color:#F5F5F5;
+  }
+  table.dataintable tr:nth-child(even) {
+    background-color:#fff;
+  }

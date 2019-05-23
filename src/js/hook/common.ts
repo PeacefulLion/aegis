@@ -27,7 +27,8 @@ export interface FormatLog extends Log {
     webview: string[],
     time: string,
     device: any,
-    version: number
+    version: number,
+    index: number
 }
 
 export interface Icon {

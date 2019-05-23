@@ -23,27 +23,29 @@ export function useOfflineLogs(value: FormatLog[]): [FormatLog[], Function, (opt
             id,
             fileId
         } = opts;
-
+        const startTime = new Date().getTime();
         let data = await api.get(`//${location.host}/controller/logAction/showOfflineLog.do`, {
             params: {
                 id,
                 fileId
             }
         }) as any;
+        console.log('api请求结束：',new Date().getTime()-startTime);
         try {
             data = JSON.parse(data);
+            console.log('JSON解析完毕：',new Date().getTime()-startTime);
         } catch (e) {
             setLogs([]);
             return []
         }
 
         const {logs, userAgent} = data;
-        const formatLogs = logs.map((item) => {
-            return formatLog(Object.assign(item, {userAgent}));
+        const formatLogs = logs.map((item, index) => {
+            return formatLog(Object.assign(item, {userAgent, index}));
         });
-
+        console.log('format结束',new Date().getTime()-startTime);
         setLogs(formatLogs);
-
+        console.log('dom渲染完毕',new Date().getTime()-startTime);
         return formatLogs;
     }
 

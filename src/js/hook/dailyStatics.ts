@@ -1,7 +1,7 @@
 import * as React from 'react';
 import api from '../common/api';
 import { dailyStatic } from './common';
-import {} from './'
+import axios from 'axios';
 
 const {
     useState,
@@ -47,15 +47,14 @@ export function useStatics(value: dailyStatic[]): [dailyStatic[], Function, (opt
                 date: date
             }
         }).catch(err => {
-            console.log('err');
-            console.log(err);
             return err;
         })
-        const [detailRes, overviewRes] = await Promise.all([getDetail, getOverview]);
-        console.log(overviewRes);
+        const [detailRes, overviewRes] = await axios.all([getDetail, getOverview]);
         const content = detailRes[0] && detailRes[0].content;
+        if (overviewRes[0]) {
+            setOverview(overviewRes[0]);
+        }
         setStatics(content);
-        setOverview(overviewRes[0]);
         return content;
     }
 
