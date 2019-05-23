@@ -219,6 +219,7 @@ export default function LogTable(props: LogTableProps) {
     const [record, setRecord] = useState(null);
     const [visibelLog, setVisibelLog] = useState(logs.slice(0, pageSize));
     const [isEnd, setIsEnd] = useState(false);
+
     // 订阅log，首次加载数据后，显示前30条
     useEffect(() => {
         setVisibelLog(logs.slice(0, pageSize));
@@ -247,6 +248,16 @@ export default function LogTable(props: LogTableProps) {
 
     const handlerLoadMore = function () {
         setVisibelLog(logs.slice(0, visibelLog.length + pageSize));
+    }
+
+    const searchLog = function(keyword) {
+        if (keyword) {
+            const searchResult = logs.filter(log => {
+                return log.msg.indexOf(keyword) != -1
+            })
+            setVisibelLog(searchResult);
+            setIsEnd(true);
+        }
     }
     return (
         <div className="logtable">
@@ -309,6 +320,11 @@ export default function LogTable(props: LogTableProps) {
                 hasMore={!isEnd}
                 useWindow={true}
             >
+                <Search
+                    placeholder="输入搜索内容"
+                    onSearch={searchLog}
+                    className="search"
+                />
                 <Table dataSource={visibelLog} rowKey="index"
                     expandedRowRender={LogPanelInline}
                     expandRowByClick={true}

@@ -11,11 +11,14 @@ const RouterWrap = withRouter((props) => {
         history,
         match
     } = props;
-
+    let { projectId } = match.params;
+    if (!projectId) {
+        projectId = location.hash.replace(/[^0-9]/ig,'');
+    }
     const {
         data,
         status
-    } = useProject(match.params.projectId);
+    } = useProject(projectId);
 
     function doApply(values) {
         const {

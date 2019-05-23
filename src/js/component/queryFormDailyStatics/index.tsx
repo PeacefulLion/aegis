@@ -41,7 +41,9 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
     const [pageIndex, setPageIndex] = useState(0);
     const [drawerVisiblie, setDrawerVisiblie] = useState(true);
     const [list, projectId, setProjectId] = useBusinessList(0);
+
     const [selectDate, setSelectDate] = useState(moment().add(-1, 'days').format("YYYY-MM-DD"));    
+
     function handlerClose() {
         setDrawerVisiblie(false);
     }

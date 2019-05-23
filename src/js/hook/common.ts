@@ -22,6 +22,11 @@ export interface dailyStatic {
     total: number
 }
 
+export interface dailyStatic {
+    title: string,
+    total: number
+}
+
 export interface FormatLog extends Log {
     platform: Icon[],
     appIcon: Icon[],
