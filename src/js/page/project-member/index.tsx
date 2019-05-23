@@ -60,8 +60,8 @@ export default function ProjectMembers(props) {
         addUser
     } = useProjectMembers(role, projectId);
 
-    function handelProjectChange(index) {
-        const project = list[index];
+    function handelProjectChange(id) {
+        const project = list.find(t => t.id === id);
         setProjectId(project.id);
         setProject(project);
     }
@@ -131,7 +131,7 @@ export default function ProjectMembers(props) {
                     </div>
                 ) : null
             }
-            <Table dataSource={data} key={projectId}>
+            <Table pagination={ false } dataSource={data} key={projectId}>
                 <Column
                     title="成员"
                     key="chineseName"
