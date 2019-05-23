@@ -26,6 +26,7 @@ export function useOfflineLogs(value: FormatLog[]): [FormatLog[], Function, (opt
             include,
             exclude
         } = opts;
+        window.scroll(0,0);
         const startTime = new Date().getTime();
         let data = await api.get(`//${location.host}/controller/logAction/showOfflineLog.do`, {
             params: {

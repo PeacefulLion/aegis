@@ -199,7 +199,7 @@ export default function LogTable(props: LogTableProps) {
         logs
     } = props;
 
-    const pageSize = 20;
+    const pageSize = 30;
     const [showStaticApp, setShowStaticApp] = useState(false);
     const [showStaticPlatform, setShowStaticPlatform] = useState(false);
     const [showISP, setShowISP] = useState(false);
@@ -219,7 +219,7 @@ export default function LogTable(props: LogTableProps) {
     const [record, setRecord] = useState(null);
     const [visibelLog, setVisibelLog] = useState(logs.slice(0, pageSize));
     const [isEnd, setIsEnd] = useState(false);
-    // 订阅log，首次加载数据后，显示前20条
+    // 订阅log，首次加载数据后，显示前30条
     useEffect(() => {
         setVisibelLog(logs.slice(0, pageSize));
         setIsEnd(false);
