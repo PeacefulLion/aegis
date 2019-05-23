@@ -41,8 +41,7 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
     const [pageIndex, setPageIndex] = useState(0);
     const [drawerVisiblie, setDrawerVisiblie] = useState(true);
     const [list, projectId, setProjectId] = useBusinessList(0);
-    const [selectDate, setSelectDate] = useState(null);
-
+    const [selectDate, setSelectDate] = useState(moment().format("YYYY-MM-DD"));    
     function handlerClose() {
         setDrawerVisiblie(false);
     }
@@ -56,7 +55,6 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
         setLastSelect(id);
     }
     function changeDate(date, dateString) {
-        console.log(dateString);
         setSelectDate(dateString);
     }
 

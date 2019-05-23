@@ -44,6 +44,9 @@ interface Device {
 }
 
 export function getDevice(ua: string): Device {
+    if (!ua) {
+        ua = '';
+    }
     const device: Device = {
         ua: ua
     }
