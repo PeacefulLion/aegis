@@ -396,9 +396,7 @@ export default function LogTable(props: LogTableProps) {
                         key="msg"
                         render={(msg) => {
                             return (
-                                <Typography>
-                                    <Typography.Paragraph>{msg}</Typography.Paragraph>
-                                </Typography>
+                                <Typography.Paragraph>{msg}</Typography.Paragraph>
                             )
                         }}
                     />
