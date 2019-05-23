@@ -95,7 +95,7 @@ export default function ProjectMembers(props) {
                         >
                         {
                             list.map((item, index) => {
-                                return <Option title={item.name} key={item.id} value={index}>{item.id}.{item.name}</Option>
+                                return <Option title={item.name} key={item.id} value={item.id}>{item.id}.{item.name}</Option>
                             })
                         }
                     </Select>
