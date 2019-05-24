@@ -25,7 +25,7 @@ const NavPath = (props) => {
 
     useEffect(() => {
         const data = [];
-    
+
         function checkPathName(items) {
             return items.some((item, index) => {
                 const {
@@ -34,7 +34,7 @@ const NavPath = (props) => {
                     path,
                     child
                 } = item;
-    
+
                 if(matchPath(pathname, {
                     path: path,
                     exact,
@@ -54,6 +54,7 @@ const NavPath = (props) => {
         }
         checkPathName(menuConfig);
         setData(data);
+        window.scrollTo(0, 0);
     }, [pathname])
 
     const bread = data.map((item) => {
