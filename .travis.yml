@@ -5,12 +5,21 @@ install:
 - npm install
 
 script:
-- npm run dist
+- npm run build
 
 after_script:
 - cd ./dist
-- scp
+- git init
+- git config user.name "Leo555"
+- git config user.email "lizhen55521@gmail.com"
+- git add .
+- git commit -m "Update"
+- git push --force --quiet "https://${GITHUB_TOKEN}@${GH_REF}" master:master
 
 branches:
     only:
     - master
+
+env:
+    global:
+    - GH_REF: github.com/Leo555/server.git
