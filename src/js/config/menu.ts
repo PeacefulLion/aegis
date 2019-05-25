@@ -104,6 +104,11 @@ const menu: MenuRoute[] = [{
         path: '/projectmember',
         component: ProjectMember
     }, {
+        name: '项目日志统计',
+        key: '304',
+        path: '/project-daily-statics',
+        component: DailyStatics
+    }, {
         name: '用户绑定审核',
         key: '305',
         path: '/userbind-verify',
@@ -114,11 +119,6 @@ const menu: MenuRoute[] = [{
         key: '306',
         path: '/projectedit',
         component: ProjectEdit
-    }, {
-        name: '项目日志统计',
-        key: '307',
-        path: '/project-daily-statics',
-        component: DailyStatics
     }]
 }, {
     key: '4',

@@ -1,3 +1,7 @@
+## [0.0.1](https://github.com/iv-web/wardmonitor/compare/v0.1.0...v0.0.1) (2019-05-25)
+
+
+
 ## 0.0.1 (2019-05-23)
 
 
