@@ -34,7 +34,7 @@ export const DateInput = forwardRef(function (props: DateInputProps, ref) {
     const wrapRef = useRef(null);
 
     const [year, setYear] = useNumberState(time.year());
-    const [month, setMonth] = useNumberState(time.month());
+    let [month, setMonth] = useNumberState(time.month() + 1);
     const [date, setDate] = useNumberState(time.date());
     const [hour, setHour] = useNumberState(time.hour());
     const [minute, setMinute] = useNumberState(time.minute());
@@ -42,6 +42,8 @@ export const DateInput = forwardRef(function (props: DateInputProps, ref) {
     useImperativeMethods(ref, () => {
         return {
             getTime: () => {
+                // 转换时间  js中 一月的month值为0
+                month = month - 1;
                 return dayjs(new Date(year, month, date, hour, minute)); 
             }
         }
@@ -50,7 +52,7 @@ export const DateInput = forwardRef(function (props: DateInputProps, ref) {
     return (
         <div ref={wrapRef}>
             <InputNumber className="ward-dateinput-year" max={MAX_YEAR} min={MIN_YEAR} onChange={setYear} value={year}></InputNumber>年
-            <InputNumber className="ward-dateinput" max={12} min={1} onChange={setMonth} value={month + 1}></InputNumber>月
+            <InputNumber className="ward-dateinput" max={12} min={1} onChange={setMonth} value={month}></InputNumber>月
             <InputNumber className="ward-dateinput" max={31} min={1} onChange={setDate} value={date}></InputNumber>日
             <InputNumber className="ward-dateinput" max={23} min={0} onChange={setHour} value={hour}></InputNumber>时
             <InputNumber className="ward-dateinput" max={59} min={0} onChange={setMinute} value={minute}></InputNumber>分
