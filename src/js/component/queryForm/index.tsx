@@ -82,7 +82,6 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
         const exclude = excludeRef.current.getTags();
         const startDate = startTimeRef.current.getTime().unix() * 1000;
         const endDate = endTimeRef.current.getTime().unix() * 1000;
-
         if (!projectId) {
             return;
         }
@@ -138,7 +137,7 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
                 <Form.Item label="起始时间" {...formItemLayout}>
                     <DateInput ref={startTimeRef} time={start}></DateInput>
                 </Form.Item>
-                <Form.Item label="起始时间" {...formItemLayout}>
+                <Form.Item label="结束时间" {...formItemLayout}>
                     <DateInput ref={endTimeRef} time={end}></DateInput>
                 </Form.Item>
                 <Form.Item label="日志类型" {...formItemLayout}>
