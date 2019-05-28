@@ -185,7 +185,7 @@ export default function LogTable(props: LogTableProps) {
                 </Button>
             </div>
 
-            <Table dataSource={logs} rowKey="index"
+            <Table dataSource={logs} rowKey={record => `${record.uin}${record.date}`}
                 expandedRowRender={LogPanelInline}
                 expandRowByClick={true}
             >
