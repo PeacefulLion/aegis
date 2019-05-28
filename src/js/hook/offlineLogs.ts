@@ -19,6 +19,7 @@ export interface SummitOptions {
 
 export function useOfflineLogs(value: FormatLog[]): [FormatLog[], Function, (opts: SummitOptions) => Promise<FormatLog[]>] {
     const [logs, setLogs] = useState(value);
+
     async function getLogs(opts: SummitOptions) {
         const {
             id,
@@ -26,7 +27,7 @@ export function useOfflineLogs(value: FormatLog[]): [FormatLog[], Function, (opt
             include,
             exclude
         } = opts;
-        window.scroll(0,0);
+        window.scroll(0, 0);
 
         const startTime = new Date().getTime();
         let data = await api.get(`//${location.host}/controller/logAction/showOfflineLog.do`, {
@@ -35,10 +36,10 @@ export function useOfflineLogs(value: FormatLog[]): [FormatLog[], Function, (opt
                 fileId
             }
         }) as any;
-        console.log('api请求结束：',new Date().getTime()-startTime);
+        console.log('api请求结束：', new Date().getTime() - startTime);
         try {
             data = JSON.parse(data);
-            console.log('JSON解析完毕：',new Date().getTime()-startTime);
+            console.log('JSON解析完毕：', new Date().getTime() - startTime);
         } catch (e) {
             setLogs([]);
             return []
@@ -47,19 +48,23 @@ export function useOfflineLogs(value: FormatLog[]): [FormatLog[], Function, (opt
         function exist(content, keyword) {
             return content.indexOf(keyword) !== -1;
         }
+
         let {logs, userAgent} = data;
         if (include.length > 0) {
             logs = logs.filter(log => include.every(tag => exist(log.msg, tag)));
         }
         if (exclude.length > 0) {
-            logs = logs.filter(log => !exclude.some(tag => exist(log.msg, tag)));    
+            logs = logs.filter(log => !exclude.some(tag => exist(log.msg, tag)));
         }
+        logs = logs.sort((p, n) => {
+            return p.time - n.time
+        });
         const formatLogs = logs.map((item, index) => {
             return formatLog(Object.assign(item, {userAgent, index}));
         });
-        console.log('format结束',new Date().getTime()-startTime);
+        console.log('format结束', new Date().getTime() - startTime);
         setLogs(formatLogs);
-        console.log('dom渲染完毕',new Date().getTime()-startTime);
+        console.log('dom渲染完毕', new Date().getTime() - startTime);
         return formatLogs;
     }
 

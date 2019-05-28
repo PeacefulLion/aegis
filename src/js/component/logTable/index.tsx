@@ -304,7 +304,7 @@ export default function LogTable(props: LogTableProps) {
                     hasMore={!isEnd}
                     useWindow={true}
                 >
-                    <Table dataSource={logs} rowKey="index"
+                    <Table dataSource={logs} rowKey={record => `${record.uin}${record.date}`}
                         expandedRowRender={LogPanelInline}
                         expandRowByClick={true}
                         pagination={false}

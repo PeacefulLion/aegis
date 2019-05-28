@@ -47,7 +47,7 @@ export interface Icon {
 export function formatLog(log: Log): FormatLog {
     const device = getDevice(log.userAgent);
     const formatLog: FormatLog = Object.assign(log, {
-        time: dayjs(log.time).format('YYYY-MM-DD HH:mm:ss'),
+        time: dayjs(log.time || log.date).format('YYYY-MM-DD HH:mm:ss'),
         uin: (log.uin || isNaN(log.uin as number) ? '-' : log.uin),
         device,
         appIcon: [],
