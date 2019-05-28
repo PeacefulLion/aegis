@@ -69,7 +69,7 @@ export function useLogs(value: FormatLog[]): [FormatLog[], Function, (opts: Summ
 }
 
 export function useLogsPool(logs) {
-    const [point, setPoint] = useState(10);
+    const [point, setPoint] = useState(30);
     const [pool, setPool] = useState(logs);
 
     useEffect(() => {
