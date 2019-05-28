@@ -1,4 +1,4 @@
-import * as React from 'react';;
+import * as React from 'react';
 import LogTable from '../../component/logTable';
 import { useLogs, useLogsPool } from '../../hook/logs';
 

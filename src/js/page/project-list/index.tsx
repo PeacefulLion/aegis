@@ -1,4 +1,4 @@
-import * as React from 'react';;
+import * as React from 'react';
 import { useApplyProjectList, applyProjectItem } from '../../hook/projectList';
 
 import APPLY_STATUS from "../../common/const/applyStatus";
