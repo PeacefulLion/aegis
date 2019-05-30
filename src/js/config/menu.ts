@@ -11,7 +11,7 @@ import ProjectList from '../page/project-list';
 import ProjectApply from '../page/project-apply';
 import UserbindVerify from "../component/UserbindVerify";
 import DailyStatics from '../page/project-daily-statics';
-
+import ChangeLog  from '../page/changelog';
 import Sourcemap from '../page/sourcemap';
 
 import { ReactComponentLike } from "prop-types";
@@ -132,7 +132,8 @@ const menu: MenuRoute[] = [{
     }, {
         name: '更新日志',
         path: '/changelog',
-        key: '402'
+        key: '402',
+        component: ChangeLog
     }]
 }]
 
