@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useEffect} from 'react';
-import {Checkbox, Form, Button, Icon, Select, Drawer, Modal, Input} from 'antd';
+import {Checkbox, Form, Button, Icon, Select, Drawer, Modal, Input, Radio} from 'antd';
 import TagList from '../tagList';
 import logType from '../../common/const/logType';
 import {firstUpperCase} from '../../common/util';
@@ -46,6 +46,7 @@ export default function QueryFormOffline({onSummit}: Props) {
     const [modalVisible, setModalVisible] = useState(false);
     const [level, setLevel] = useState([logType.Debug, logType.Info, logType.Error, logType.Offline]);
     const [uins, addUin, removeUin, getUins] = useOfflineUin();
+    const [order, setOrder] = useState(-1);
 
     const includeRef: any = useRef(null);
     const excludeRef: any = useRef(null);
@@ -116,6 +117,10 @@ export default function QueryFormOffline({onSummit}: Props) {
         // uins.splice(index, 1);
     }
 
+    function changeOrder(e) {
+        setOrder(e.target.value);
+    }
+
     function searchOfflineLog() {
         const include = includeRef.current.getTags();
         const exclude = excludeRef.current.getTags();
@@ -124,10 +129,10 @@ export default function QueryFormOffline({onSummit}: Props) {
         if (!projectId || !fileId) {
             return;
         }
-
         onSummit({
             id: projectId,
             fileId,
+            order,
             include,
             exclude,
             index: pageIndex,
@@ -239,6 +244,12 @@ export default function QueryFormOffline({onSummit}: Props) {
                 </Form.Item>
                 <Form.Item label="屏蔽词" {...formItemLayout}>
                     <TagList ref={excludeRef} key="excludeTags" color="red" text="添加屏蔽词"></TagList>
+                </Form.Item>
+                <Form.Item label="排序" {...formItemLayout}>
+                    <Radio.Group onChange={changeOrder} value={order}>
+                        <Radio value={-1}>DESC</Radio>
+                        <Radio value={1}>ASC</Radio>
+                    </Radio.Group>
                 </Form.Item>
                 <Form.Item wrapperCol={{
                     xs: {span: 24, offset: 0},

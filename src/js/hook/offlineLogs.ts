@@ -12,6 +12,7 @@ export interface ApiResult {
 
 export interface SummitOptions {
     id: number,
+    order: number, // 1: 逆序; -1: 正序
     fileId: string,
     include: string[],
     exclude: string[]
@@ -25,7 +26,8 @@ export function useOfflineLogs(value: FormatLog[]): [FormatLog[], Function, (opt
             id,
             fileId,
             include,
-            exclude
+            exclude,
+            order = -1 // 默认降序排列
         } = opts;
         window.scroll(0, 0);
 
@@ -57,7 +59,7 @@ export function useOfflineLogs(value: FormatLog[]): [FormatLog[], Function, (opt
             logs = logs.filter(log => !exclude.some(tag => exist(log.msg, tag)));
         }
         logs = logs.sort((p, n) => {
-            return p.time - n.time
+            return order * (p.time - n.time);
         });
         const formatLogs = logs.map((item, index) => {
             return formatLog(Object.assign(item, {userAgent, index}));
