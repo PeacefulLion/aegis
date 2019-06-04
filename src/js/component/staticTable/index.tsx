@@ -23,7 +23,7 @@ export default function StaticTable(props: StaticTableProps) {
             <Table dataSource={statics} rowKey="title"
                 expandRowByClick={true}
                 pagination={false}
-                className="aegis-logtalbe"
+                className="aegis-statics"
             >
                 <Column
                     title="出现次数"
@@ -35,7 +35,7 @@ export default function StaticTable(props: StaticTableProps) {
                     title="错误内容"
                     dataIndex="title"
                     key="title"
-                    width={118}
+                    width={290}
                 />
             </Table>
         </div>
