@@ -1,3 +1,19 @@
+## [0.0.3](https://github.com/iv-web/wardmonitor/compare/0.0.2...0.0.3) (2019-06-10)
+
+
+### Bug Fixes
+
+* aegis statics score logic error ([4e2806d](https://github.com/iv-web/wardmonitor/commit/4e2806d))
+* history and realtime log uin is empty ([d626883](https://github.com/iv-web/wardmonitor/commit/d626883))
+* 实时日志按照逆序排列 ([167c532](https://github.com/iv-web/wardmonitor/commit/167c532))
+
+
+### Features
+
+* offline log add order sort and default is desc ([9293de1](https://github.com/iv-web/wardmonitor/commit/9293de1))
+
+
+
 ## [0.0.2](https://github.com/iv-web/wardmonitor/compare/v0.1.0...v0.0.2) (2019-05-30)
 
 
