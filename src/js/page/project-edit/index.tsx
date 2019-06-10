@@ -63,7 +63,7 @@ const RouterWrap = withRouter((props) => {
             .catch((result) => {
                 const modal = Modal.error({
                     title: '修改失败',
-                    content: JSON.stringify(result, null, 2)
+                    content: result.msg
                 });
             })
     }

@@ -58,11 +58,14 @@ export function useProjectMembers(role = 0, projectId = 0) {
     }
 
     async function addUser(userName) {
-        const result = await api.post(`//${location.host}/controller/userApplyAction/addUserApply.do`, {
-            userName,
-            applyId: projectId
-        });
-
+        try {
+            await api.post(`//${location.host}/controller/userApplyAction/addUserApply.do`, {
+                userName,
+                applyId: projectId
+            })
+        } catch (e) {
+            return alert(e.msg);
+        }
         setData(data.concat({
             chineseName: userName,
             role: NORMAL_USER

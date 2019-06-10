@@ -6,14 +6,14 @@ import {
     FETCH_PROFILE_PENDING,
     FETCH_PROFILE_SUCCESS
 } from '../action/auth';
-  
+
 const initialState = {
     user: null,
     loggingIn: false,
     loggingOut: false,
     loginErrors: null
 };
-  
+
 type AuthAction = {
     type: string
     payload: any
@@ -24,7 +24,6 @@ export default function auth(state = initialState, action: AuthAction) {
         case LOGIN_PENDING:
             return Object.assign({}, initialState, {loggingIn: true});
         case LOGIN_SUCCESS:
-        debugger;
             let user = action.payload.data;
             window.localStorage.setItem('uid', user.uid);
             return Object.assign({}, state, {user: user, loggingIn: false, loginErrors: null});

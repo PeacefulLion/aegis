@@ -1,5 +1,3 @@
-import {  } from "module";
-
 import Home from '../page/home';
 import Historylog from '../page/log-history';
 import Realtimelog from '../page/log-realtime';
@@ -14,7 +12,7 @@ import DailyStatics from '../page/project-daily-statics';
 import ChangeLog  from '../page/changelog';
 import Sourcemap from '../page/sourcemap';
 
-import { ReactComponentLike } from "prop-types";
+import {ReactComponentLike} from "prop-types";
 
 
 export type MenuRoute = {
@@ -54,13 +52,18 @@ const menu: MenuRoute[] = [{
         path: '/offlinelog',
         component: OfflineLog
     }, {
-        name: '图表',
+        name: '项目日志统计',
         key: '105',
+        path: '/project-daily-statics',
+        component: DailyStatics
+    }, {
+        name: '图表',
+        key: '106',
         path: '/charts',
         component: Charts
     }, {
         name: 'SourceMap',
-        key: '106',
+        key: '107',
         path: '/sourcemap',
         component: Sourcemap,
         showInMenu: false
@@ -104,19 +107,14 @@ const menu: MenuRoute[] = [{
         path: '/projectmember',
         component: ProjectMember
     }, {
-        name: '项目日志统计',
-        key: '304',
-        path: '/project-daily-statics',
-        component: DailyStatics
-    }, {
         name: '用户绑定审核',
-        key: '305',
+        key: '304',
         path: '/userbind-verify',
         component: UserbindVerify
     }, {
         showInMenu: false,
         name: '项目编辑',
-        key: '306',
+        key: '305',
         path: '/projectedit',
         component: ProjectEdit
     }]

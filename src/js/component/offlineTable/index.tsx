@@ -182,8 +182,8 @@ function ColumnVersion(platform: IconProps[], record: FormatLog, index: number) 
 interface LogTableProps {
     logs: FormatLog[],
     id?: number,
-    isEnd: boolean,
-    loadMore: Function
+    isEnd?: boolean,
+    loadMore?: Function
 }
 
 export default function LogTable(props: LogTableProps) {
