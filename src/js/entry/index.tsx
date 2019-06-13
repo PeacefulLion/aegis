@@ -32,9 +32,8 @@ function Container() {
 }
 
 function UseRecvCode() {
-    if (location.pathname === '/qq-connect' || location.hash === '#/qq-connect' ||
-        location.search.includes('code=')
-    ) {
+    console.log('in UseRecvCode:::::::::', location.search.includes('openid='))
+    if (location.search.includes('openid=')) {
         return <RecvCode />
     } else {
         return <LoginProvider component={ Container } />

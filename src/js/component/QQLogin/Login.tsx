@@ -24,21 +24,10 @@ export default function Login(props: LoginProps) {
         console.log('onMsg Data', ev.data);
 
         // 获取到 access_token 进而获取 OpenId
-        if (ev.data && ev.data.code) {
-            const { code } = ev.data;
-
-            console.log('!!! code', code);
-            loginBy(code, redirect_uri).then(data => {
-                window.removeEventListener('message', listen);
-                if (isUserInfoResp(data)) {
-                    console.log('登陆成功', data);
-                    props.setUserInfo(data);
-                } else {
-                    // 新用户
-                    console.log('useropenid', data.openid);
-                    setOpenid(data.openid);
-                }
-            });
+        if (ev.data && ev.data.openid) {
+            const { openid } = ev.data;
+            setOpenid(openid);
+             
         }
     }
 

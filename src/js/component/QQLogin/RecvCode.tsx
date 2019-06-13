@@ -4,9 +4,9 @@ import { queryParse } from '../../common/utils';
 
 export default function RecvCode() {
     const query = queryParse(window.location.search.substring(1)); 
-
     useEffect(() => {
         // 发送消息到 main 窗口
+        console.log('in RecvCode::::::::::',query, location.origin)
         window.parent.postMessage(query, location.origin); 
     }); 
 
