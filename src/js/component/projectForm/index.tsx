@@ -53,7 +53,8 @@ export function ApplyProject(props) {
         status = 0,
         name = '',
         appkey,
-        url = '', 
+        url = '',
+        codePath = '',
         blacklist,
         description = '',
         mail = '',
@@ -84,7 +85,7 @@ export function ApplyProject(props) {
                 label="项目名称"
                 required
                 {...formItemLayout}
-            >   
+            >
                 {getFieldDecorator('name', {
                     initialValue: name,
                     rules: [{
@@ -103,7 +104,7 @@ export function ApplyProject(props) {
                 help="上报请求的 referer 与该 url 不匹配将被拒绝
                 eg: http://www.qq.com/(绝对匹配) 和 *.qq.com 格式
                 如果不希望服务器做 referer 检查, 请填写 *"
-            >   
+            >
                 {getFieldDecorator('url', {
                     initialValue: url,
                     rules: [{
@@ -116,9 +117,21 @@ export function ApplyProject(props) {
             </Form.Item>
 
             <Form.Item
+                label="代码仓库"
+                {...formItemLayout}
+                help="提供代码仓库能够帮助其他开发者更容易定位问题"
+            >
+                {getFieldDecorator('codePath', {
+                    initialValue: codePath
+                })(
+                    <Input placeholder="请输入代码仓库地址，如：https://github.com/iv-web/badjs-ivweb" id="validatingcode" />
+                )}
+            </Form.Item>
+
+            <Form.Item
                 {...formItemLayout}
                 label="业务描述"
-            >   
+            >
                 {getFieldDecorator('description', {
                     initialValue: description
                 })(
@@ -130,7 +143,7 @@ export function ApplyProject(props) {
                 {...formItemLayout}
                 label="IP限制"
                 help="格式如下： 127.0.0.5,132.5.3.*,132.4.*"
-            >   
+            >
                 {getFieldDecorator('ip', {
                     initialValue: ip.join(','),
                     rules: [{
@@ -157,7 +170,7 @@ export function ApplyProject(props) {
             <Form.Item
                 {...formItemLayout}
                 label="项目是否上线"
-            >   
+            >
                 {getFieldDecorator('online', {
                     initialValue: Boolean(online),
                     valuePropName: 'checked'
@@ -178,12 +191,12 @@ export function ApplyProject(props) {
                     <Input type="number" placeholder="300"  />
                 )}
             </Form.Item>
-            
+
             <Form.Item
                 {...formItemLayout}
                 label="负责人"
                 help=""
-            >   
+            >
                 {getFieldDecorator('userName', {
                     initialValue: userName
                 })(
