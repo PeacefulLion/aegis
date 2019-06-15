@@ -18,9 +18,11 @@ export interface Log {
     time: number
 }
 
-export interface dailyStatic {
-    title: string,
-    total: number
+export interface speed {
+    aegis_id: number,
+    url: string,
+    create_time: string,
+    avg_time: number
 }
 
 export interface dailyStatic {

@@ -25,6 +25,7 @@ export function retcodeInterceptor(resp: AxiosResponse) {
     if(!transformRetcode) { // 如果不转换，直接退出
         return resp;
     }
+    console.log('ret', resp.data);
 
     if(['retcode', 'errCode', 'ec', 'ret', 'code'].some((ret) => resp.data[ret] === 0)) {
         return resp.data.result || resp.data.data || resp.data;
