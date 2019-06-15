@@ -23,11 +23,10 @@ export default function Login(props: LoginProps) {
     const listen = (ev: MessageEvent) => {
         console.log('onMsg Data', ev.data);
 
-        // 获取到 access_token 进而获取 OpenId
+        // 获取openid
         if (ev.data && ev.data.openid) {
             const { openid } = ev.data;
             setOpenid(openid);
-             
         }
     }
 
