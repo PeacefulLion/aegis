@@ -37,9 +37,8 @@ export function realtimeLogs(value: Log[]) {
             let data = JSON.parse(evt.data).message;
 
             let formatLogArray = formatLog(data);
-
             let temp = logs;
-            temp.push(formatLogArray);
+            temp.unshift(formatLogArray);
 
             setLogs(temp);
         };

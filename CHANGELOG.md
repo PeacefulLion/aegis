@@ -1,4 +1,27 @@
-## [0.0.1](https://github.com/iv-web/wardmonitor/compare/v0.1.0...v0.0.1) (2019-05-25)
+## [0.0.3](https://github.com/iv-web/wardmonitor/compare/0.0.2...0.0.3) (2019-06-10)
+
+
+### Bug Fixes
+
+* aegis statics score logic error ([4e2806d](https://github.com/iv-web/wardmonitor/commit/4e2806d))
+* history and realtime log uin is empty ([d626883](https://github.com/iv-web/wardmonitor/commit/d626883))
+* 实时日志按照逆序排列 ([167c532](https://github.com/iv-web/wardmonitor/commit/167c532))
+
+
+### Features
+
+* offline log add order sort and default is desc ([9293de1](https://github.com/iv-web/wardmonitor/commit/9293de1))
+
+
+
+## [0.0.2](https://github.com/iv-web/wardmonitor/compare/v0.1.0...v0.0.2) (2019-05-30)
+
+
+### Bug Fixes
+
+* add user error msg show ([cec4203](https://github.com/iv-web/wardmonitor/commit/cec4203))
+* fix project history log date picker display error ([#7](https://github.com/iv-web/wardmonitor/issues/7)) ([00acc76](https://github.com/iv-web/wardmonitor/commit/00acc76))
+* history log date show error ([e4bca5f](https://github.com/iv-web/wardmonitor/commit/e4bca5f))
 
 
 
@@ -27,15 +50,11 @@
 * BindRTX ([a807734](https://github.com/iv-web/wardmonitor/commit/a807734))
 * clear logs ([eef8aef](https://github.com/iv-web/wardmonitor/commit/eef8aef))
 * enhance offline search logic ([5141143](https://github.com/iv-web/wardmonitor/commit/5141143))
-* fix ([df87b68](https://github.com/iv-web/wardmonitor/commit/df87b68))
-* fix confict ([00cf650](https://github.com/iv-web/wardmonitor/commit/00cf650))
 * https ([6c15878](https://github.com/iv-web/wardmonitor/commit/6c15878))
 * ignore .DS_Store ([e71b994](https://github.com/iv-web/wardmonitor/commit/e71b994))
 * login ([7a2a3aa](https://github.com/iv-web/wardmonitor/commit/7a2a3aa))
 * offline log add version show ([5ae72fb](https://github.com/iv-web/wardmonitor/commit/5ae72fb))
 * RecvCode ([58aac58](https://github.com/iv-web/wardmonitor/commit/58aac58))
-* style ([c9d5712](https://github.com/iv-web/wardmonitor/commit/c9d5712))
-* test ([48522c9](https://github.com/iv-web/wardmonitor/commit/48522c9))
 * uin check alert ([ebb3343](https://github.com/iv-web/wardmonitor/commit/ebb3343))
 * uin 可以为字母和数字 ([519673b](https://github.com/iv-web/wardmonitor/commit/519673b))
 * update ([d4296c1](https://github.com/iv-web/wardmonitor/commit/d4296c1))
@@ -44,20 +63,11 @@
 * use async/await ([f9f54fd](https://github.com/iv-web/wardmonitor/commit/f9f54fd))
 * use dayjs ([f10d25c](https://github.com/iv-web/wardmonitor/commit/f10d25c))
 * use https vs http ([580beb1](https://github.com/iv-web/wardmonitor/commit/580beb1))
-* utils ([3f2e9b1](https://github.com/iv-web/wardmonitor/commit/3f2e9b1))
-* utils ([541a4e7](https://github.com/iv-web/wardmonitor/commit/541a4e7))
 * websoket 支持 ws wss 两种协议 ([a235aa3](https://github.com/iv-web/wardmonitor/commit/a235aa3))
 * 一般的靠栏 ([4f0ba8e](https://github.com/iv-web/wardmonitor/commit/4f0ba8e))
 * 优化布局 ([937ff34](https://github.com/iv-web/wardmonitor/commit/937ff34))
 * 优化日志 ([e5c505b](https://github.com/iv-web/wardmonitor/commit/e5c505b))
 * 优化菜单逻辑,增加添加用户功能 ([48c4e5f](https://github.com/iv-web/wardmonitor/commit/48c4e5f))
-* 修复api ([d487e31](https://github.com/iv-web/wardmonitor/commit/d487e31))
-* 修复bug ([02b5546](https://github.com/iv-web/wardmonitor/commit/02b5546))
-* 修复导航问题 ([3481f07](https://github.com/iv-web/wardmonitor/commit/3481f07))
-* 修复拉取日志错误的问题，添加 logo ([41ed880](https://github.com/iv-web/wardmonitor/commit/41ed880))
-* 修复日志 ([cce34ab](https://github.com/iv-web/wardmonitor/commit/cce34ab))
-* 修改 readme ([dbb938c](https://github.com/iv-web/wardmonitor/commit/dbb938c))
-* 修改copyright ([ac2acb9](https://github.com/iv-web/wardmonitor/commit/ac2acb9))
 * 修改全局样式 ([5533098](https://github.com/iv-web/wardmonitor/commit/5533098))
 * 修改负责人 ([5ee531a](https://github.com/iv-web/wardmonitor/commit/5ee531a))
 * 加入 UserInfoWithOpenid 类型 ([884c8c0](https://github.com/iv-web/wardmonitor/commit/884c8c0))
@@ -75,7 +85,6 @@
 * 无限滚动加载 ([4fc3957](https://github.com/iv-web/wardmonitor/commit/4fc3957))
 * 更新package版本 ([257ac56](https://github.com/iv-web/wardmonitor/commit/257ac56))
 * 替换momentjs，修复 ts 错误 ([7bb581d](https://github.com/iv-web/wardmonitor/commit/7bb581d))
-* 添加 ([491858e](https://github.com/iv-web/wardmonitor/commit/491858e))
 * 添加 hook ([6c109d2](https://github.com/iv-web/wardmonitor/commit/6c109d2))
 * 添加 ts ([5c58588](https://github.com/iv-web/wardmonitor/commit/5c58588))
 * 添加中断分析 ([af37cc2](https://github.com/iv-web/wardmonitor/commit/af37cc2))

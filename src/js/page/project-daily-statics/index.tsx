@@ -1,4 +1,4 @@
-import * as React from 'react';;
+import * as React from 'react';
 import StaticTable from '../../component/staticTable';
 import StaticTitle from '../../component/dailyStaticsTitle';
 import { useStatics } from '../../hook/dailyStatics';

@@ -29,7 +29,8 @@ const RouterWrap = withRouter((props) => {
             online,
             userAgent,
             limitpv,
-            userName
+            userName,
+            codePath
         } = values;
 
         const params = {
@@ -43,7 +44,8 @@ const RouterWrap = withRouter((props) => {
             },
             online: online ? 1 : 0,
             limitpv,
-            userName
+            userName,
+            codePath
         };
 
         api({
@@ -63,7 +65,7 @@ const RouterWrap = withRouter((props) => {
             .catch((result) => {
                 const modal = Modal.error({
                     title: '修改失败',
-                    content: JSON.stringify(result, null, 2)
+                    content: result.msg
                 });
             })
     }
