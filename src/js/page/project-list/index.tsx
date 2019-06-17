@@ -1,18 +1,15 @@
 import * as React from 'react';
-import { useApplyProjectList, applyProjectItem } from '../../hook/projectList';
+import {useApplyProjectList, applyProjectItem} from '../../hook/projectList';
 
-import APPLY_STATUS from "../../common/const/applyStatus";
-import { Link } from 'react-router-dom';
-import { Row, Col, Table, Tooltip, Switch, Form, Button, Select, Divider } from 'antd';
+import {Link} from 'react-router-dom';
+import {Row, Col, Table, Tooltip, Switch, Form, Button, Select, Divider} from 'antd';
+import {loginCtx} from '../../component/QQLogin';
 
-const {
-    useState,
-    useEffect
-} = React;
-const { Column, ColumnGroup } = Table;
+const {Column} = Table;
 const Option = Select.Option;
 
-const optionName= ['审核中', '已通过', '已拒绝', '全部'];
+const optionName = ['审核中', '已通过', '已拒绝', '全部'];
+const operateOptions = ['待审核', '通过', '拒绝', '删除'];
 
 
 export default function ApplyProjectList(props) {
@@ -25,7 +22,7 @@ export default function ApplyProjectList(props) {
         setProjectStatus
     } = useApplyProjectList();
 
-    const handleChange = function(value) {
+    const handleChange = function (value) {
         setStatus(value);
     }
 
@@ -33,13 +30,13 @@ export default function ApplyProjectList(props) {
         <div>
             <Form layout="inline">
                 <Form.Item label="状态类型">
-                <Select defaultValue={optionName[status]} style={{ width: 120 }} onChange={handleChange}>
-                    {
-                        optionName.map((name, index) => {
-                            return <Option key={name} value={index}>{name}</Option>
-                        })
-                    }
-                </Select>
+                    <Select defaultValue={optionName[status]} style={{width: 120}} onChange={handleChange}>
+                        {
+                            optionName.map((name, index) => {
+                                return <Option key={name} value={index}>{name}</Option>
+                            })
+                        }
+                    </Select>
                 </Form.Item>
             </Form>
             <Divider></Divider>
@@ -55,7 +52,7 @@ export default function ApplyProjectList(props) {
                     dataIndex="name"
                     render={(name, record: applyProjectItem) => {
                         return (
-                            <Link key="link" to={`/projectedit/${record.id}`} >
+                            <Link key="link" to={`/projectedit/${record.id}`}>
                                 {name}
                             </Link>
                         )
@@ -72,15 +69,20 @@ export default function ApplyProjectList(props) {
                     dataIndex="status"
                     render={(status, record: applyProjectItem) => {
                         const changeProjectStatus = (value) => {
+                            debugger;
                             setProjectStatus(record.id, value);
                         };
-                        return <Select key={record.id} defaultValue={optionName[status]} style={{ width: 120 }} onChange={changeProjectStatus}>
-                            {
-                                optionName.map((name, index) => {
-                                    return <Option key={name} value={index}>{name}</Option>
-                                })
-                            }
-                            </Select>
+                        return <loginCtx.Consumer>{({userInfo}) => (
+                            userInfo.role === 0 ? <div>{optionName[status]}</div> :
+                                <Select key={record.id} defaultValue={optionName[status]} style={{width: 120}}
+                                        onChange={changeProjectStatus}>
+                                    {
+                                        operateOptions.map((name, index) => {
+                                            return <Option key={name} value={index}>{name}</Option>
+                                        })
+                                    }
+                                </Select>
+                        )}</loginCtx.Consumer>
                     }}
                 />
             </Table>
