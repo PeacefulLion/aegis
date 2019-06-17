@@ -35,13 +35,15 @@ export function useApplyProjectList(_status = APPLY_STATUS.STATUS_CHECK) {
             return item.id === id;
         });
 
-        item.status = status;
-        if (status === 3) {
-            await api.get(`//${location.host}/user/controller/applyAction/remove.do?reply=${reply}&id=${id}`) as any;
-            const index = list.findIndex(l => l.id === id);
-            setList(list.splice(index, 1));
-        } else {
-            await api.get(`//${location.host}/user/controller/approveAction/doApprove.do?reply=${reply}&applyId=${id}&applyStatus=${status}`) as any;
+        if (item.status !== status) {
+            item.status = status;
+            if (status === 3) {
+                await api.get(`//${location.host}/user/controller/applyAction/remove.do?reply=${reply}&id=${id}`) as any;
+                const index = list.findIndex(l => l.id === id);
+                setList(list.splice(index, 1));
+            } else {
+                await api.get(`//${location.host}/user/controller/approveAction/doApprove.do?reply=${reply}&applyId=${id}&applyStatus=${status}`) as any;
+            }
         }
 
         setList(list.concat([]));

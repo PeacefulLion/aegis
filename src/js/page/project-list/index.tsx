@@ -4,6 +4,7 @@ import {useApplyProjectList, applyProjectItem} from '../../hook/projectList';
 import {Link} from 'react-router-dom';
 import {Row, Col, Table, Tooltip, Switch, Form, Button, Select, Divider} from 'antd';
 import {loginCtx} from '../../component/QQLogin';
+import api from "../../common/api";
 
 const {Column} = Table;
 const Option = Select.Option;
@@ -69,8 +70,13 @@ export default function ApplyProjectList(props) {
                     dataIndex="status"
                     render={(status, record: applyProjectItem) => {
                         const changeProjectStatus = (value) => {
-                            debugger;
-                            setProjectStatus(record.id, value);
+                            if (value === 3) {
+                                if (confirm('确认删除该项目')) {
+                                    setProjectStatus(record.id, value);
+                                }
+                            } else {
+                                setProjectStatus(record.id, value);
+                            }
                         };
                         return <loginCtx.Consumer>{({userInfo}) => (
                             userInfo.role === 0 ? <div>{optionName[status]}</div> :
