@@ -71,7 +71,6 @@ export default function Login(props: LoginProps) {
                     </div>
                 </div>
             );
-        }
     }
 
     if (props.userInfo) {

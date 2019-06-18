@@ -32,7 +32,6 @@ function Container() {
 }
 
 function UseRecvCode() {
-    console.log('in UseRecvCode:::::::::', location.search.includes('openid='))
     if (location.search.includes('openid=')) {
         return <RecvCode />
     } else {
