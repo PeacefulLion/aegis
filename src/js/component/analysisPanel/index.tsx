@@ -9,6 +9,8 @@ import echartTheme from '../../common/data/echarts-theme';
 import chinaMap from '../../common/data/china';
 
 import './index.less';
+import { charts } from 'highcharts';
+import echartsTheme from '../../common/data/echarts-theme';
 
 echarts.registerTheme('westeros', echartTheme);
 echarts.registerMap('china', chinaMap);
@@ -116,7 +118,7 @@ export default function AnalysisPanel(props: LogTableProps) {
     useEffect(() => {
         if(showISP) {
             const config = getISPEchartsConfig(analysisResult.ispData);
-            const charts = echarts.init($ispChartsDom.current);
+            const charts = echarts.init($ispChartsDom.current, 'westeros');
             charts.setOption(config);
         }
 
@@ -133,7 +135,7 @@ export default function AnalysisPanel(props: LogTableProps) {
     useEffect(() => {
         if(showMap) {
             const config = getMapEchatsConfig(analysisResult.mapData);
-            const charts = echarts.init($mapChartsDom.current);
+            const charts = echarts.init($mapChartsDom.current, 'westeros');
             charts.setOption(config);
         }
 

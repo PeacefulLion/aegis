@@ -12,7 +12,8 @@ export interface SummitOptions {
     id: number
     date: string,
     index: number,
-    type: string
+    type: string,
+    url: string
 }
 
 
@@ -22,13 +23,15 @@ export function useSpeed(value: speed[]): [speed[], Function, (opts: SummitOptio
         const {
             id,
             date,
-            type
+            type,
+            url
         } = opts;
         const data = await api({
             method: 'GET',
             url: `speed/${id}/${type}`,
             params: {
-                startDate: date
+                startDate: date,
+                url: encodeURIComponent(url)
             }
         }) as any
         setSpeed(data);

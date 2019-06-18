@@ -7,6 +7,8 @@ import moment from 'moment';
 import logType from '../../common/const/logType';
 import { setLastSelect } from '../../common/utils';
 import { useBusinessList } from '../../hook/businessList';
+import { useUrlList } from '../../hook/urlList';
+import { speedType } from '../../hook/common';
 
 import './index.less';
 
@@ -30,7 +32,7 @@ export interface Props {
     start?: dayjs.Dayjs
     end?: dayjs.Dayjs
     onSummit: Function,
-    type: string
+    type: speedType
 }
 
 const LOGTYPE_OPTIONS = [
@@ -38,13 +40,12 @@ const LOGTYPE_OPTIONS = [
     'error'
 ];
 
-export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs(), onSummit, type }:Props) {
+export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs(), onSummit, type }: Props) {
     const [pageIndex, setPageIndex] = useState(0);
     const [drawerVisiblie, setDrawerVisiblie] = useState(true);
     const [list, projectId, setProjectId] = useBusinessList(0);
-
-    const [selectDate, setSelectDate] = useState(moment().add(-1, 'days').format("YYYY-MM-DD"));    
-
+    const [selectDate, setSelectDate] = useState(moment().add(-1, 'days').format("YYYY-MM-DD"));
+    const [urlList, url, setUrl] = useUrlList(projectId, type, selectDate);
     function handlerClose() {
         setDrawerVisiblie(false);
     }
@@ -63,7 +64,7 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
 
     function handlerSumbit() {
 
-        if (!projectId) {
+        if (!projectId || !url) {
             return;
         }
 
@@ -71,14 +72,19 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
             id: projectId,
             date: selectDate,
             index: pageIndex,
-            type: type
+            type: type,
+            url: url
         });
 
         setDrawerVisiblie(false);
     }
-    
-    function isEarlyThanToday(date : any) {
+
+    function isEarlyThanToday(date: any) {
         return date > dayjs();
+    }
+
+    function setSelectUrl(id) {
+        setUrl(id);
     }
 
     return (
@@ -92,7 +98,7 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
             visible={drawerVisiblie}
         >
             <div className="ward-left-btn" onClick={handlerOpen}>
-                { !drawerVisiblie ? <Icon type="caret-left" /> : <Icon type="caret-right" /> }
+                {!drawerVisiblie ? <Icon type="caret-left" /> : <Icon type="caret-right" />}
             </div>
             <Form>
                 <Form.Item label="选择项目" {...formItemLayout}>
@@ -116,13 +122,34 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
                         }
                     </Select>
                 </Form.Item>
+                <Form.Item label="搜索URL" {...formItemLayout}>
+                    <Select
+                        showSearch
+                        value={url}
+                        onSelect={setSelectUrl}
+                        filterOption={(input, option: any) =>
+                            option.props.value.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                            option.props.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                    >
+                        {
+                            urlList.map((item) => {
+                                return (
+                                    <Select.Option key={item.toString()} value={item} title={item}>
+                                        {item}
+                                    </Select.Option>
+                                )
+                            })
+                        }
+                    </Select>
+                </Form.Item>
                 <Form.Item label="统计时间" {...formItemLayout}>
                     <DatePicker onChange={changeDate} disabledDate={isEarlyThanToday} defaultValue={moment().add(-1, 'days')}></DatePicker>
                 </Form.Item>
                 <Form.Item wrapperCol={{
-                        xs: { span: 24, offset: 0 },
-                        sm: { span: 20, offset: 4 },
-                    }}>
+                    xs: { span: 24, offset: 0 },
+                    sm: { span: 20, offset: 4 },
+                }}>
                     <Button onClick={handlerSumbit} type="primary">
                         <Icon type="search" />查询
                     </Button>

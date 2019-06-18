@@ -30,6 +30,11 @@ export interface dailyStatic {
     total: number
 }
 
+export enum speedType {
+    IMG = 'img',
+    FETCH = 'fetch',
+    SCRIPT = 'script'
+}
 export interface FormatLog extends Log {
     platform: Icon[],
     appIcon: Icon[],
@@ -58,7 +63,7 @@ export function formatLog(log: Log): FormatLog {
         version: log.version || 1,
         index: log.index
     });
-
+    console.log(formatLog);
     ['android', 'iOS', 'windows'].forEach((name) => {
         if (device[name + 'Version']) {
             formatLog.platform.push({
@@ -67,7 +72,9 @@ export function formatLog(log: Log): FormatLog {
             });
         }
     });
-
+    if (device.chromeVersion) {
+        formatLog.webview.push('chrome:' + device.chromeVersion.toString());
+    }
     ['qq', 'wechat', 'huayang', 'qzone',
         'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou', 'now', 'nowsdk',
         'maxthon', '360', 'edge', 'chrome', 'firefox', 'safari'].forEach((name) => {

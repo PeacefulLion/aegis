@@ -189,6 +189,7 @@ function ColumnApp(platform: IconProps[], record: FormatLog, index: number) {
 
 interface LogTableProps {
     logs: FormatLog[],
+    allLogs: FormatLog[],
     id?: number,
     isEnd: boolean,
     loadMore: Function
@@ -198,7 +199,8 @@ export default function LogTable(props: LogTableProps) {
     const {
         logs,
         isEnd,
-        loadMore
+        loadMore,
+        allLogs
     } = props;
 
     const [showStaticApp, setShowStaticApp] = useState(false);
@@ -242,7 +244,6 @@ export default function LogTable(props: LogTableProps) {
     const handlerLoadMore = function() {
         loadMore();
     }
-
     return (
         <div className="logtable">
             <div className="logtable-control">
@@ -271,14 +272,8 @@ export default function LogTable(props: LogTableProps) {
                     <Form.Item label="Version">
                         <Switch checked={showVersion} onChange={setShowVersion} />
                     </Form.Item>
-                    <Form.Item label="统计操作系统分布分布">
-                        <Switch checked={showStaticPlatform} onChange={setShowStaticPlatform} />
-                    </Form.Item>
                     <Form.Item label="统计webview内核分布">
                         <Switch checked={showWebviewCore} onChange={setshowWebviewCore} />
-                    </Form.Item>
-                    <Form.Item label="统计客户端版本分布">
-                        <Switch checked={showStaticApp} onChange={setShowStaticApp} />
                     </Form.Item>
                     <Form.Item label="统计运营商分布">
                         <Switch checked={showISP} onChange={setShowISP} />
@@ -290,7 +285,7 @@ export default function LogTable(props: LogTableProps) {
             </div>
 
             <AnalysisPanel
-                logs={logs}
+                logs={allLogs}
                 showApp={showApp}
                 showPlatform={showPlatform}
                 showISP={showISP}
@@ -304,7 +299,7 @@ export default function LogTable(props: LogTableProps) {
                     hasMore={!isEnd}
                     useWindow={true}
                 >
-                    <Table dataSource={logs} rowKey={record => `${record.uin}${record.date}`}
+                    <Table dataSource={logs} rowKey={record => `${record.all}${record.date}${record._id}`}
                         expandedRowRender={LogPanelInline}
                         expandRowByClick={true}
                         pagination={false}

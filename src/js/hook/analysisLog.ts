@@ -57,14 +57,12 @@ export function useAnalysisLog(sourceLog: FormatLog[]): analysisLog {
     //     platformCountMap,
     //     webviewCountMap
     // });
-
     sourceLog.forEach((_sourcelog) => {
         const {
             webview,
             platform,
             appIcon
         } = _sourcelog;
-
         webview.forEach((webviewType) => {
             _counter(webviewData, webviewType);
         });
@@ -75,8 +73,8 @@ export function useAnalysisLog(sourceLog: FormatLog[]): analysisLog {
         });
 
         platform.forEach(({name, version}) => {
-            _counter(platformData, 'ios');
-            _counter(platformData['ios'].subItem, ['9', '8'][(Math.random() < 0.3) ? 1 : 0]);
+            _counter(platformData, name);
+            _counter(platformData[name].subItem, version.toString());
         });
     });
 
