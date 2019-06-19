@@ -1,3 +1,15 @@
+## [0.0.4](https://github.com/iv-web/wardmonitor/compare/v0.0.3...v0.0.4) (2019-06-18)
+
+
+### Features
+
+* add code path ([e7099c1](https://github.com/iv-web/wardmonitor/commit/e7099c1))
+* delete confirm ([373f21b](https://github.com/iv-web/wardmonitor/commit/373f21b))
+* 提示管理员 ([2d768a4](https://github.com/iv-web/wardmonitor/commit/2d768a4))
+* 项目管理权限控制 ([bbc8677](https://github.com/iv-web/wardmonitor/commit/bbc8677))
+
+
+
 ## [0.0.3](https://github.com/iv-web/wardmonitor/compare/0.0.2...0.0.3) (2019-06-10)
 
 

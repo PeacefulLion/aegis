@@ -59,7 +59,7 @@ function commonHeader(props) {
                     <loginCtx.Consumer>{({userInfo}) => (
                         <div style={{margin: '0 15px'}} className="item">
                             {
-                                userInfo ? `👏 欢迎, ${ userInfo.loginName }` : '未登陆'
+                                userInfo ? `👏 欢迎, ${userInfo.role === 1 ? '管理员': ''} ${ userInfo.loginName }` : '未登陆'
                             }
                         </div>
                     )}</loginCtx.Consumer>
