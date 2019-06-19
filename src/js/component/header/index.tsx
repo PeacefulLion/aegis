@@ -67,7 +67,7 @@ function commonHeader(props) {
                 <Col span={3}>
                     <loginCtx.Consumer>{({userInfo}) => (
                         <Dropdown overlay={menu}>
-                            <a className="ant-dropdown-link" href="#">
+                            <a className="ant-dropdown-link" href="javascript:void(0)">
                                 <Avatar style={{verticalAlign: 'middle'}} icon="user"
                                         src={userInfo ? userInfo.avatar || '' : ''}>{username}</Avatar><Icon
                                 type="down"/>
