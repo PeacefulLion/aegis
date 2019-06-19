@@ -70,6 +70,7 @@ export default function AnalysisPanel(props: LogTableProps) {
     useEffect(() => {
         if(showApp) {
             const config = getAppEchartsConfig(analysisResult.appData);
+            console.log('config!!!', config);
             const charts = echarts.init($appChartsDom.current, 'westeros');
             charts.setOption(config);
         }

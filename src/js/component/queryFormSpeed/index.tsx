@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import dayjs from 'dayjs';
-import { Checkbox, Form, Button, Icon, Select, Drawer, DatePicker } from 'antd';
+import { Checkbox, Form, Button, Icon, Select, Drawer } from 'antd';
+import { DateInput } from '../rangeDateInput';
 import TagList from '../tagList';
 import moment from 'moment';
 import logType from '../../common/const/logType';
@@ -9,6 +10,7 @@ import { setLastSelect } from '../../common/utils';
 import { useBusinessList } from '../../hook/businessList';
 import { useUrlList } from '../../hook/urlList';
 import { speedType } from '../../hook/common';
+
 
 import './index.less';
 
@@ -43,12 +45,16 @@ const LOGTYPE_OPTIONS = [
 export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs(), onSummit, type }: Props) {
     const [pageIndex, setPageIndex] = useState(0);
     const [drawerVisiblie, setDrawerVisiblie] = useState(true);
+    const [timeGranularity, setTimeGranularity] = useState('1分钟');
     const [list, projectId, setProjectId] = useBusinessList(0);
     const [selectDate, setSelectDate] = useState(moment().add(-1, 'days').format("YYYY-MM-DD"));
     const [urlList, url, setUrl] = useUrlList(projectId, type, selectDate);
     function handlerClose() {
         setDrawerVisiblie(false);
     }
+    const startTimeRef: any = useRef(null);
+    const endTimeRef: any = useRef(null);
+
 
     function handlerOpen() {
         setDrawerVisiblie(!drawerVisiblie); // 取反
@@ -67,13 +73,19 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
         if (!projectId || !url) {
             return;
         }
+        const startDate = startTimeRef.current.getTime().unix() * 1000;
+        const endDate = endTimeRef.current.getTime().unix() * 1000;
 
         onSummit({
             id: projectId,
-            date: selectDate,
+            date: {
+                startDate,
+                endDate
+            },
             index: pageIndex,
             type: type,
-            url: url
+            url: url,
+            timeGranularity: timeGranularity
         });
 
         setDrawerVisiblie(false);
@@ -85,6 +97,10 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
 
     function setSelectUrl(id) {
         setUrl(id);
+    }
+
+    function setSelectTimeGranularity(option) {
+        setTimeGranularity(option);
     }
 
     return (
@@ -143,9 +159,34 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
                         }
                     </Select>
                 </Form.Item>
-                <Form.Item label="统计时间" {...formItemLayout}>
-                    <DatePicker onChange={changeDate} disabledDate={isEarlyThanToday} defaultValue={moment().add(-1, 'days')}></DatePicker>
+                <Form.Item label="起始时间" {...formItemLayout}>
+                    <DateInput ref={startTimeRef} time={start}></DateInput>
                 </Form.Item>
+                <Form.Item label="结束时间" {...formItemLayout}>
+                    <DateInput ref={endTimeRef} time={end}></DateInput>
+                </Form.Item>
+
+                <Form.Item label="时间粒度" {...formItemLayout}>
+                <Select
+                        value={timeGranularity}
+                        onSelect={setSelectTimeGranularity}
+                        filterOption={(input, option: any) =>
+                            option.props.value.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                            option.props.title.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                    >
+                        {
+                            ['1分钟', '5分钟', '1小时', '1天'].map((item) => {
+                                return (
+                                    <Select.Option key={item.toString()} value={item} title={item}>
+                                        {item}
+                                    </Select.Option>
+                                )
+                            })
+                        }
+                    </Select>
+                </Form.Item>
+
                 <Form.Item wrapperCol={{
                     xs: { span: 24, offset: 0 },
                     sm: { span: 20, offset: 4 },

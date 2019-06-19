@@ -7,11 +7,11 @@ import './index.less';
 import QueryFormSpeed from '../../component/queryFormSpeed';
 
 export default function Log(props) {
-    let [speed, setSpeed, getSpeed ] = useSpeed([]);
+    let [speed, setSpeed, getSpeed, timeGranularity ] = useSpeed([]);
     return (
         <div>
             <QueryFormSpeed onSummit={getSpeed} type={speedType.IMG} />
-            <SpeedTable statics={speed} />
+            <SpeedTable statics={speed} timeGranularity={timeGranularity}/>
         </div>
     );
 }

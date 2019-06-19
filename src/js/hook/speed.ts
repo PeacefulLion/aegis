@@ -10,27 +10,32 @@ const {
 
 export interface SummitOptions {
     id: number
-    date: string,
+    date: any,
     index: number,
     type: string,
-    url: string
+    url: string,
+    timeGranularity: string
 }
 
 
-export function useSpeed(value: speed[]): [speed[], Function, (opts: SummitOptions) => Promise<speed[]>] {
+export function useSpeed(value: speed[]): [speed[], Function, (opts: SummitOptions) => Promise<speed[]>, string] {
     const [speed, setSpeed] = useState(value);
+    const [timeGranularity, setTimeGranularity] = useState('');
     async function getSpeed(opts: SummitOptions) {
         const {
             id,
             date,
             type,
-            url
+            url,
+            timeGranularity
         } = opts;
+        setTimeGranularity(timeGranularity);
         const data = await api({
             method: 'GET',
             url: `speed/${id}/${type}`,
             params: {
-                startDate: date,
+                startDate: date.startDate,
+                endDate: date.endDate,
                 url: encodeURIComponent(url)
             }
         }) as any
@@ -38,5 +43,5 @@ export function useSpeed(value: speed[]): [speed[], Function, (opts: SummitOptio
         return data;
     }
 
-    return [speed, setSpeed, getSpeed];
+    return [speed, setSpeed, getSpeed, timeGranularity];
 }
