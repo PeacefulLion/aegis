@@ -59,7 +59,7 @@ function commonHeader(props) {
                     <loginCtx.Consumer>{({userInfo}) => (
                         <div style={{margin: '0 15px'}} className="item">
                             {
-                                userInfo ? `👏 欢迎, ${ userInfo.loginName }` : '未登陆'
+                                userInfo ? `👏 欢迎, ${userInfo.role === 1 ? '管理员': ''} ${ userInfo.loginName }` : '未登陆'
                             }
                         </div>
                     )}</loginCtx.Consumer>
@@ -67,7 +67,7 @@ function commonHeader(props) {
                 <Col span={3}>
                     <loginCtx.Consumer>{({userInfo}) => (
                         <Dropdown overlay={menu}>
-                            <a className="ant-dropdown-link" href="#">
+                            <a className="ant-dropdown-link" href="javascript:void(0)">
                                 <Avatar style={{verticalAlign: 'middle'}} icon="user"
                                         src={userInfo ? userInfo.avatar || '' : ''}>{username}</Avatar><Icon
                                 type="down"/>
