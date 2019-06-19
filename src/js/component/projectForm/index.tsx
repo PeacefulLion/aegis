@@ -58,7 +58,7 @@ export function ApplyProject(props) {
         blacklist,
         description = '',
         mail = '',
-        online = 0,
+        online = 1,
         limitpv = 300
     } = props;
 
@@ -172,7 +172,7 @@ export function ApplyProject(props) {
                 label="项目是否上线"
             >
                 {getFieldDecorator('online', {
-                    initialValue: Boolean(online),
+                    initialValue: online === 2,
                     valuePropName: 'checked'
                 })(
                     <Switch></Switch>
