@@ -63,7 +63,6 @@ export function formatLog(log: Log): FormatLog {
         version: log.version || 1,
         index: log.index
     });
-    console.log(formatLog);
     ['android', 'iOS', 'windows'].forEach((name) => {
         if (device[name + 'Version']) {
             formatLog.platform.push({

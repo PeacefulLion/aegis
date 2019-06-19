@@ -54,7 +54,6 @@ export function getChartsData(items: InfoItem[], list: Business[]) {
                 type: 'datetime',
                 labels: {
                     formatter() {
-                        console.log('this.value', new Date(this.value));
                         return HightChart.dateFormat('%a %d %b', 
                             this.value
                         );
