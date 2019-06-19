@@ -4,12 +4,12 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import routeInst from '../route';
-import { HashRouter as Router } from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 
 import configureStore from '../store/configureStore';
 import RecvCode from '../component/QQLogin/RecvCode';
 
-import "./index.less"; 
+import "./index.less";
 import LoginProvider from '../component/QQLogin/LoginProvider';
 
 const store = configureStore({});
@@ -22,20 +22,24 @@ function Root(props) {
     const [route, setRoute] = useState(routeInst);
     return (
         <Provider store={props.store}>
-            <Router children={route}/>
+            <Router children={route} />
         </Provider>
     )
 }
 
 function Container() {
-    return <Root store={ store } />
+    return <Root store={store} />
 }
 
 function UseRecvCode() {
-    if (location.search.includes('openid=')) {
-        return <RecvCode />
+    if (location.toString().indexOf('openid') !== -1) {
+        return (
+            <Router>
+                <Route path="/auth" exact><RecvCode /></Route>
+            </Router>
+        )
     } else {
-        return <LoginProvider component={ Container } />
+        return <LoginProvider component={Container} />
     }
 }
 

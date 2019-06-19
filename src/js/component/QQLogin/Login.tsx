@@ -23,10 +23,13 @@ export default function Login(props: LoginProps) {
     const listen = (ev: MessageEvent) => {
         console.log('onMsg Data', ev.data);
 
-        // 获取openid
         if (ev.data && ev.data.openid) {
             const { openid } = ev.data;
             setOpenid(openid);
+        }
+        if (ev.data && ev.data.result) {
+            const { result } = ev.data;
+            props.setUserInfo(JSON.parse(decodeURIComponent(result)));
         }
     }
 
@@ -71,6 +74,7 @@ export default function Login(props: LoginProps) {
                     </div>
                 </div>
             );
+        }
     }
 
     if (props.userInfo) {
