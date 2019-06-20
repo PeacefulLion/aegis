@@ -1,7 +1,6 @@
 import * as React from "react"; 
 import { getUserInfo, UserInfo } from "./login_cgi"; 
 import Login from "./Login";
-import { Loading } from "./Loading"
 import "./login.less";
 
 export type LoginAction = {
@@ -53,7 +52,7 @@ export default function LoginProvider(props: LoginProviderProps) {
         }}>
             {
                 initLoading ? (
-                    <Loading /> 
+                    null
                 ) : (
                     <loginCtx.Consumer>{
                         ({ userInfo }) => <Login
