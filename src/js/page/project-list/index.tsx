@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useApplyProjectList, applyProjectItem} from '../../hook/projectList';
-
+import dayjs from 'dayjs';
 import {Link} from 'react-router-dom';
 import {Row, Col, Table, Tooltip, Switch, Form, Button, Select, Divider} from 'antd';
 import {loginCtx} from '../../component/QQLogin';
@@ -41,7 +41,7 @@ export default function ApplyProjectList(props) {
                 </Form.Item>
             </Form>
             <Divider></Divider>
-            <Table dataSource={list} key={status} pagination={{pageSize: 25}}>
+            <Table dataSource={list} key={status} pagination={{pageSize: 50}}>
                 <Column
                     title="上报ID"
                     dataIndex="id"
@@ -63,6 +63,31 @@ export default function ApplyProjectList(props) {
                     title="申请人"
                     dataIndex="userName"
                     key="userName"
+                />
+                <Column
+                    title="申请时间"
+                    dataIndex="createTime"
+                    key="createTime"
+                    render={(createTime) => {
+                        return (
+                            <span>{dayjs(createTime).format('YYYY-MM-DD')}</span>
+                        )
+                    }}
+                />
+                <Column
+                    title="上线"
+                    dataIndex="online"
+                    key="online"
+                    render={(online) => {
+                    return (
+                        <span>{online === 2 ? '上线': '下线'}</span>
+                    )
+                }}
+                />
+                <Column
+                    title="pv"
+                    dataIndex="limitpv"
+                    key="limitpv"
                 />
                 <Column
                     title="状态"

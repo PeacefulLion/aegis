@@ -26,13 +26,12 @@ const RouterWrap = withRouter((props) => {
             url,
             description,
             ip,
-            online,
+            online = 1,
             userAgent,
             limitpv,
             userName,
             codePath
         } = values;
-
         const params = {
             id: data.id,
             name,
@@ -42,7 +41,7 @@ const RouterWrap = withRouter((props) => {
                 ip: ip ? ip.split(',') : [],
                 ua: userAgent ? userAgent.split(',') : []
             },
-            online: online ? 1 : 0,
+            online: online ? 2 : 1,
             limitpv,
             userName,
             codePath
