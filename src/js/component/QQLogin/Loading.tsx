@@ -2,7 +2,7 @@ import * as React from "react";
 
 export function Loading() {
     return (
-        <div className="login-container">
+        <div className="in-loading">
             <div className="align-center">
                 <div className="recv-container">
                     <div className="recv-input-area" >

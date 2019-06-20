@@ -113,7 +113,7 @@ export default function QueryForm({ start = dayjs().add(-1, 'hour'), end = dayjs
             visible={drawerVisiblie}
         >
             <div className="ward-left-btn" onClick={handlerOpen}>
-                { !drawerVisiblie ? <Icon type="caret-left" /> : <Icon type="caret-right" /> }
+                { !drawerVisiblie ? <Icon type="caret-left" style={{ color: '#fff' }} /> : <Icon type="caret-right" style={{ color: '#fff' }} /> }
             </div>
             <Form>
                 <Form.Item label="选择项目" {...formItemLayout}>

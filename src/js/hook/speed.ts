@@ -32,7 +32,7 @@ export function useSpeed(value: speed[]): [speed[], Function, (opts: SummitOptio
         setTimeGranularity(timeGranularity);
         const data = await api({
             method: 'GET',
-            url: `speed/${id}/${type}`,
+            url: `api/speed/${id}/${type}`,
             params: {
                 startDate: date.startDate,
                 endDate: date.endDate,

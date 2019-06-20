@@ -23,7 +23,7 @@ export function useUrlList(businessID: number, type: speedType, date: string ): 
         (async () => {
             const data = await api({
                 method: 'GET',
-                url: `speed/${businessID}/${type}/url`,
+                url: `/api/speed/${businessID}/${type}/url`,
                 params: {
                     date: date
                 }
