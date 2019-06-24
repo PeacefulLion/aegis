@@ -1,7 +1,7 @@
 {
   "name": "wardmonitor",
   "version": "0.0.4",
-  "description": "基于 badjs",
+  "description": "Aegis 管理页面",
   "main": "index.js",
   "scripts": {
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",

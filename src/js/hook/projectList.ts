@@ -30,7 +30,7 @@ export function useApplyProjectList(_status = APPLY_STATUS.STATUS_CHECK) {
         })();
     }, [status]);
 
-    async function setProjectStatus(id, status, reply = '') {
+    async function updateProjectStatus(id, status, reply = '') {
         const item = list.find((item) => {
             return item.id === id;
         });
@@ -54,7 +54,7 @@ export function useApplyProjectList(_status = APPLY_STATUS.STATUS_CHECK) {
         status,
         setStatus,
         setList,
-        setProjectStatus
+        updateProjectStatus
     }
 }
 
