@@ -5,12 +5,15 @@ import * as ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import routeInst from '../route';
 import { HashRouter as Router } from 'react-router-dom';
+import aegis from '../common/aegis';
 
 import configureStore from '../store/configureStore';
 import RecvCode from '../component/QQLogin/RecvCode';
 
-import "./index.less"; 
+import "./index.less";
 import LoginProvider from '../component/QQLogin/LoginProvider';
+
+aegis.init();
 
 const store = configureStore({});
 

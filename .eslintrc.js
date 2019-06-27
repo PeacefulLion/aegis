@@ -38,6 +38,7 @@ module.exports = {
         process: true,
         AlloyReport: true,
         IS_SERVER: true,
-        GDTMOD: true
+        GDTMOD: true,
+        AEGIS_REPORT: true
     }
 };
