@@ -9,8 +9,9 @@ import ProjectList from '../page/project-list';
 import ProjectApply from '../page/project-apply';
 import UserbindVerify from "../component/UserbindVerify";
 import DailyStatics from '../page/project-daily-statics';
-import ChangeLog from '../page/changelog';
+import ChangeLog  from '../page/changelog';
 import Sourcemap from '../page/sourcemap';
+import ImgSpeed from '../page/img-speed';
 
 import {ReactComponentLike} from "prop-types";
 
@@ -76,11 +77,12 @@ const menu: MenuRoute[] = [{
     child: [{
         name: 'CGI测速',
         key: '201',
-        path: '/cgispeed'
+        path: '/cgispeed',
     }, {
         name: '图片测速',
         key: '202',
-        path: '/imgspeed'
+        path: '/imgspeed',
+        component: ImgSpeed
     }, {
         name: '页面测速',
         key: '203',

@@ -153,7 +153,7 @@ export default function QueryFormOffline({onSummit}: Props) {
             visible={drawervisible}
         >
             <div className="ward-left-btn" onClick={handlerOpen}>
-                {!drawervisible ? <Icon type="caret-left"/> : <Icon type="caret-right"/>}
+                {!drawervisible ? <Icon type="caret-left" style={{ color: '#fff' }}/> : <Icon type="caret-right" style={{ color: '#fff' }}/>}
             </div>
             <Form>
                 <Form.Item label="选择项目" {...formItemLayout}>

@@ -18,9 +18,11 @@ export interface Log {
     time: number
 }
 
-export interface dailyStatic {
-    title: string,
-    total: number
+export interface speed {
+    aegis_id: number,
+    url: string,
+    create_time: string,
+    avg_time: number
 }
 
 export interface dailyStatic {
@@ -28,6 +30,20 @@ export interface dailyStatic {
     total: number
 }
 
+export enum speedType {
+    IMG = 'img',
+    FETCH = 'fetch',
+    SCRIPT = 'script'
+}
+
+interface region {
+    id: number,
+    country: string,
+    region: string,
+    province: string,
+    city: string,
+    isp: string
+}
 export interface FormatLog extends Log {
     platform: Icon[],
     appIcon: Icon[],
@@ -36,7 +52,8 @@ export interface FormatLog extends Log {
     device: any,
     version: number,
     index: number,
-    msg: string
+    msg: string,
+    region: region
 }
 
 export interface Icon {
@@ -56,7 +73,6 @@ export function formatLog(log: Log): FormatLog {
         version: log.version || 1,
         index: log.index
     });
-
     ['android', 'iOS', 'windows'].forEach((name) => {
         if (device[name + 'Version']) {
             formatLog.platform.push({
@@ -65,7 +81,9 @@ export function formatLog(log: Log): FormatLog {
             });
         }
     });
-
+    if (device.chromeVersion) {
+        formatLog.webview.push('chrome:' + device.chromeVersion.toString());
+    }
     ['qq', 'wechat', 'huayang', 'qzone',
         'pcQQBrowser', 'qqcomic', 'weibo', 'yyb', 'sougou', 'now', 'nowsdk',
         'maxthon', '360', 'edge', 'chrome', 'firefox', 'safari'].forEach((name) => {

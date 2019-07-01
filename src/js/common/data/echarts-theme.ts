@@ -1,5 +1,5 @@
 const colorPalette = [
-    '#2ec7c9','#b6a2de','#5ab1ef','#ffb980','#d87a80',
+    '#1890ff','#b6a2de','#5ab1ef','#ffb980','#d87a80',
     '#8d98b3','#e5cf0d','#97b552','#95706d','#dc69aa',
     '#07a2a4','#9a7fd1','#588dd5','#f5994e','#c05050',
     '#59678c','#c9ab00','#7eb00a','#6f5553','#c14089'
@@ -109,10 +109,10 @@ export default {
         itemStyle: {
             normal: {
                 color: '#d87a80',
-                color0: '#2ec7c9',
+                color0: '#1890ff',
                 lineStyle: {
                     color: '#d87a80',
-                    color0: '#2ec7c9'
+                    color0: '#1890ff'
                 }
             }
         }
@@ -149,19 +149,13 @@ export default {
     gauge : {
         axisLine: {
             lineStyle: {
-                color: [[0.2, '#2ec7c9'],[0.8, '#5ab1ef'],[1, '#d87a80']],
+                color: [[0.2, '#1890ff'],[0.8, '#5ab1ef'],[1, '#d87a80']],
                 width: 10
             }
         },
         axisTick: {
             splitNumber: 10,
             length :15,
-            lineStyle: {
-                color: 'auto'
-            }
-        },
-        splitLine: {
-            length :22,
             lineStyle: {
                 color: 'auto'
             }
