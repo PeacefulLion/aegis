@@ -1,23 +1,27 @@
 # Aegis
 基于 badjs 的前端监控体系平台
 
-## 开发 
-语言 ts
-构建 parcel
-UI框架 echarts + ant-design
-架构 react hook 
+## 技术栈
+- 语言 ts
+- 构建 parcel
+- UI框架 echarts + ant-design
+- 架构 react hook
 
-## whistle 配置
+
+## 开发
+
+### whistle 配置
 ```
-//badjs2.ivweb.io/index.html localhost:1234/index.html
-//badjs2.ivweb.io/aegis/ localhost:1234/aegis
+/^https?://aegis\.ivweb\.io/(.*\.(js|css|png|jpg|gif|jpeg|svg|blob).*)$/ http://localhost:1234/$1
+/^https?://aegis\.ivweb\.io\/?$/ http://localhost:1234/index.html
+
+aegis.ivweb.io pac://网络代理配置文件URL
 ```
 
-## 调试
-1. ``` npm start ```
+### 调试
 
-2. 登录 badjs2.ivweb.io 获取登录态
+1. 登录 https://aegis.ivweb.io 获取登录态
 
-3. 打开 badjs2.ivweb.io/badjs3 开始调试
+2. 切换至 Whistle 打开 https://aegis.ivweb.io 开始调试
 
 

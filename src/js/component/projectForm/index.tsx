@@ -3,6 +3,9 @@ import {
     Form, Input, Select, Row, Col, Checkbox, Button, Switch
 } from 'antd';
 
+const REG_REFERER = /^https?:\/\/[^\/]+\//i;
+const REG_DOMAIN_STAR = /^\*(\.[^\/]+)?$/;
+
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -15,9 +18,9 @@ const formItemLayout = {
 };
 
 function checkUrl(rule, value, callback) {
-    if(/^(?=^.{3,255}$)[\*a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/ig.test(value)) {
+    if(REG_REFERER.test(value)) {
         callback();
-    } else if(/^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[\*a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*(\/\w+\.\w+)*\/?$/ig.test(value)) {
+    } else if(REG_DOMAIN_STAR.test(value)) {
         callback();
     } else if(value === '*') {
         callback();

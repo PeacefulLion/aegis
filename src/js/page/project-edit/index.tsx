@@ -70,7 +70,7 @@ const RouterWrap = withRouter((props) => {
     }
 
     return status === CGI_STATUS.SUCCESS ? (
-        <ProjectFrom btnText="编辑项目" onSummit={doApply} {...data}></ProjectFrom>
+        <ProjectFrom btnText="确认修改" onSummit={doApply} {...data}></ProjectFrom>
     ) : (
         <Empty>
             {  status === CGI_STATUS.FAIL ? '加载失败' : ''}
