@@ -26,13 +26,12 @@ const RouterWrap = withRouter((props) => {
             url,
             description,
             ip,
-            online,
+            online = 1,
             userAgent,
             limitpv,
             userName,
             codePath
         } = values;
-
         const params = {
             id: data.id,
             name,
@@ -42,7 +41,7 @@ const RouterWrap = withRouter((props) => {
                 ip: ip ? ip.split(',') : [],
                 ua: userAgent ? userAgent.split(',') : []
             },
-            online: online ? 1 : 0,
+            online: online ? 2 : 1,
             limitpv,
             userName,
             codePath
@@ -71,7 +70,7 @@ const RouterWrap = withRouter((props) => {
     }
 
     return status === CGI_STATUS.SUCCESS ? (
-        <ProjectFrom btnText="编辑项目" onSummit={doApply} {...data}></ProjectFrom>
+        <ProjectFrom btnText="确认修改" onSummit={doApply} {...data}></ProjectFrom>
     ) : (
         <Empty>
             {  status === CGI_STATUS.FAIL ? '加载失败' : ''}
