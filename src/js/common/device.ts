@@ -56,11 +56,6 @@ export function getDevice(ua: string): Device {
         device.netType = RegExp.$1.toUpperCase();
     }
 
-    // 机型，主要是安卓机型，例如 HUAWEI C8825D，SAMSUNG-GT-I9308_TD 等
-    if(ua.match(/\(.*;\s?(\S*?\s?\S*?)\s?(Build)?\//i)) { 
-        device.model = RegExp.$1;
-    }
-
     regexp.forEach(([name, exp, verPos]) => {
         const match = ua.match(exp);
         const version = (match && match[verPos] || '').replace(/_/g, '.') || null;

@@ -202,7 +202,6 @@ export default function LogTable(props: LogTableProps) {
     const [showNetType, setShowNetType] = useState(false);
     const [visibelLog, setVisibelLog] = useState(logs.slice(0, pageSize));
     const [isEnd, setIsEnd] = useState(false);
-
     // 订阅log，首次加载数据后，显示前30条
     useEffect(() => {
         setVisibelLog(logs.slice(0, pageSize));

@@ -1,3 +1,24 @@
+## [0.0.6](https://github.com/iv-web/wardmonitor/compare/v0.0.4...v0.0.6) (2019-07-01)
+
+
+### Bug Fixes
+
+* url or referer regex ([47858ca](https://github.com/iv-web/wardmonitor/commit/47858ca))
+* 修复项目申请和编辑的时候上下线的bug ([a27f4db](https://github.com/iv-web/wardmonitor/commit/a27f4db))
+* 头像点击页面不刷新 ([db24cf6](https://github.com/iv-web/wardmonitor/commit/db24cf6))
+
+
+### Features
+
+* install aegis-report ([c81bebd](https://github.com/iv-web/wardmonitor/commit/c81bebd))
+* project filter in apply page ([#12](https://github.com/iv-web/wardmonitor/issues/12)) ([0312b66](https://github.com/iv-web/wardmonitor/commit/0312b66))
+* update button text ([3de1f76](https://github.com/iv-web/wardmonitor/commit/3de1f76))
+* update left btn style ([172e914](https://github.com/iv-web/wardmonitor/commit/172e914))
+* update lock file ([f65e908](https://github.com/iv-web/wardmonitor/commit/f65e908))
+* 分页个数 ([080bae7](https://github.com/iv-web/wardmonitor/commit/080bae7))
+
+
+
 ## [0.0.5](https://github.com/iv-web/wardmonitor/compare/v0.0.4...v0.0.5) (2019-06-24)
 
 

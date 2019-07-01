@@ -21,7 +21,7 @@ export default function Log(props) {
     return (
         <div>
             <QueryForm onSummit={getLogs}></QueryForm>
-            <LogTable key={logKey} logs={logsPool} isEnd={false} loadMore={loadMore} />
+            <LogTable key={logKey} logs={logsPool} allLogs={logs} isEnd={false} loadMore={loadMore} />
         </div>
     )
 }

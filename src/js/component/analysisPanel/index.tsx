@@ -116,7 +116,7 @@ export default function AnalysisPanel(props: LogTableProps) {
     useEffect(() => {
         if(showISP) {
             const config = getISPEchartsConfig(analysisResult.ispData);
-            const charts = echarts.init($ispChartsDom.current);
+            const charts = echarts.init($ispChartsDom.current, 'westeros');
             charts.setOption(config);
         }
 
