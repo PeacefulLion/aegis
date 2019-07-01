@@ -63,6 +63,11 @@ export function useAnalysisLog(sourceLog: FormatLog[]): analysisLog {
             platform,
             appIcon
         } = _sourcelog;
+        if (_sourcelog.region) {
+            _counter(mapData, _sourcelog.region && _sourcelog.region.city);
+            _counter(ispData, _sourcelog.region && _sourcelog.region.isp);
+        }
+
         webview.forEach((webviewType) => {
             _counter(webviewData, webviewType);
         });
@@ -82,28 +87,6 @@ export function useAnalysisLog(sourceLog: FormatLog[]): analysisLog {
     _percentage(platformData, sourceLog.length);
     _percentage(webviewData, sourceLog.length);
 
-    const totalLogCount = sourceLog.length;
-    
-    let ispMockData = [0, 63482811, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 真实数据分布
-
-    // 随机产生 10% 以内正负 的波动
-    ispMockData = ispMockData.map((num) => {
-        return Math.floor(num * ( 1 -  (Math.random() - 0.5) * 0.1));
-    });
-
-    const mockDataTotal = ispMockData.reduce((prev, next) => prev + next, 0);
-    // 根据 countlength 修正
-
-    ispMockData = ispMockData.map((num) => {
-        return Math.floor(num / mockDataTotal * totalLogCount);
-    });
-
-    ['电信', '移动', '联通', '长城宽带', '铁通', '天威', '教育', '方正宽带', '歌华有限', '东方有线'].forEach((name, index) => {
-        ispData[name] = {
-            count: ispMockData[index],
-            percentage: (ispMockData[index] / sourceLog.length)
-        }
-    });
 
     // setLog({
     //     appVersionCountMap,

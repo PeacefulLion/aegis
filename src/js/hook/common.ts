@@ -35,6 +35,15 @@ export enum speedType {
     FETCH = 'fetch',
     SCRIPT = 'script'
 }
+
+interface region {
+    id: number,
+    country: string,
+    region: string,
+    province: string,
+    city: string,
+    isp: string
+}
 export interface FormatLog extends Log {
     platform: Icon[],
     appIcon: Icon[],
@@ -43,7 +52,8 @@ export interface FormatLog extends Log {
     device: any,
     version: number,
     index: number,
-    msg: string
+    msg: string,
+    region: region
 }
 
 export interface Icon {
