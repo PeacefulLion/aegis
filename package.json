@@ -1,6 +1,6 @@
 {
   "name": "wardmonitor",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Aegis 管理页面",
   "main": "index.js",
   "scripts": {
