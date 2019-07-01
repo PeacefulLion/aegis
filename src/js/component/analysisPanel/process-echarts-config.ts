@@ -317,13 +317,18 @@ export function getMapEchatsConfig(mapData: analysisItem) {
         '菏泽': [115.480656, 35.23375],
         '合肥': [117.27, 31.86],
         '武汉': [114.31, 30.52],
-        '大庆': [125.03, 46.58]
+        '大庆': [125.03, 46.58],
+        "孝感":[113.91,31.92],
+        "襄阳":[112.14,30.02],
+        "蚌埠":[117.34,32.93],
+        "莆田":[119,25.44],
+        "台湾": [121.50, 25.03]
     };
     const formatData = [];
     let maxCount = 0
     for (let key in mapData) {
         // 去除最后一个 “市” 字
-        let _key = key.substring(0, key.length - 1);
+        let _key = key.replace('市', '');
         if (geoCoordMap[_key]) {
             mapData[key].count > maxCount ? maxCount = mapData[key].count : null;
             formatData.push({
@@ -378,6 +383,10 @@ export function getMapEchatsConfig(mapData: analysisItem) {
                 }
             },
             roam: true,
+            scaleLimit: {
+                min:1,
+                max:10
+            },
             itemStyle: {
                 normal: {
                     areaColor: '#323c48',
